@@ -1,5 +1,6 @@
-# FrequentWordsByCounting.py
-# FrequentWords() algorithm in class based on the PatternCount() method.
+# FrequentKmers.py
+# Class encapsulates the methods for finding frequent kmers 
+# by counting or hashing. Also, it generates a DNA sequence
 
 class FrequentKmers:
 
