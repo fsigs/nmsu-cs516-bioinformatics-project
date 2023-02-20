@@ -30,8 +30,9 @@ if __name__ == '__main__':
   print("Part 5: Reading Covid Genome")
   print("===============================")
   genome = fk.get_covid_genome()
-  k_values = [3, 6, 9, 12, 15]
+  k_values = [3, 4, 6, 9, 12, 15]
   for k in k_values:
+    print("****************** ")
     print(f"Frequent {k}-mers ")
     print("****************** ")
     print(fk.better_frequent_words(genome, k))
