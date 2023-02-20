@@ -12,7 +12,7 @@ class FrequentKmers:
     frequent_words = []
     
     #your code here
-    
+
     end = timer()
     return [frequent_words,  round((end - start) * 1000, 3)]
   
@@ -44,5 +44,7 @@ class FrequentKmers:
     sequence = np.random.choice(['A', 'C', 'G', 'T'], size=L, p=[0.25, 0.25, 0.25, 0.25])
     return ''.join(sequence)
   
-  def read_covid_txt_file(self):
-    None
+  def get_covid_genome(self):
+    with open('SARS-CoV-2.txt', 'r') as file:
+      lines = file.read().replace('\n', '')
+    return lines
