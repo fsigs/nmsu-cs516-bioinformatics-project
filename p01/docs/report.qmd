@@ -1,0 +1,22 @@
+Frequent k-mers in the SARS-CoV-2 Genome
+Israel Gonzalez and Gabriel Romero
+
+For this project our first two tasks where to implement two algorithms to find Frequent
+k-mers in the SARS-CoV-2 Genome.  For these algorithms we were using a string text of
+ACGTTTCACGTTTTACGG with a kmer length of 3.  The first algorithm was based on the PatternCount method.
+First we began with pseudocode for the pattern count method:
+PatternCount(Text, Pattern)
+    count <- 0
+    for i <- 0 to |text| - |pattern|
+        if text(i, |pattern|) = pattern
+            count <- count + 1
+        return count
+
+When putting this method into python we simply set the count to 0, and used a for loop
+to subtract the 3mer patterns from the entire string length of the genome.
+
+Straightforwardly to find the most frequent kmers in a string text, we generated an array
+called frequent_words that held the genome sequence. Next in the method we generated a 
+count array that stores the count and pattern of the 3-mers.
+|Text| - k + 1
+
