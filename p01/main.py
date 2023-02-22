@@ -41,8 +41,7 @@ if __name__ == '__main__':
   print("========================================")
   num_executions = 10
   random_length = 10
-  print(f"Using Numpy random choice function of Python,"
-        "\nwe generate {num_executions} random DNA sequences of variable lenght: ")
+  print(f"Using Numpy random choice function of Python,\nwe generate {num_executions} random DNA sequences of variable lenght: ")
   for _ in range(num_executions):
     random_sequence = fk.generate_dna(np.random.randint(random_length, random_length + 5))
     pp.pprint(random_sequence)  
