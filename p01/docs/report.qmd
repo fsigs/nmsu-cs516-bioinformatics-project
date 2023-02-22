@@ -21,11 +21,17 @@ Write here the intro
 # Methods
 We proceed in this section to describe the methods we have implemented in the Python class FrequentKmers and the way they can be used in an executable Python file main.py
 
-## Methods code
+## Code
 The methods are organized in the way each task required. First, we have the methods related to Tasks 1 and Task 2 that require to code the pseudo code we have in *Bioinformatics Algorithms–An Active Learning Approach, 3rd Edition*.
 
+The class encapsulates all methods is:
+
 ```python
-# Frequent Words Algorithm methods:
+class FrequentKmers:
+```
+
+```python
+  # Frequent Words Algorithm methods:
   def frequent_words(self, text, k):
     start = timer()
     frequent_words = []
@@ -62,9 +68,38 @@ The methods are organized in the way each task required. First, we have the meth
 
 The `FrequentKmers.frequent_words` method takes as parameters `text` and `k` representing the DNA sequence and the length of k-mer respectively. Taking text slices of length k, we coun the frequency of each k-mer using `FrequentKmers.pattern_count` method. After counting them, we determine the k-mers with a maximum frequency count using `FrequentKmers.max_array` and filter them in a unique list without repetitions using `FrequentKmers.remove_duplicates`
 
-Complete
+```python
 
-## Exection of program
+  # Better Frequent Words Algorithm methods:
+  def better_frequent_words(self, text, k):
+    start = timer()
+    freq_map = self.frequent_map(text, k)
+    if freq_map is not None:
+      max_count = max(freq_map.values())
+      frequent_words = []
+      for pattern in freq_map.items():
+        if pattern[1] == max_count:
+          frequent_words.append(pattern[0])
+      end = timer()
+      return [frequent_words, round((end - start) * 1000, 3)]
+    else:
+      end = timer()
+      return[None, round((end - start) * 1000, 3)]
+  
+  def frequent_map(self, text, k):
+    freq_map = {}
+    n = len(text)
+    for i in range(n - k + 1):
+      pattern = text[i:i+k]
+      if pattern in freq_map:
+        freq_map[pattern] += 1
+      else:
+        freq_map[pattern] = 1
+    return freq_map
+```
+Explanation
+
+## Execution
 Explain
 
 # Results
