@@ -87,9 +87,9 @@ class FrequentKmers:
       sequence = file.read().replace('\n', '').strip()
     tail_length = 10
     if(filename == "SARS-CoV-2.txt"):
-      tail_length = 32
+      tail_length = 33
     if(filename == "SARS-CoV.txt"):
-      tail_length = 23
+      tail_length = 24
     return self.remove_polyA(sequence, tail_length)
 
   # Permutation test (null distribution):
