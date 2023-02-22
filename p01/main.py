@@ -99,7 +99,6 @@ if __name__ == '__main__':
   for r in random_results:
     print("|", r["l"], "|", r["k"], "|", r["fwt"], "|", r["bfwt"], "|") 
  
-
   print()
   print("============================================================")
   print("Tasks 5 and E2: SARS-CoV-2 and SARS-CoV most frequent k-mers")
@@ -130,10 +129,14 @@ if __name__ == '__main__':
   covid2_genome = fk.get_covid_genome('SARS-CoV-2.txt')
   k_mer = 3
   num_per = 1000
-  print(f"Using the SARS-CoV-2 genome sequence, our permutation test \nwith {num_per} permutations gives:")
+  print(f"Using the SARS-CoV-2 genome sequence, our permutation test \nwith {num_per} permutations gives. We have considered a p-value threshld of 0.05 to decide \nif the most frequent k-mer is unlikely to have occurred by chance alone \nand consequently, it has biological significance:\n")
   for k_mer in covid_k:
-    p_value = fk.permutation_test(covid2_genome, k_mer, num_per)
-    print(f"{k_mer}-mer gives a p-value of {p_value}")
+    p_value = round(fk.permutation_test(covid2_genome, k_mer, num_per),5)
+    if p_value < 0.05:
+      bio_significance = "they DO HAVE biological significance"
+    else:
+      bio_significance = "they DO NOT HAVE biological significance"
+    print(f"{k_mer}-mers give a p-value of {p_value}, then {bio_significance}")
   
   print()
   print("===========================================================================")

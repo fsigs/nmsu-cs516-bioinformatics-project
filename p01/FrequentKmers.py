@@ -18,8 +18,9 @@ class FrequentKmers:
     for i in range(n - k + 1):
       pattern = text[i:i+k]
       count_array[i] = self.pattern_count(text, pattern)
-    frequent_patterns = [text[i:i+k] for i in self.max_array(count_array)]
-    frequent_words = self.remove_duplicates(frequent_patterns)
+    for i in self.max_array(count_array):
+      frequent_words.append(text[i:i+k])
+    frequent_words = self.remove_duplicates(frequent_words)
     end = timer()
     return [frequent_words,  round((end - start) * 1000, 3)]
   
