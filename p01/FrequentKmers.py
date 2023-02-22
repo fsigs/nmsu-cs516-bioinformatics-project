@@ -14,7 +14,7 @@ class FrequentKmers:
     start = timer()
     frequent_words = []
     n = len(text)
-    count_array = [0] * (n - k + 1)
+    count_array = np.zeros(n - k + 1)
     for i in range(n - k + 1):
       pattern = text[i:i+k]
       count_array[i] = self.pattern_count(text, pattern)
