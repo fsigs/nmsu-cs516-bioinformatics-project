@@ -13,10 +13,10 @@ execute:
   warning: false
 ---
 # Abstract
-Write here the abstract
+Write here the abstract (Gabriel)
 
 # Introduction
-Write here the intro
+Write here the intro (Gabriel)
 
 # Methods
 We proceed in this section to describe the methods we have implemented in the Python class FrequentKmers and the way they can be used in an executable Python file main.py
@@ -66,7 +66,7 @@ class FrequentKmers:
     return max_indices
 ```
 
-The `FrequentKmers.frequent_words` method takes as parameters `text` and `k` representing the DNA sequence and the length of k-mer respectively. Taking text slices of length k, we coun the frequency of each k-mer using `FrequentKmers.pattern_count` method. After counting them, we determine the k-mers with a maximum frequency count using `FrequentKmers.max_array` and filter them in a unique list without repetitions using `FrequentKmers.remove_duplicates`
+The `FrequentKmers.frequent_words` method takes as parameters `text` and `k` representing the DNA sequence and the length of k-mer respectively. Taking text slices of length k, we *count* the frequency of each k-mer using `FrequentKmers.pattern_count` method. After counting them, we determine the k-mers with a maximum frequency count using `FrequentKmers.max_array` and filter them in a unique list without repetitions using `FrequentKmers.remove_duplicates`
 
 ```python
 
@@ -97,41 +97,224 @@ The `FrequentKmers.frequent_words` method takes as parameters `text` and `k` rep
         freq_map[pattern] = 1
     return freq_map
 ```
-Explanation
+Similarly, the `FrequentKmers.better_frequent_words` method takes as parameters `text` and `k` representing the DNA sequence and the length of k-mer respectively.
+
+Explaination (Israel)
 
 ## Execution
-Explain
+Explaination (Israel)
 
 # Results
-Write here
+In this section, we proceed to describe our results. We have structured this section in the same schema the project tasks appears in the project prompt.
+
+## Algorithms for finding frequent k-mers
+### Task 1. Frequent words by counting
+This is the output of our program:
+
+> ============================================ \
+> Task 1: Algorithm Frequent Words (counting) \
+> ============================================ \
+> Using test cases from class slides (Ch 1 slides 64 and 99), \
+> we show the list of frequent words and running time in ms for our implementation are correct: \
+> [['ACG', 'TTT'], 0.163] \
+> [['atgatcaag', 'ctcttgatc', 'tcttgatca', 'cttgatcat'], 89.532] \
+
+Comment these results here (Gabriel)
+
+### Task 2. Frequent words by hashing
+This is the output of our program:
+
+> ================================================= \
+> Task 2: Algorithm Better Frequent Words (hashing) \
+> ================================================= \
+> Using test cases from class slides (Ch 1 slides 64 and 99), \
+> we show the list of frequent words and running time in ms for our implementation are correct: \
+> [['ACG', 'TTT'], 0.1] \
+> [['atgatcaag', 'ctcttgatc', 'tcttgatca', 'cttgatcat'], 0.792] \
+
+Comment these results here (Gabriel)
+
+## Understanding the runtime
+### Task 3. Method generates random DNA sequences of several random lengths
+This is the output of our program:
+
+> ======================================== \
+> Task 3: Generating Random DNA Sequences \
+> ======================================== \
+> Using Numpy random choice function of Python, \
+> we generate 10 random DNA sequences of variable lenght: \
+> 'GACTCGGATATGT' \
+> 'GAATATGTGCAA' \
+> 'AGGGGATACTACT' \
+> 'GTACATATCA' \
+> 'TTGGGATAACA' \
+> 'GTGGGAAGCACGT' \
+> 'ACATACAGACGCA' \
+> 'ATTCTTAACAAGGC' \
+> 'CTATTGAAAG' \
+> 'TCCGTAGGTCT' \
+
+Comment these results here (Gabriel)
+
+### Task 4. Analysis of empirical time comparing counting and hashing algorithms
+To empirically compare the two algorithms in terms of runtime, our program for this analysis has produced the comparison in the following charts, and also consolidated everything in a major table with these results.
+
+The following are our charts:
+
+::: {#fig-scenario layout-ncol=2}
+
+![L25](images/q4_25.png){#q4_25}
+
+![L50](images/q4_50.png){#q4_50}
+
+![L75](images/q4_75.png){#q4_75}
+
+![L100](images/q4_100.png){#q4_100}
+
+![L250](images/q4_75.png){#q4_250}
+
+![L500](images/q4_500.png){#q4_500}
+
+![L750](images/q4_750.png){#q4_750}
+
+![L1000](images/q4_1000.png){#q4_1000}
+
+Runtime comparison using a Random Genome length of 25, 50, 75, 100, 250, 500, 750, and 1000 nucleotides, and k-lengths of 3, 6, 9, 12, and 15
+:::
+
+And in a consolidated table:
+
+|Length|K-length|FW(ms)|BFW(ms)|
+|:----:|:---:|:-----:|:------:|
+| 25 | 3 | 0.369 | 0.04 |
+| 25 | 6 | 0.263 | 0.029 |
+| 25 | 9 | 0.201 | 0.026 |
+| 25 | 12 | 0.148 | 0.022 |
+| 25 | 15 | 0.117 | 0.019 |
+| 50 | 3 | 2.672 | 0.107 |
+| 50 | 6 | 2.848 | 0.149 |
+| 50 | 9 | 2.291 | 0.121 |
+| 50 | 12 | 1.878 | 0.132 |
+| 50 | 15 | 1.687 | 0.112 |
+| 75 | 3 | 7.455 | 0.151 |
+| 75 | 6 | 7.312 | 0.224 |
+| 75 | 9 | 5.965 | 0.155 |
+| 75 | 12 | 6.064 | 0.214 |
+| 75 | 15 | 6.115 | 0.143 |
+| 100 | 3 | 9.436 | 0.21 |
+| 100 | 6 | 10.619 | 0.19 |
+| 100 | 9 | 9.054 | 0.316 |
+| 100 | 12 | 7.918 | 0.24 |
+| 100 | 15 | 6.889 | 0.117 |
+| 250 | 3 | 55.049 | 0.269 |
+| 250 | 6 | 35.782 | 0.282 |
+| 250 | 9 | 42.438 | 0.283 |
+| 250 | 12 | 26.598 | 0.276 |
+| 250 | 15 | 27.295 | 0.288 |
+| 500 | 3 | 198.86 | 0.467 |
+| 500 | 6 | 125.661 | 0.563 |
+| 500 | 9 | 156.53 | 0.874 |
+| 500 | 12 | 157.304 | 0.867 |
+| 500 | 15 | 157.182 | 2.094 |
+| 750 | 3 | 334.105 | 0.696 |
+| 750 | 6 | 261.337 | 0.798 |
+| 750 | 9 | 291.711 | 0.824 |
+| 750 | 12 | 259.805 | 0.803 |
+| 750 | 15 | 268.239 | 0.808 |
+| 1000 | 3 | 602.367 | 0.915 |
+| 1000 | 6 | 501.437 | 1.017 |
+| 1000 | 9 | 475.136 | 0.967 |
+| 1000 | 12 | 476.967 | 1.067 |
+| 1000 | 15 | 472.738 | 1.058 |
+
+Comment these results here (Gabriel)
+
+## Frequent k-mers in the SARS-Cov-2 genome
+### Task 5 and Task E2. SARS-CoV-2 and SARS-CoV most frequent k-mers
+
+The following is a table of the most frequent k-mers present in the SARS-CoV-2 and SARS-CoV genomes:
+
+|Genome|K-length|K-mer|
+|:----:|:---:|:-----:|
+| SARS-CoV-2 | 3 | TTT |
+| SARS-CoV-2 | 6 | TTGTTA |
+| SARS-CoV-2 | 9 | TAAACGAAC |
+| SARS-CoV-2 | 12 | GTTGATGGTGTT |
+| SARS-CoV-2 | 15 | ATCAGACAACTACTA |
+| SARS-CoV-2 | 15 | TCAGACAACTACTAT |
+| SARS-CoV-2 | 15 | CAGACAACTACTATT |
+| SARS-CoV-2 | 15 | CAATTATTATAAGAA |
+| SARS-CoV-2 | 15 | AATTATTATAAGAAA |
+| SARS-CoV-2 | 15 | ATTATTATAAGAAAG |
+| SARS-CoV-2 | 15 | TTGCAGAGTGGTTTT |
+| SARS-CoV-2 | 15 | AAAGTTGATGGTGTT |
+| SARS-CoV-2 | 15 | AAGTTGATGGTGTTG |
+| SARS-CoV-2 | 15 | TAAACGAACATGAAA |
+| SARS-CoV | 3 | TTT |
+| SARS-CoV | 6 | TTGCTG |
+| SARS-CoV | 9 | TAAACGAAC |
+| SARS-CoV | 12 | TGAGGAAGAAGA |
+| SARS-CoV | 12 | TAAAATGTCTGA |
+| SARS-CoV | 15 | AAAAGAAAAAGACTG |
+| SARS-CoV | 15 | AAAGAAAAAGACTGA |
+| SARS-CoV | 15 | ATTATAATTATAAAT |
+
+Comment these results here (Gabriel)
+
+### Task 6. Interpreting the k-mers found in a biological context
+Comment your research about this question here (Gabriel)
+
+## Extra Credits
+### Task E1. The null distribution of the frequency of most frequent k-mers
+Our program produced these results:
+
+> ================================================================================ \
+> E1: Null Distribution of the most frequent k-mers in SARS-CoV-2 genome sequence \
+> ================================================================================ \
+> Using the SARS-CoV-2 genome sequence, our permutation test \
+> with 1000 permutations gives. We have considered a p-value threshold of 0.05 to decide \
+> if the most frequent k-mer is unlikely to have occurred by chance alone \
+> and consequently, it has biological significance: \
+> 
+> 3-mers give a p-value of 0.33067, then they DO NOT HAVE biological significance \
+> 6-mers give a p-value of 0.34366, then they DO NOT HAVE biological significance \
+> **9-mers give a p-value of 0.02198, then they DO HAVE biological significance** \
+> **12-mers give a p-value of 0.09491, then they DO NOT HAVE biological significance** \
+> 15-mers give a p-value of 0.52248, then they DO NOT HAVE biological significance \
+
+Comment your research about this question here (Gabriel)
+
+### Task E2. SARS-CoV versus SARS-CoV-2
+Analyzed above in Task 5. Please, go to that section.
+
+### Task E3. Find the longest k-mer repeats beyond 15
+First, we find what is the max value for k in each Genome:
+
+|Genome|K-length|# matches|
+|:----:|:---:|:-----:|
+| SARS-CoV-2 | 15 | 10 |
+| SARS-CoV-2 | 16 | 5 |
+| SARS-CoV-2 | 17 | 2 |
+| SARS-CoV | 15 | 3 |
+| SARS-CoV | 16 | 1 |
+
+Now, that we know for SARS-CoV-2 is k=17 and for SARS-CoV is K=16, we found the longest kmers:
+Longest k-mers in SARS-CoV-2:  ['ATCAGACAACTACTATT', 'CAATTATTATAAGAAAG']
+Longest k-mers in SARS-CoV  :  ['AAAAGAAAAAGACTGA']
+
+Comment your research about this question here (Gabriel)
+
+### Task E4. Develop a fast algorithm to find k-mer repeats in a given range of k
+Pending of coding. Part of future work.
+
+### Task E5. Evolution of repeats in coronavirus genomes
+Pending of coding. Part of future work.
 
 # Discussion
-Write here
+Write here (Gabriel)
 
 # Distribution of work
-Write here
+Write here (Gabriel)
 
 # References
-Write here
-
-# Your notes (legacy to delete)
-
-For this project our first two tasks where to implement two algorithms to find Frequent
-k-mers in the SARS-CoV-2 Genome.  For these algorithms we were using a string text of
-ACGTTTCACGTTTTACGG with a kmer length of 3.  The first algorithm was based on the PatternCount method.
-First we began with pseudocode for the pattern count method:
-PatternCount(Text, Pattern)
-    count <- 0
-    for i <- 0 to |text| - |pattern|
-        if text(i, |pattern|) = pattern
-            count <- count + 1
-        return count
-
-When putting this method into python we simply set the count to 0, and used a for loop
-to subtract the 3mer patterns from the entire string length of the genome.
-
-Straightforwardly to find the most frequent kmers in a string text, we generated an array
-called frequent_words that held the genome sequence. Next in the method we generated a 
-count array that stores the count and pattern of the 3-mers.
-|Text| - k + 1
-
+Write here (Gabriel)

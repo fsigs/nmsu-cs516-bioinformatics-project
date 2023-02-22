@@ -69,7 +69,7 @@ class FrequentKmers:
       else:
         freq_map[pattern] = 1
     return freq_map
-
+  
   # Random DNA generator method:
   def generate_dna(self, L):
     return ''.join(np.random.choice(['A', 'C', 'G', 'T'], size=L, p=[0.25, 0.25, 0.25, 0.25]))
