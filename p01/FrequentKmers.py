@@ -74,7 +74,7 @@ class FrequentKmers:
   def generate_dna(self, L):
     return ''.join(np.random.choice(['A', 'C', 'G', 'T'], size=L, p=[0.25, 0.25, 0.25, 0.25]))
   
-  # Remover of polyA tail
+  # Removes polyA tail
   def remove_polyA(self, sequence, tail_length):
     pattern = "A{" + str(tail_length) + ",}$"
     match = re.search(pattern, sequence)

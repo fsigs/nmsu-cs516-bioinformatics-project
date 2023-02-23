@@ -66,7 +66,7 @@ class FrequentKmers:
     return max_indices
 ```
 
-The `FrequentKmers.frequent_words` method takes as parameters `text` and `k` representing the DNA sequence and the length of k-mer respectively. Taking text slices of length k, we *count* the frequency of each k-mer using `FrequentKmers.pattern_count` method. After counting them, we determine the k-mers with a maximum frequency count using `FrequentKmers.max_array` and filter them in a unique list without repetitions using `FrequentKmers.remove_duplicates`
+The `FrequentKmers.frequent_words` method takes as parameters `text` and `k` representing the DNA sequence and the length of k-mer respectively. Taking text slices of length k, we *count* the frequency of each k-mer using `FrequentKmers.pattern_count` method. After counting them, we determine the k-mers with a maximum frequency count using `FrequentKmers.max_array` and filter them in a unique list of frequent_words without repetitions using `FrequentKmers.remove_duplicates`. We answer this list plus the running time taken in miliseconds.
 
 ```python
 
@@ -97,12 +97,69 @@ The `FrequentKmers.frequent_words` method takes as parameters `text` and `k` rep
         freq_map[pattern] = 1
     return freq_map
 ```
-Similarly, the `FrequentKmers.better_frequent_words` method takes as parameters `text` and `k` representing the DNA sequence and the length of k-mer respectively.
+Similarly, the `FrequentKmers.better_frequent_words` method takes as parameters `text` and `k` representing the DNA sequence and the length of k-mer respectively. Taking text slices of length k, we create a hash map with the patterns as their index and count their frequency as its value using the method `FrequentKmers.frequent_map`. After, for each pattern, we choose the one with the maximum frecuency, adding it to the frequent_words list. We answer this list plus the running time taken in miliseconds.
 
-Explaination (Israel)
+```python
+  # Random DNA generator method:
+  def generate_dna(self, L):
+    return ''.join(np.random.choice(['A', 'C', 'G', 'T'], size=L, p=[0.25, 0.25, 0.25, 0.25]))
+```
+The `FrequentKmers.generate_dna` method generates a random DNA sequence of a given length *L*. For this, it uses the Numpy choice function inside the library np.random. This generation uses a flat probability of 0.25 for each one of the characters of the nucleotides A, C, G, T; answering an array of chars. Then, we consolidate in a single string using the string function join. 
+
+```python
+  # Removes polyA tail
+  def remove_polyA(self, sequence, tail_length):
+    pattern = "A{" + str(tail_length) + ",}$"
+    match = re.search(pattern, sequence)
+    if match:
+      sequence = sequence[:(match.start())]
+    return sequence
+```
+The `FrequentKmers.remove_polyA` method removes polyA tails if a Genome, like in this project, has several A in its composition so we avoid that repetitive A's constitute the most frequent k-mers. This method defines a regular epression where we find in the DNA sequence a substring of tail_length. If the regular expression matches correctly, that substring is removed from the original sequence.
+
+```python
+  # Reader of Covid genome files:
+  def get_covid_genome(self, filename):
+    with open(filename, 'r') as file:
+      sequence = file.read().replace('\n', '').strip()
+    tail_length = 10
+    if(filename == "SARS-CoV-2.txt"):
+      tail_length = 33
+    if(filename == "SARS-CoV.txt"):
+      tail_length = 24
+    return self.remove_polyA(sequence, tail_length)
+```
+The `FrequentKmers.get_covid_genome` method chooses if the dataset is SARS-CoV-2 or SARS-CoV, making them a single block of characters removing the breaklines. Also, for the reasons previously mentioned, it removes from the DNA sequence the polyA if it is present with the help of `remove_polyA` method.
+
+```python
+  # Permutation test (null distribution):
+  def permutation_test(self, text, k, num_perm):
+    p_value = None
+    fm = self.frequent_map(text, k)
+    max_count = max(fm.values())
+    null_population = list(text)
+    null_distribution = []
+    for _ in range(num_perm):
+      random.shuffle(null_population)
+      fm2 = self.frequent_map(''.join(null_population), k)
+      null_counts = max(fm2.values())
+      null_distribution.append(null_counts)
+    sum_ = sum(null_elem >= max_count for null_elem in null_distribution)
+    p_value = (sum_ + 1) / (num_perm + 1)
+    return p_value
+```
+The `FrequentKmers.permutation_test` method in base of the DNA sequence (text), a k length (k), and a number of iterations, it generates randomly several new DNA sequences by suffling the original text characters during the indicated iterations. It takes what are the most frequent kmers in this shuffled scenario. Then, it took a predictor value to represent how significant are these frequent k lengths in comparison with the original ones.
 
 ## Execution
-Explaination (Israel)
+To exercise correctly these methods, we have developed a `main.py` program. The following are the steps for its execution
+
+* Unzip this project on a path where Python 3.8 or superior is active
+* Open a console and go to where the unzipped folder is. make sure you are in the same level where the `main.py` program is. You can be sure of this printing the directory content with `ls` command
+* Run the program with the command `py main.py`
+* The program will produce exctly each one of the output, plots, and tables the following section has in its analysis
+
+**Important note**: Make sure you have installed the following Python 3 modules/libraries before:
+pandas, matplotlib, numpy, pprint, random, re, and timeit.
 
 # Results
 In this section, we proceed to describe our results. We have structured this section in the same schema the project tasks appears in the project prompt.

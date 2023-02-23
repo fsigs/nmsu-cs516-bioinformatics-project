@@ -2729,7 +2729,7 @@ vertical-align: -.125em;
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    max_val <span class="op">=</span> <span class="bu">max</span>(arr)</span>
 <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    max_indices <span class="op">=</span> [i <span class="cf">for</span> i, val <span class="kw">in</span> <span class="bu">enumerate</span>(arr) <span class="cf">if</span> val <span class="op">==</span> max_val]</span>
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> max_indices</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <code>FrequentKmers.frequent_words</code> method takes as parameters <code>text</code> and <code>k</code> representing the DNA sequence and the length of k-mer respectively. Taking text slices of length k, we <em>count</em> the frequency of each k-mer using <code>FrequentKmers.pattern_count</code> method. After counting them, we determine the k-mers with a maximum frequency count using <code>FrequentKmers.max_array</code> and filter them in a unique list without repetitions using <code>FrequentKmers.remove_duplicates</code></p>
+<p>The <code>FrequentKmers.frequent_words</code> method takes as parameters <code>text</code> and <code>k</code> representing the DNA sequence and the length of k-mer respectively. Taking text slices of length k, we <em>count</em> the frequency of each k-mer using <code>FrequentKmers.pattern_count</code> method. After counting them, we determine the k-mers with a maximum frequency count using <code>FrequentKmers.max_array</code> and filter them in a unique list of frequent_words without repetitions using <code>FrequentKmers.remove_duplicates</code>. We answer this list plus the running time taken in miliseconds.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Better Frequent Words Algorithm methods:</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> better_frequent_words(<span class="va">self</span>, text, k):</span>
@@ -2757,12 +2757,57 @@ vertical-align: -.125em;
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>      <span class="cf">else</span>:</span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        freq_map[pattern] <span class="op">=</span> <span class="dv">1</span></span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> freq_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Similarly, the <code>FrequentKmers.better_frequent_words</code> method takes as parameters <code>text</code> and <code>k</code> representing the DNA sequence and the length of k-mer respectively.</p>
-<p>Explaination (Israel)</p>
+<p>Similarly, the <code>FrequentKmers.better_frequent_words</code> method takes as parameters <code>text</code> and <code>k</code> representing the DNA sequence and the length of k-mer respectively. Taking text slices of length k, we create a hash map with the patterns as their index and count their frequency as its value using the method <code>FrequentKmers.frequent_map</code>. After, for each pattern, we choose the one with the maximum frecuency, adding it to the frequent_words list. We answer this list plus the running time taken in miliseconds.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Random DNA generator method:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> generate_dna(<span class="va">self</span>, L):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&#39;&#39;</span>.join(np.random.choice([<span class="st">&#39;A&#39;</span>, <span class="st">&#39;C&#39;</span>, <span class="st">&#39;G&#39;</span>, <span class="st">&#39;T&#39;</span>], size<span class="op">=</span>L, p<span class="op">=</span>[<span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>FrequentKmers.generate_dna</code> method generates a random DNA sequence of a given length <em>L</em>. For this, it uses the Numpy choice function inside the library np.random. This generation uses a flat probability of 0.25 for each one of the characters of the nucleotides A, C, G, T; answering an array of chars. Then, we consolidate in a single string using the string function join.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Removes polyA tail</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> remove_polyA(<span class="va">self</span>, sequence, tail_length):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    pattern <span class="op">=</span> <span class="st">&quot;A{&quot;</span> <span class="op">+</span> <span class="bu">str</span>(tail_length) <span class="op">+</span> <span class="st">&quot;,}$&quot;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    match <span class="op">=</span> re.search(pattern, sequence)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> match:</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      sequence <span class="op">=</span> sequence[:(match.start())]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sequence</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>FrequentKmers.remove_polyA</code> method removes polyA tails if a Genome, like in this project, has several A in its composition so we avoid that repetitive A’s constitute the most frequent k-mers. This method defines a regular epression where we find in the DNA sequence a substring of tail_length. If the regular expression matches correctly, that substring is removed from the original sequence.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reader of Covid genome files:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_covid_genome(<span class="va">self</span>, filename):</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      sequence <span class="op">=</span> <span class="bu">file</span>.read().replace(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>, <span class="st">&#39;&#39;</span>).strip()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    tail_length <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(filename <span class="op">==</span> <span class="st">&quot;SARS-CoV-2.txt&quot;</span>):</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      tail_length <span class="op">=</span> <span class="dv">33</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(filename <span class="op">==</span> <span class="st">&quot;SARS-CoV.txt&quot;</span>):</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      tail_length <span class="op">=</span> <span class="dv">24</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.remove_polyA(sequence, tail_length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>FrequentKmers.get_covid_genome</code> method chooses if the dataset is SARS-CoV-2 or SARS-CoV, making them a single block of characters removing the breaklines. Also, for the reasons previously mentioned, it removes from the DNA sequence the polyA if it is present with the help of <code>remove_polyA</code> method.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Permutation test (null distribution):</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> permutation_test(<span class="va">self</span>, text, k, num_perm):</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    p_value <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    fm <span class="op">=</span> <span class="va">self</span>.frequent_map(text, k)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    max_count <span class="op">=</span> <span class="bu">max</span>(fm.values())</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    null_population <span class="op">=</span> <span class="bu">list</span>(text)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    null_distribution <span class="op">=</span> []</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_perm):</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>      random.shuffle(null_population)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      fm2 <span class="op">=</span> <span class="va">self</span>.frequent_map(<span class="st">&#39;&#39;</span>.join(null_population), k)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      null_counts <span class="op">=</span> <span class="bu">max</span>(fm2.values())</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>      null_distribution.append(null_counts)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    sum_ <span class="op">=</span> <span class="bu">sum</span>(null_elem <span class="op">&gt;=</span> max_count <span class="cf">for</span> null_elem <span class="kw">in</span> null_distribution)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    p_value <span class="op">=</span> (sum_ <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> (num_perm <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>FrequentKmers.permutation_test</code> method in base of the DNA sequence (text), a k length (k), and a number of iterations, it generates randomly several new DNA sequences by suffling the original text characters during the indicated iterations. It takes what are the most frequent kmers in this shuffled scenario. Then, it took a predictor value to represent how significant are these frequent k lengths in comparison with the original ones.</p>
 </section>
 <section id="execution" class="level2">
 <h2 class="anchored" data-anchor-id="execution">Execution</h2>
-<p>Explaination (Israel)</p>
+<p>To exercise correctly these methods, we have developed a <code>main.py</code> program. The following are the steps for its execution</p>
+<ul>
+<li>Unzip this project on a path where Python 3.8 or superior is active</li>
+<li>Open a console and go to where the unzipped folder is. make sure you are in the same level where the <code>main.py</code> program is. You can be sure of this printing the directory content with <code>ls</code> command</li>
+<li>Run the program with the command <code>py main.py</code></li>
+<li>The program will produce exctly each one of the output, plots, and tables the following section has in its analysis</li>
+</ul>
+<p><strong>Important note</strong>: Make sure you have installed the following Python 3 modules/libraries before: pandas, matplotlib, numpy, pprint, random, re, and timeit.</p>
 </section>
 </section>
 <section id="results" class="level1">
@@ -3574,332 +3619,389 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class>
-<div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Frequent k-mers in the SARS-CoV-2 Genome&quot;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> &quot;CS516 Bioinformatics - Project 1&quot;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> &quot;Israel Gonzalez S., Gabriel Romero&quot;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> &quot;February 22, 2023&quot;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="an">toc:</span><span class="co"> true</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">    html-math-method: katex</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">    self-contained: true</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu"># Abstract</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>Write here the abstract (Gabriel)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>Write here the intro (Gabriel)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu"># Methods</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>We proceed in this section to describe the methods we have implemented in the Python class FrequentKmers and the way they can be used in an executable Python file main.py</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>The methods are organized in the way each task required. First, we have the methods related to Tasks 1 and Task 2 that require to code the pseudo code we have in *Bioinformatics Algorithms–An Active Learning Approach, 3rd Edition*.</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>The class encapsulates all methods is:</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FrequentKmers:</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Frequent Words Algorithm methods:</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> frequent_words(<span class="va">self</span>, text, k):</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> timer()</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    frequent_words <span class="op">=</span> []</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(text)</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    count_array <span class="op">=</span> np.zeros(n <span class="op">-</span> k <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n <span class="op">-</span> k <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>      pattern <span class="op">=</span> text[i:i<span class="op">+</span>k]</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>      count_array[i] <span class="op">=</span> <span class="va">self</span>.pattern_count(text, pattern)</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="va">self</span>.max_array(count_array):</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>      frequent_words.append(text[i:i<span class="op">+</span>k])</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    frequent_words <span class="op">=</span> <span class="va">self</span>.remove_duplicates(frequent_words)</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    end <span class="op">=</span> timer()</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [frequent_words,  <span class="bu">round</span>((end <span class="op">-</span> start) <span class="op">*</span> <span class="dv">1000</span>, <span class="dv">3</span>)]</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> pattern_count(<span class="va">self</span>, text, pattern):</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    count <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(text) <span class="op">-</span> <span class="bu">len</span>(pattern) <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> text[i:i<span class="op">+</span><span class="bu">len</span>(pattern)] <span class="op">==</span> pattern:</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        count <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> count</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> remove_duplicates(<span class="va">self</span>, arr):</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    answer <span class="op">=</span> []</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> item <span class="kw">in</span> arr:</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> item <span class="kw">not</span> <span class="kw">in</span> answer:</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>        answer.append(item)</span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> answer</span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> max_array(<span class="va">self</span>, arr):</span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    max_val <span class="op">=</span> <span class="bu">max</span>(arr)</span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    max_indices <span class="op">=</span> [i <span class="cf">for</span> i, val <span class="kw">in</span> <span class="bu">enumerate</span>(arr) <span class="cf">if</span> val <span class="op">==</span> max_val]</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> max_indices</span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>The <span class="in">`FrequentKmers.frequent_words`</span> method takes as parameters <span class="in">`text`</span> and <span class="in">`k`</span> representing the DNA sequence and the length of k-mer respectively. Taking text slices of length k, we *count* the frequency of each k-mer using <span class="in">`FrequentKmers.pattern_count`</span> method. After counting them, we determine the k-mers with a maximum frequency count using <span class="in">`FrequentKmers.max_array`</span> and filter them in a unique list without repetitions using <span class="in">`FrequentKmers.remove_duplicates`</span></span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Better Frequent Words Algorithm methods:</span></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> better_frequent_words(<span class="va">self</span>, text, k):</span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> timer()</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>    freq_map <span class="op">=</span> <span class="va">self</span>.frequent_map(text, k)</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> freq_map <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>      max_count <span class="op">=</span> <span class="bu">max</span>(freq_map.values())</span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>      frequent_words <span class="op">=</span> []</span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> pattern <span class="kw">in</span> freq_map.items():</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pattern[<span class="dv">1</span>] <span class="op">==</span> max_count:</span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>          frequent_words.append(pattern[<span class="dv">0</span>])</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>      end <span class="op">=</span> timer()</span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> [frequent_words, <span class="bu">round</span>((end <span class="op">-</span> start) <span class="op">*</span> <span class="dv">1000</span>, <span class="dv">3</span>)]</span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>      end <span class="op">=</span> timer()</span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span>[<span class="va">None</span>, <span class="bu">round</span>((end <span class="op">-</span> start) <span class="op">*</span> <span class="dv">1000</span>, <span class="dv">3</span>)]</span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> frequent_map(<span class="va">self</span>, text, k):</span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>    freq_map <span class="op">=</span> {}</span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(text)</span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n <span class="op">-</span> k <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>      pattern <span class="op">=</span> text[i:i<span class="op">+</span>k]</span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> pattern <span class="kw">in</span> freq_map:</span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>        freq_map[pattern] <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>      <span class="cf">else</span>:</span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>        freq_map[pattern] <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> freq_map</span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>Similarly, the <span class="in">`FrequentKmers.better_frequent_words`</span> method takes as parameters <span class="in">`text`</span> and <span class="in">`k`</span> representing the DNA sequence and the length of k-mer respectively.</span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>Explaination (Israel)</span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a><span class="fu">## Execution</span></span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>Explaination (Israel)</span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a><span class="fu"># Results</span></span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>In this section, we proceed to describe our results. We have structured this section in the same schema the project tasks appears in the project prompt.</span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a><span class="fu">## Algorithms for finding frequent k-mers</span></span>
-<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 1. Frequent words by counting</span></span>
-<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a>This is the output of our program:</span>
-<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ============================================ \</span></span>
-<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Task 1: Algorithm Frequent Words (counting) \</span></span>
-<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ============================================ \</span></span>
-<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using test cases from class slides (Ch 1 slides 64 and 99), \</span></span>
-<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; we show the list of frequent words and running time in ms for our implementation are correct: \</span></span>
-<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;ACG&#39;, &#39;TTT&#39;</span><span class="co">]</span><span class="at">, 0.163] \</span></span>
-<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;atgatcaag&#39;, &#39;ctcttgatc&#39;, &#39;tcttgatca&#39;, &#39;cttgatcat&#39;</span><span class="co">]</span><span class="at">, 89.532] \</span></span>
-<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a>This algorithm using the counting method for frequent words is straightforward in finding</span>
-<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a>the most frequent kmers.  What is interesting about these results, is that the most frequent kmers were &quot;9-mers&quot;.  According to biological experiments, bacterial DnaA boxes are usually </span>
-<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a>nine nucleotides long.  The likelihood of four 9-mers showing up in a genome sequence lead </span>
-<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a>to the hypothesis that one of these four 9-mers might represent a potential DnaA box. </span>
-<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a>However, before concluding that this is a DnaA box, we would still need to sequence other short regions in the genome to determine if these strings exhibit throughout the entire genome. If they are exhibited throughout the genome, rather than just in the ori region, then these results are considered insignificant.</span>
-<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 2. Frequent words by hashing</span></span>
-<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a>This is the output of our program:</span>
-<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================= \</span></span>
-<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Task 2: Algorithm Better Frequent Words (hashing) \</span></span>
-<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================= \</span></span>
-<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using test cases from class slides (Ch 1 slides 64 and 99), \</span></span>
-<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; we show the list of frequent words and running time in ms for our implementation are correct: \</span></span>
-<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;ACG&#39;, &#39;TTT&#39;</span><span class="co">]</span><span class="at">, 0.1] \</span></span>
-<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;atgatcaag&#39;, &#39;ctcttgatc&#39;, &#39;tcttgatca&#39;, &#39;cttgatcat&#39;</span><span class="co">]</span><span class="at">, 0.792] \</span></span>
-<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a>When analyzing the hashing algorithm, the results of finding the most and longest kmers are exactly the same.  This is reassuring that the problem was solved with coinciding results of finding the most frequent kmers with both algorithms worked.  However, when looking at the algorithm analysis of the hashing method, the runtime is significantly lower than the counting method.  Now, this significant lower runtime can answer a lot of problems in bioinformational questions.  The counting method is efficient for small string genomes, however the upper bound runtime of |Text|^2 makes it extrememly slow for larger string texts.  Since more short region sequencing throughout the genome is required to determine a potential DnaA box, this algorithm is the optimal choice in finding significant results from the string data. </span>
-<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Understanding the runtime</span></span>
-<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 3. Method generates random DNA sequences of several random lengths</span></span>
-<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a>This is the output of our program:</span>
-<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ======================================== \</span></span>
-<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Task 3: Generating Random DNA Sequences \</span></span>
-<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ======================================== \</span></span>
-<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using Numpy random choice function of Python, \</span></span>
-<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; we generate 10 random DNA sequences of variable lenght: \</span></span>
-<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GACTCGGATATGT&#39; \</span></span>
-<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GAATATGTGCAA&#39; \</span></span>
-<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;AGGGGATACTACT&#39; \</span></span>
-<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GTACATATCA&#39; \</span></span>
-<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;TTGGGATAACA&#39; \</span></span>
-<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GTGGGAAGCACGT&#39; \</span></span>
-<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;ACATACAGACGCA&#39; \</span></span>
-<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;ATTCTTAACAAGGC&#39; \</span></span>
-<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;CTATTGAAAG&#39; \</span></span>
-<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;TCCGTAGGTCT&#39; \</span></span>
-<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 4. Analysis of empirical time comparing counting and hashing algorithms</span></span>
-<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a>To empirically compare the two algorithms in terms of runtime, our program for this analysis has produced the comparison in the following charts, and also consolidated everything in a major table with these results.</span>
-<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a>The following are our charts:</span>
-<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a>::: {#fig-scenario layout-ncol=2}</span>
-<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a><span class="al">![L25](images/q4_25.png)</span>{#q4_25}</span>
-<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a><span class="al">![L50](images/q4_50.png)</span>{#q4_50}</span>
-<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a><span class="al">![L75](images/q4_75.png)</span>{#q4_75}</span>
-<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a><span class="al">![L100](images/q4_100.png)</span>{#q4_100}</span>
-<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a><span class="al">![L250](images/q4_75.png)</span>{#q4_250}</span>
-<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a><span class="al">![L500](images/q4_500.png)</span>{#q4_500}</span>
-<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a><span class="al">![L750](images/q4_750.png)</span>{#q4_750}</span>
-<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a><span class="al">![L1000](images/q4_1000.png)</span>{#q4_1000}</span>
-<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a>Runtime comparison using a Random Genome length of 25, 50, 75, 100, 250, 500, 750, and 1000 nucleotides, and k-lengths of 3, 6, 9, 12, and 15</span>
-<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>And in a consolidated table:</span>
-<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>|Length|K-length|FW(ms)|BFW(ms)|</span>
-<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|:------:|</span>
-<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a>| 25 | 3 | 0.369 | 0.04 |</span>
-<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a>| 25 | 6 | 0.263 | 0.029 |</span>
-<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a>| 25 | 9 | 0.201 | 0.026 |</span>
-<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a>| 25 | 12 | 0.148 | 0.022 |</span>
-<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a>| 25 | 15 | 0.117 | 0.019 |</span>
-<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a>| 50 | 3 | 2.672 | 0.107 |</span>
-<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a>| 50 | 6 | 2.848 | 0.149 |</span>
-<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a>| 50 | 9 | 2.291 | 0.121 |</span>
-<span id="cb4-202"><a href="#cb4-202" aria-hidden="true" tabindex="-1"></a>| 50 | 12 | 1.878 | 0.132 |</span>
-<span id="cb4-203"><a href="#cb4-203" aria-hidden="true" tabindex="-1"></a>| 50 | 15 | 1.687 | 0.112 |</span>
-<span id="cb4-204"><a href="#cb4-204" aria-hidden="true" tabindex="-1"></a>| 75 | 3 | 7.455 | 0.151 |</span>
-<span id="cb4-205"><a href="#cb4-205" aria-hidden="true" tabindex="-1"></a>| 75 | 6 | 7.312 | 0.224 |</span>
-<span id="cb4-206"><a href="#cb4-206" aria-hidden="true" tabindex="-1"></a>| 75 | 9 | 5.965 | 0.155 |</span>
-<span id="cb4-207"><a href="#cb4-207" aria-hidden="true" tabindex="-1"></a>| 75 | 12 | 6.064 | 0.214 |</span>
-<span id="cb4-208"><a href="#cb4-208" aria-hidden="true" tabindex="-1"></a>| 75 | 15 | 6.115 | 0.143 |</span>
-<span id="cb4-209"><a href="#cb4-209" aria-hidden="true" tabindex="-1"></a>| 100 | 3 | 9.436 | 0.21 |</span>
-<span id="cb4-210"><a href="#cb4-210" aria-hidden="true" tabindex="-1"></a>| 100 | 6 | 10.619 | 0.19 |</span>
-<span id="cb4-211"><a href="#cb4-211" aria-hidden="true" tabindex="-1"></a>| 100 | 9 | 9.054 | 0.316 |</span>
-<span id="cb4-212"><a href="#cb4-212" aria-hidden="true" tabindex="-1"></a>| 100 | 12 | 7.918 | 0.24 |</span>
-<span id="cb4-213"><a href="#cb4-213" aria-hidden="true" tabindex="-1"></a>| 100 | 15 | 6.889 | 0.117 |</span>
-<span id="cb4-214"><a href="#cb4-214" aria-hidden="true" tabindex="-1"></a>| 250 | 3 | 55.049 | 0.269 |</span>
-<span id="cb4-215"><a href="#cb4-215" aria-hidden="true" tabindex="-1"></a>| 250 | 6 | 35.782 | 0.282 |</span>
-<span id="cb4-216"><a href="#cb4-216" aria-hidden="true" tabindex="-1"></a>| 250 | 9 | 42.438 | 0.283 |</span>
-<span id="cb4-217"><a href="#cb4-217" aria-hidden="true" tabindex="-1"></a>| 250 | 12 | 26.598 | 0.276 |</span>
-<span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a>| 250 | 15 | 27.295 | 0.288 |</span>
-<span id="cb4-219"><a href="#cb4-219" aria-hidden="true" tabindex="-1"></a>| 500 | 3 | 198.86 | 0.467 |</span>
-<span id="cb4-220"><a href="#cb4-220" aria-hidden="true" tabindex="-1"></a>| 500 | 6 | 125.661 | 0.563 |</span>
-<span id="cb4-221"><a href="#cb4-221" aria-hidden="true" tabindex="-1"></a>| 500 | 9 | 156.53 | 0.874 |</span>
-<span id="cb4-222"><a href="#cb4-222" aria-hidden="true" tabindex="-1"></a>| 500 | 12 | 157.304 | 0.867 |</span>
-<span id="cb4-223"><a href="#cb4-223" aria-hidden="true" tabindex="-1"></a>| 500 | 15 | 157.182 | 2.094 |</span>
-<span id="cb4-224"><a href="#cb4-224" aria-hidden="true" tabindex="-1"></a>| 750 | 3 | 334.105 | 0.696 |</span>
-<span id="cb4-225"><a href="#cb4-225" aria-hidden="true" tabindex="-1"></a>| 750 | 6 | 261.337 | 0.798 |</span>
-<span id="cb4-226"><a href="#cb4-226" aria-hidden="true" tabindex="-1"></a>| 750 | 9 | 291.711 | 0.824 |</span>
-<span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a>| 750 | 12 | 259.805 | 0.803 |</span>
-<span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a>| 750 | 15 | 268.239 | 0.808 |</span>
-<span id="cb4-229"><a href="#cb4-229" aria-hidden="true" tabindex="-1"></a>| 1000 | 3 | 602.367 | 0.915 |</span>
-<span id="cb4-230"><a href="#cb4-230" aria-hidden="true" tabindex="-1"></a>| 1000 | 6 | 501.437 | 1.017 |</span>
-<span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a>| 1000 | 9 | 475.136 | 0.967 |</span>
-<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a>| 1000 | 12 | 476.967 | 1.067 |</span>
-<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a>| 1000 | 15 | 472.738 | 1.058 |</span>
-<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a>Analyzing the empirical time comparisin of the two algorithms.  It is clear that the runtime (ms) of the counting method implementation increases significantly as the function of sequence length L increases.</span>
-<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a>Looking at the consolidated table, no matter the increase of sequence length L, the runtime of the hashing algorithm stays suprisingly close to its mean.  The upper bound of the count algorithm O(|Text|^2 * k) versus the O(n)+1 hashing algorithm runtime.</span>
-<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a><span class="fu">## Frequent k-mers in the SARS-Cov-2 genome</span></span>
-<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 5 and Task E2. SARS-CoV-2 and SARS-CoV most frequent k-mers</span></span>
-<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a>The following is a table of the most frequent k-mers present in the SARS-CoV-2 and SARS-CoV genomes:</span>
-<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a>|Genome|K-length|K-mer|</span>
-<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|</span>
-<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 3 | TTT |</span>
-<span id="cb4-246"><a href="#cb4-246" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 6 | TTGTTA |</span>
-<span id="cb4-247"><a href="#cb4-247" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 9 | TAAACGAAC |</span>
-<span id="cb4-248"><a href="#cb4-248" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 12 | GTTGATGGTGTT |</span>
-<span id="cb4-249"><a href="#cb4-249" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | ATCAGACAACTACTA |</span>
-<span id="cb4-250"><a href="#cb4-250" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | TCAGACAACTACTAT |</span>
-<span id="cb4-251"><a href="#cb4-251" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | CAGACAACTACTATT |</span>
-<span id="cb4-252"><a href="#cb4-252" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | CAATTATTATAAGAA |</span>
-<span id="cb4-253"><a href="#cb4-253" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | AATTATTATAAGAAA |</span>
-<span id="cb4-254"><a href="#cb4-254" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | ATTATTATAAGAAAG |</span>
-<span id="cb4-255"><a href="#cb4-255" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | TTGCAGAGTGGTTTT |</span>
-<span id="cb4-256"><a href="#cb4-256" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | AAAGTTGATGGTGTT |</span>
-<span id="cb4-257"><a href="#cb4-257" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | AAGTTGATGGTGTTG |</span>
-<span id="cb4-258"><a href="#cb4-258" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | TAAACGAACATGAAA |</span>
-<span id="cb4-259"><a href="#cb4-259" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 3 | TTT |</span>
-<span id="cb4-260"><a href="#cb4-260" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 6 | TTGCTG |</span>
-<span id="cb4-261"><a href="#cb4-261" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 9 | TAAACGAAC |</span>
-<span id="cb4-262"><a href="#cb4-262" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 12 | TGAGGAAGAAGA |</span>
-<span id="cb4-263"><a href="#cb4-263" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 12 | TAAAATGTCTGA |</span>
-<span id="cb4-264"><a href="#cb4-264" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | AAAAGAAAAAGACTG |</span>
-<span id="cb4-265"><a href="#cb4-265" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | AAAGAAAAAGACTGA |</span>
-<span id="cb4-266"><a href="#cb4-266" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | ATTATAATTATAAAT |</span>
-<span id="cb4-267"><a href="#cb4-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-268"><a href="#cb4-268" aria-hidden="true" tabindex="-1"></a>When comparing the most frequent k-mers of SARS-CoV-2 and SARS-CoV, the 15-mer shows up the most.  It seems that SARS-CoV-2 might have a faster mutation rate than SARS-CoV.</span>
-<span id="cb4-269"><a href="#cb4-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-270"><a href="#cb4-270" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 6. Interpreting the k-mers found in a biological context</span></span>
-<span id="cb4-271"><a href="#cb4-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-272"><a href="#cb4-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-273"><a href="#cb4-273" aria-hidden="true" tabindex="-1"></a><span class="fu">## Extra Credits</span></span>
-<span id="cb4-274"><a href="#cb4-274" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E1. The null distribution of the frequency of most frequent k-mers</span></span>
-<span id="cb4-275"><a href="#cb4-275" aria-hidden="true" tabindex="-1"></a>Our program produced these results:</span>
-<span id="cb4-276"><a href="#cb4-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-277"><a href="#cb4-277" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================================================ \</span></span>
-<span id="cb4-278"><a href="#cb4-278" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; E1: Null Distribution of the most frequent k-mers in SARS-CoV-2 genome sequence \</span></span>
-<span id="cb4-279"><a href="#cb4-279" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================================================ \</span></span>
-<span id="cb4-280"><a href="#cb4-280" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using the SARS-CoV-2 genome sequence, our permutation test \</span></span>
-<span id="cb4-281"><a href="#cb4-281" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; with 1000 permutations gives. We have considered a p-value threshold of 0.05 to decide \</span></span>
-<span id="cb4-282"><a href="#cb4-282" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; if the most frequent k-mer is unlikely to have occurred by chance alone \</span></span>
-<span id="cb4-283"><a href="#cb4-283" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; and consequently, it has biological significance: \</span></span>
-<span id="cb4-284"><a href="#cb4-284" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb4-285"><a href="#cb4-285" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 3-mers give a p-value of 0.33067, then they DO NOT HAVE biological significance \</span></span>
-<span id="cb4-286"><a href="#cb4-286" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 6-mers give a p-value of 0.34366, then they DO NOT HAVE biological significance \</span></span>
-<span id="cb4-287"><a href="#cb4-287" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **9-mers give a p-value of 0.02198, then they DO HAVE biological significance** \</span></span>
-<span id="cb4-288"><a href="#cb4-288" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **12-mers give a p-value of 0.09491, then they DO NOT HAVE biological significance** \</span></span>
-<span id="cb4-289"><a href="#cb4-289" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 15-mers give a p-value of 0.52248, then they DO NOT HAVE biological significance \</span></span>
-<span id="cb4-290"><a href="#cb4-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-291"><a href="#cb4-291" aria-hidden="true" tabindex="-1"></a>research about this question here **</span>
-<span id="cb4-292"><a href="#cb4-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-293"><a href="#cb4-293" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E2. SARS-CoV versus SARS-CoV-2</span></span>
-<span id="cb4-294"><a href="#cb4-294" aria-hidden="true" tabindex="-1"></a>Analyzed above in Task 5. Please, go to that section.</span>
-<span id="cb4-295"><a href="#cb4-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-296"><a href="#cb4-296" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E3. Find the longest k-mer repeats beyond 15</span></span>
-<span id="cb4-297"><a href="#cb4-297" aria-hidden="true" tabindex="-1"></a>First, we find what is the max value for k in each Genome:</span>
-<span id="cb4-298"><a href="#cb4-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-299"><a href="#cb4-299" aria-hidden="true" tabindex="-1"></a>|Genome|K-length|# matches|</span>
-<span id="cb4-300"><a href="#cb4-300" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|</span>
-<span id="cb4-301"><a href="#cb4-301" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | 10 |</span>
-<span id="cb4-302"><a href="#cb4-302" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 16 | 5 |</span>
-<span id="cb4-303"><a href="#cb4-303" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 17 | 2 |</span>
-<span id="cb4-304"><a href="#cb4-304" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | 3 |</span>
-<span id="cb4-305"><a href="#cb4-305" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 16 | 1 |</span>
-<span id="cb4-306"><a href="#cb4-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-307"><a href="#cb4-307" aria-hidden="true" tabindex="-1"></a>Now, that we know for SARS-CoV-2 is k=17 and for SARS-CoV is K=16, we found the longest kmers:</span>
-<span id="cb4-308"><a href="#cb4-308" aria-hidden="true" tabindex="-1"></a>Longest k-mers in SARS-CoV-2:  <span class="co">[</span><span class="ot">&#39;ATCAGACAACTACTATT&#39;, &#39;CAATTATTATAAGAAAG&#39;</span><span class="co">]</span></span>
-<span id="cb4-309"><a href="#cb4-309" aria-hidden="true" tabindex="-1"></a>Longest k-mers in SARS-CoV  :  <span class="co">[</span><span class="ot">&#39;AAAAGAAAAAGACTGA&#39;</span><span class="co">]</span></span>
-<span id="cb4-310"><a href="#cb4-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-311"><a href="#cb4-311" aria-hidden="true" tabindex="-1"></a>Comment ***</span>
-<span id="cb4-312"><a href="#cb4-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-313"><a href="#cb4-313" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E4. Develop a fast algorithm to find k-mer repeats in a given range of k</span></span>
-<span id="cb4-314"><a href="#cb4-314" aria-hidden="true" tabindex="-1"></a>Pending of coding. Part of future work.</span>
-<span id="cb4-315"><a href="#cb4-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-316"><a href="#cb4-316" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E5. Evolution of repeats in coronavirus genomes</span></span>
-<span id="cb4-317"><a href="#cb4-317" aria-hidden="true" tabindex="-1"></a>Pending of coding. Part of future work.</span>
-<span id="cb4-318"><a href="#cb4-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-319"><a href="#cb4-319" aria-hidden="true" tabindex="-1"></a><span class="fu"># Discussion</span></span>
-<span id="cb4-320"><a href="#cb4-320" aria-hidden="true" tabindex="-1"></a>Write here (Gabriel)</span>
-<span id="cb4-321"><a href="#cb4-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-322"><a href="#cb4-322" aria-hidden="true" tabindex="-1"></a><span class="fu"># Distribution of work</span></span>
-<span id="cb4-323"><a href="#cb4-323" aria-hidden="true" tabindex="-1"></a>Write here (Gabriel)</span>
-<span id="cb4-324"><a href="#cb4-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-325"><a href="#cb4-325" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
-<span id="cb4-326"><a href="#cb4-326" aria-hidden="true" tabindex="-1"></a>Write here (Gabriel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Frequent k-mers in the SARS-CoV-2 Genome&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> &quot;CS516 Bioinformatics - Project 1&quot;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> &quot;Israel Gonzalez S., Gabriel Romero&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> &quot;February 22, 2023&quot;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="an">toc:</span><span class="co"> true</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">    html-math-method: katex</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">    self-contained: true</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="fu"># Abstract</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>Write here the abstract (Gabriel)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>Write here the intro (Gabriel)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="fu"># Methods</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>We proceed in this section to describe the methods we have implemented in the Python class FrequentKmers and the way they can be used in an executable Python file main.py</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>The methods are organized in the way each task required. First, we have the methods related to Tasks 1 and Task 2 that require to code the pseudo code we have in *Bioinformatics Algorithms–An Active Learning Approach, 3rd Edition*.</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>The class encapsulates all methods is:</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FrequentKmers:</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Frequent Words Algorithm methods:</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> frequent_words(<span class="va">self</span>, text, k):</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> timer()</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    frequent_words <span class="op">=</span> []</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(text)</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    count_array <span class="op">=</span> np.zeros(n <span class="op">-</span> k <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n <span class="op">-</span> k <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>      pattern <span class="op">=</span> text[i:i<span class="op">+</span>k]</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>      count_array[i] <span class="op">=</span> <span class="va">self</span>.pattern_count(text, pattern)</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="va">self</span>.max_array(count_array):</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>      frequent_words.append(text[i:i<span class="op">+</span>k])</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    frequent_words <span class="op">=</span> <span class="va">self</span>.remove_duplicates(frequent_words)</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    end <span class="op">=</span> timer()</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [frequent_words,  <span class="bu">round</span>((end <span class="op">-</span> start) <span class="op">*</span> <span class="dv">1000</span>, <span class="dv">3</span>)]</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> pattern_count(<span class="va">self</span>, text, pattern):</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(text) <span class="op">-</span> <span class="bu">len</span>(pattern) <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> text[i:i<span class="op">+</span><span class="bu">len</span>(pattern)] <span class="op">==</span> pattern:</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>        count <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> count</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> remove_duplicates(<span class="va">self</span>, arr):</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>    answer <span class="op">=</span> []</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> item <span class="kw">in</span> arr:</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> item <span class="kw">not</span> <span class="kw">in</span> answer:</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>        answer.append(item)</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> answer</span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> max_array(<span class="va">self</span>, arr):</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>    max_val <span class="op">=</span> <span class="bu">max</span>(arr)</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>    max_indices <span class="op">=</span> [i <span class="cf">for</span> i, val <span class="kw">in</span> <span class="bu">enumerate</span>(arr) <span class="cf">if</span> val <span class="op">==</span> max_val]</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> max_indices</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>The <span class="in">`FrequentKmers.frequent_words`</span> method takes as parameters <span class="in">`text`</span> and <span class="in">`k`</span> representing the DNA sequence and the length of k-mer respectively. Taking text slices of length k, we *count* the frequency of each k-mer using <span class="in">`FrequentKmers.pattern_count`</span> method. After counting them, we determine the k-mers with a maximum frequency count using <span class="in">`FrequentKmers.max_array`</span> and filter them in a unique list of frequent_words without repetitions using <span class="in">`FrequentKmers.remove_duplicates`</span>. We answer this list plus the running time taken in miliseconds.</span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Better Frequent Words Algorithm methods:</span></span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> better_frequent_words(<span class="va">self</span>, text, k):</span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> timer()</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>    freq_map <span class="op">=</span> <span class="va">self</span>.frequent_map(text, k)</span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> freq_map <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>      max_count <span class="op">=</span> <span class="bu">max</span>(freq_map.values())</span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>      frequent_words <span class="op">=</span> []</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> pattern <span class="kw">in</span> freq_map.items():</span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pattern[<span class="dv">1</span>] <span class="op">==</span> max_count:</span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>          frequent_words.append(pattern[<span class="dv">0</span>])</span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>      end <span class="op">=</span> timer()</span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> [frequent_words, <span class="bu">round</span>((end <span class="op">-</span> start) <span class="op">*</span> <span class="dv">1000</span>, <span class="dv">3</span>)]</span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>      end <span class="op">=</span> timer()</span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span>[<span class="va">None</span>, <span class="bu">round</span>((end <span class="op">-</span> start) <span class="op">*</span> <span class="dv">1000</span>, <span class="dv">3</span>)]</span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> frequent_map(<span class="va">self</span>, text, k):</span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a>    freq_map <span class="op">=</span> {}</span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(text)</span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n <span class="op">-</span> k <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>      pattern <span class="op">=</span> text[i:i<span class="op">+</span>k]</span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> pattern <span class="kw">in</span> freq_map:</span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>        freq_map[pattern] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>      <span class="cf">else</span>:</span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>        freq_map[pattern] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> freq_map</span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>Similarly, the <span class="in">`FrequentKmers.better_frequent_words`</span> method takes as parameters <span class="in">`text`</span> and <span class="in">`k`</span> representing the DNA sequence and the length of k-mer respectively. Taking text slices of length k, we create a hash map with the patterns as their index and count their frequency as its value using the method <span class="in">`FrequentKmers.frequent_map`</span>. After, for each pattern, we choose the one with the maximum frecuency, adding it to the frequent_words list. We answer this list plus the running time taken in miliseconds.</span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Random DNA generator method:</span></span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> generate_dna(<span class="va">self</span>, L):</span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&#39;&#39;</span>.join(np.random.choice([<span class="st">&#39;A&#39;</span>, <span class="st">&#39;C&#39;</span>, <span class="st">&#39;G&#39;</span>, <span class="st">&#39;T&#39;</span>], size<span class="op">=</span>L, p<span class="op">=</span>[<span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>]))</span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>The <span class="in">`FrequentKmers.generate_dna`</span> method generates a random DNA sequence of a given length *L*. For this, it uses the Numpy choice function inside the library np.random. This generation uses a flat probability of 0.25 for each one of the characters of the nucleotides A, C, G, T; answering an array of chars. Then, we consolidate in a single string using the string function join. </span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Removes polyA tail</span></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> remove_polyA(<span class="va">self</span>, sequence, tail_length):</span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>    pattern <span class="op">=</span> <span class="st">&quot;A{&quot;</span> <span class="op">+</span> <span class="bu">str</span>(tail_length) <span class="op">+</span> <span class="st">&quot;,}$&quot;</span></span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>    match <span class="op">=</span> re.search(pattern, sequence)</span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> match:</span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>      sequence <span class="op">=</span> sequence[:(match.start())]</span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sequence</span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>The <span class="in">`FrequentKmers.remove_polyA`</span> method removes polyA tails if a Genome, like in this project, has several A in its composition so we avoid that repetitive A&#39;s constitute the most frequent k-mers. This method defines a regular epression where we find in the DNA sequence a substring of tail_length. If the regular expression matches correctly, that substring is removed from the original sequence.</span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reader of Covid genome files:</span></span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_covid_genome(<span class="va">self</span>, filename):</span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>      sequence <span class="op">=</span> <span class="bu">file</span>.read().replace(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>, <span class="st">&#39;&#39;</span>).strip()</span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>    tail_length <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(filename <span class="op">==</span> <span class="st">&quot;SARS-CoV-2.txt&quot;</span>):</span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>      tail_length <span class="op">=</span> <span class="dv">33</span></span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(filename <span class="op">==</span> <span class="st">&quot;SARS-CoV.txt&quot;</span>):</span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>      tail_length <span class="op">=</span> <span class="dv">24</span></span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.remove_polyA(sequence, tail_length)</span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>The <span class="in">`FrequentKmers.get_covid_genome`</span> method chooses if the dataset is SARS-CoV-2 or SARS-CoV, making them a single block of characters removing the breaklines. Also, for the reasons previously mentioned, it removes from the DNA sequence the polyA if it is present with the help of <span class="in">`remove_polyA`</span> method.</span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Permutation test (null distribution):</span></span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> permutation_test(<span class="va">self</span>, text, k, num_perm):</span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>    p_value <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a>    fm <span class="op">=</span> <span class="va">self</span>.frequent_map(text, k)</span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a>    max_count <span class="op">=</span> <span class="bu">max</span>(fm.values())</span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>    null_population <span class="op">=</span> <span class="bu">list</span>(text)</span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a>    null_distribution <span class="op">=</span> []</span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_perm):</span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>      random.shuffle(null_population)</span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a>      fm2 <span class="op">=</span> <span class="va">self</span>.frequent_map(<span class="st">&#39;&#39;</span>.join(null_population), k)</span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a>      null_counts <span class="op">=</span> <span class="bu">max</span>(fm2.values())</span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a>      null_distribution.append(null_counts)</span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a>    sum_ <span class="op">=</span> <span class="bu">sum</span>(null_elem <span class="op">&gt;=</span> max_count <span class="cf">for</span> null_elem <span class="kw">in</span> null_distribution)</span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a>    p_value <span class="op">=</span> (sum_ <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> (num_perm <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p_value</span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a>The <span class="in">`FrequentKmers.permutation_test`</span> method in base of the DNA sequence (text), a k length (k), and a number of iterations, it generates randomly several new DNA sequences by suffling the original text characters during the indicated iterations. It takes what are the most frequent kmers in this shuffled scenario. Then, it took a predictor value to represent how significant are these frequent k lengths in comparison with the original ones.</span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a><span class="fu">## Execution</span></span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a>To exercise correctly these methods, we have developed a <span class="in">`main.py`</span> program. The following are the steps for its execution</span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Unzip this project on a path where Python 3.8 or superior is active</span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Open a console and go to where the unzipped folder is. make sure you are in the same level where the <span class="in">`main.py`</span> program is. You can be sure of this printing the directory content with <span class="in">`ls`</span> command</span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Run the program with the command <span class="in">`py main.py`</span></span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The program will produce exctly each one of the output, plots, and tables the following section has in its analysis</span>
+<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a>**Important note**: Make sure you have installed the following Python 3 modules/libraries before:</span>
+<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a>pandas, matplotlib, numpy, pprint, random, re, and timeit.</span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a><span class="fu"># Results</span></span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>In this section, we proceed to describe our results. We have structured this section in the same schema the project tasks appears in the project prompt.</span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a><span class="fu">## Algorithms for finding frequent k-mers</span></span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 1. Frequent words by counting</span></span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>This is the output of our program:</span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ============================================ \</span></span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Task 1: Algorithm Frequent Words (counting) \</span></span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ============================================ \</span></span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using test cases from class slides (Ch 1 slides 64 and 99), \</span></span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; we show the list of frequent words and running time in ms for our implementation are correct: \</span></span>
+<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;ACG&#39;, &#39;TTT&#39;</span><span class="co">]</span><span class="at">, 0.163] \</span></span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;atgatcaag&#39;, &#39;ctcttgatc&#39;, &#39;tcttgatca&#39;, &#39;cttgatcat&#39;</span><span class="co">]</span><span class="at">, 89.532] \</span></span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a>This algorithm using the counting method for frequent words is straightforward in finding</span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a>the most frequent kmers.  What is interesting about these results, is that the most frequent kmers were &quot;9-mers&quot;.  According to biological experiments, bacterial DnaA boxes are usually </span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a>nine nucleotides long.  The likelihood of four 9-mers showing up in a genome sequence lead </span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a>to the hypothesis that one of these four 9-mers might represent a potential DnaA box. </span>
+<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a>However, before concluding that this is a DnaA box, we would still need to sequence other short regions in the genome to determine if these strings exhibit throughout the entire genome. If they are exhibited throughout the genome, rather than just in the ori region, then these results are considered insignificant.</span>
+<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 2. Frequent words by hashing</span></span>
+<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a>This is the output of our program:</span>
+<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================= \</span></span>
+<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Task 2: Algorithm Better Frequent Words (hashing) \</span></span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================= \</span></span>
+<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using test cases from class slides (Ch 1 slides 64 and 99), \</span></span>
+<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; we show the list of frequent words and running time in ms for our implementation are correct: \</span></span>
+<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;ACG&#39;, &#39;TTT&#39;</span><span class="co">]</span><span class="at">, 0.1] \</span></span>
+<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;atgatcaag&#39;, &#39;ctcttgatc&#39;, &#39;tcttgatca&#39;, &#39;cttgatcat&#39;</span><span class="co">]</span><span class="at">, 0.792] \</span></span>
+<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a>When analyzing the hashing algorithm, the results of finding the most and longest kmers are exactly the same.  This is reassuring that the problem was solved with coinciding results of finding the most frequent kmers with both algorithms worked.  However, when looking at the algorithm analysis of the hashing method, the runtime is significantly lower than the counting method.  Now, this significant lower runtime can answer a lot of problems in bioinformational questions.  The counting method is efficient for small string genomes, however the upper bound runtime of |Text|^2 makes it extrememly slow for larger string texts.  Since more short region sequencing throughout the genome is required to determine a potential DnaA box, this algorithm is the optimal choice in finding significant results from the string data. </span>
+<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a><span class="fu">## Understanding the runtime</span></span>
+<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 3. Method generates random DNA sequences of several random lengths</span></span>
+<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a>This is the output of our program:</span>
+<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ======================================== \</span></span>
+<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Task 3: Generating Random DNA Sequences \</span></span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ======================================== \</span></span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using Numpy random choice function of Python, \</span></span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; we generate 10 random DNA sequences of variable lenght: \</span></span>
+<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GACTCGGATATGT&#39; \</span></span>
+<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GAATATGTGCAA&#39; \</span></span>
+<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;AGGGGATACTACT&#39; \</span></span>
+<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GTACATATCA&#39; \</span></span>
+<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;TTGGGATAACA&#39; \</span></span>
+<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GTGGGAAGCACGT&#39; \</span></span>
+<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;ACATACAGACGCA&#39; \</span></span>
+<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;ATTCTTAACAAGGC&#39; \</span></span>
+<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;CTATTGAAAG&#39; \</span></span>
+<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;TCCGTAGGTCT&#39; \</span></span>
+<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 4. Analysis of empirical time comparing counting and hashing algorithms</span></span>
+<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a>To empirically compare the two algorithms in terms of runtime, our program for this analysis has produced the comparison in the following charts, and also consolidated everything in a major table with these results.</span>
+<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a>The following are our charts:</span>
+<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a>::: {#fig-scenario layout-ncol=2}</span>
+<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a><span class="al">![L25](images/q4_25.png)</span>{#q4_25}</span>
+<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="al">![L50](images/q4_50.png)</span>{#q4_50}</span>
+<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a><span class="al">![L75](images/q4_75.png)</span>{#q4_75}</span>
+<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a><span class="al">![L100](images/q4_100.png)</span>{#q4_100}</span>
+<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a><span class="al">![L250](images/q4_75.png)</span>{#q4_250}</span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a><span class="al">![L500](images/q4_500.png)</span>{#q4_500}</span>
+<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a><span class="al">![L750](images/q4_750.png)</span>{#q4_750}</span>
+<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a><span class="al">![L1000](images/q4_1000.png)</span>{#q4_1000}</span>
+<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a>Runtime comparison using a Random Genome length of 25, 50, 75, 100, 250, 500, 750, and 1000 nucleotides, and k-lengths of 3, 6, 9, 12, and 15</span>
+<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a>And in a consolidated table:</span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a>|Length|K-length|FW(ms)|BFW(ms)|</span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|:------:|</span>
+<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a>| 25 | 3 | 0.369 | 0.04 |</span>
+<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>| 25 | 6 | 0.263 | 0.029 |</span>
+<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a>| 25 | 9 | 0.201 | 0.026 |</span>
+<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a>| 25 | 12 | 0.148 | 0.022 |</span>
+<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a>| 25 | 15 | 0.117 | 0.019 |</span>
+<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>| 50 | 3 | 2.672 | 0.107 |</span>
+<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>| 50 | 6 | 2.848 | 0.149 |</span>
+<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a>| 50 | 9 | 2.291 | 0.121 |</span>
+<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>| 50 | 12 | 1.878 | 0.132 |</span>
+<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a>| 50 | 15 | 1.687 | 0.112 |</span>
+<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>| 75 | 3 | 7.455 | 0.151 |</span>
+<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a>| 75 | 6 | 7.312 | 0.224 |</span>
+<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a>| 75 | 9 | 5.965 | 0.155 |</span>
+<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a>| 75 | 12 | 6.064 | 0.214 |</span>
+<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a>| 75 | 15 | 6.115 | 0.143 |</span>
+<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a>| 100 | 3 | 9.436 | 0.21 |</span>
+<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a>| 100 | 6 | 10.619 | 0.19 |</span>
+<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a>| 100 | 9 | 9.054 | 0.316 |</span>
+<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a>| 100 | 12 | 7.918 | 0.24 |</span>
+<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a>| 100 | 15 | 6.889 | 0.117 |</span>
+<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a>| 250 | 3 | 55.049 | 0.269 |</span>
+<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a>| 250 | 6 | 35.782 | 0.282 |</span>
+<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a>| 250 | 9 | 42.438 | 0.283 |</span>
+<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a>| 250 | 12 | 26.598 | 0.276 |</span>
+<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a>| 250 | 15 | 27.295 | 0.288 |</span>
+<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a>| 500 | 3 | 198.86 | 0.467 |</span>
+<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a>| 500 | 6 | 125.661 | 0.563 |</span>
+<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a>| 500 | 9 | 156.53 | 0.874 |</span>
+<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a>| 500 | 12 | 157.304 | 0.867 |</span>
+<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a>| 500 | 15 | 157.182 | 2.094 |</span>
+<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a>| 750 | 3 | 334.105 | 0.696 |</span>
+<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a>| 750 | 6 | 261.337 | 0.798 |</span>
+<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a>| 750 | 9 | 291.711 | 0.824 |</span>
+<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a>| 750 | 12 | 259.805 | 0.803 |</span>
+<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a>| 750 | 15 | 268.239 | 0.808 |</span>
+<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a>| 1000 | 3 | 602.367 | 0.915 |</span>
+<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a>| 1000 | 6 | 501.437 | 1.017 |</span>
+<span id="cb8-288"><a href="#cb8-288" aria-hidden="true" tabindex="-1"></a>| 1000 | 9 | 475.136 | 0.967 |</span>
+<span id="cb8-289"><a href="#cb8-289" aria-hidden="true" tabindex="-1"></a>| 1000 | 12 | 476.967 | 1.067 |</span>
+<span id="cb8-290"><a href="#cb8-290" aria-hidden="true" tabindex="-1"></a>| 1000 | 15 | 472.738 | 1.058 |</span>
+<span id="cb8-291"><a href="#cb8-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-292"><a href="#cb8-292" aria-hidden="true" tabindex="-1"></a>Analyzing the empirical time comparisin of the two algorithms.  It is clear that the runtime (ms) of the counting method implementation increases significantly as the function of sequence length L increases.</span>
+<span id="cb8-293"><a href="#cb8-293" aria-hidden="true" tabindex="-1"></a>Looking at the consolidated table, no matter the increase of sequence length L, the runtime of the hashing algorithm stays suprisingly close to its mean.  The upper bound of the count algorithm O(|Text|^2 * k) versus the O(n)+1 hashing algorithm runtime.</span>
+<span id="cb8-294"><a href="#cb8-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-295"><a href="#cb8-295" aria-hidden="true" tabindex="-1"></a><span class="fu">## Frequent k-mers in the SARS-Cov-2 genome</span></span>
+<span id="cb8-296"><a href="#cb8-296" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 5 and Task E2. SARS-CoV-2 and SARS-CoV most frequent k-mers</span></span>
+<span id="cb8-297"><a href="#cb8-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a>The following is a table of the most frequent k-mers present in the SARS-CoV-2 and SARS-CoV genomes:</span>
+<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-300"><a href="#cb8-300" aria-hidden="true" tabindex="-1"></a>|Genome|K-length|K-mer|</span>
+<span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|</span>
+<span id="cb8-302"><a href="#cb8-302" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 3 | TTT |</span>
+<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 6 | TTGTTA |</span>
+<span id="cb8-304"><a href="#cb8-304" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 9 | TAAACGAAC |</span>
+<span id="cb8-305"><a href="#cb8-305" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 12 | GTTGATGGTGTT |</span>
+<span id="cb8-306"><a href="#cb8-306" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | ATCAGACAACTACTA |</span>
+<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | TCAGACAACTACTAT |</span>
+<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | CAGACAACTACTATT |</span>
+<span id="cb8-309"><a href="#cb8-309" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | CAATTATTATAAGAA |</span>
+<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | AATTATTATAAGAAA |</span>
+<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | ATTATTATAAGAAAG |</span>
+<span id="cb8-312"><a href="#cb8-312" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | TTGCAGAGTGGTTTT |</span>
+<span id="cb8-313"><a href="#cb8-313" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | AAAGTTGATGGTGTT |</span>
+<span id="cb8-314"><a href="#cb8-314" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | AAGTTGATGGTGTTG |</span>
+<span id="cb8-315"><a href="#cb8-315" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | TAAACGAACATGAAA |</span>
+<span id="cb8-316"><a href="#cb8-316" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 3 | TTT |</span>
+<span id="cb8-317"><a href="#cb8-317" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 6 | TTGCTG |</span>
+<span id="cb8-318"><a href="#cb8-318" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 9 | TAAACGAAC |</span>
+<span id="cb8-319"><a href="#cb8-319" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 12 | TGAGGAAGAAGA |</span>
+<span id="cb8-320"><a href="#cb8-320" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 12 | TAAAATGTCTGA |</span>
+<span id="cb8-321"><a href="#cb8-321" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | AAAAGAAAAAGACTG |</span>
+<span id="cb8-322"><a href="#cb8-322" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | AAAGAAAAAGACTGA |</span>
+<span id="cb8-323"><a href="#cb8-323" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | ATTATAATTATAAAT |</span>
+<span id="cb8-324"><a href="#cb8-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-325"><a href="#cb8-325" aria-hidden="true" tabindex="-1"></a>When comparing the most frequent k-mers of SARS-CoV-2 and SARS-CoV, the 15-mer shows up the most.  It seems that SARS-CoV-2 might have a faster mutation rate than SARS-CoV.</span>
+<span id="cb8-326"><a href="#cb8-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-327"><a href="#cb8-327" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 6. Interpreting the k-mers found in a biological context</span></span>
+<span id="cb8-328"><a href="#cb8-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-329"><a href="#cb8-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-330"><a href="#cb8-330" aria-hidden="true" tabindex="-1"></a><span class="fu">## Extra Credits</span></span>
+<span id="cb8-331"><a href="#cb8-331" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E1. The null distribution of the frequency of most frequent k-mers</span></span>
+<span id="cb8-332"><a href="#cb8-332" aria-hidden="true" tabindex="-1"></a>Our program produced these results:</span>
+<span id="cb8-333"><a href="#cb8-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-334"><a href="#cb8-334" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================================================ \</span></span>
+<span id="cb8-335"><a href="#cb8-335" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; E1: Null Distribution of the most frequent k-mers in SARS-CoV-2 genome sequence \</span></span>
+<span id="cb8-336"><a href="#cb8-336" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================================================ \</span></span>
+<span id="cb8-337"><a href="#cb8-337" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using the SARS-CoV-2 genome sequence, our permutation test \</span></span>
+<span id="cb8-338"><a href="#cb8-338" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; with 1000 permutations gives. We have considered a p-value threshold of 0.05 to decide \</span></span>
+<span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; if the most frequent k-mer is unlikely to have occurred by chance alone \</span></span>
+<span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; and consequently, it has biological significance: \</span></span>
+<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 3-mers give a p-value of 0.33067, then they DO NOT HAVE biological significance \</span></span>
+<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 6-mers give a p-value of 0.34366, then they DO NOT HAVE biological significance \</span></span>
+<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **9-mers give a p-value of 0.02198, then they DO HAVE biological significance** \</span></span>
+<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **12-mers give a p-value of 0.09491, then they DO NOT HAVE biological significance** \</span></span>
+<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 15-mers give a p-value of 0.52248, then they DO NOT HAVE biological significance \</span></span>
+<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-348"><a href="#cb8-348" aria-hidden="true" tabindex="-1"></a>research about this question here **</span>
+<span id="cb8-349"><a href="#cb8-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-350"><a href="#cb8-350" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E2. SARS-CoV versus SARS-CoV-2</span></span>
+<span id="cb8-351"><a href="#cb8-351" aria-hidden="true" tabindex="-1"></a>Analyzed above in Task 5. Please, go to that section.</span>
+<span id="cb8-352"><a href="#cb8-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-353"><a href="#cb8-353" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E3. Find the longest k-mer repeats beyond 15</span></span>
+<span id="cb8-354"><a href="#cb8-354" aria-hidden="true" tabindex="-1"></a>First, we find what is the max value for k in each Genome:</span>
+<span id="cb8-355"><a href="#cb8-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-356"><a href="#cb8-356" aria-hidden="true" tabindex="-1"></a>|Genome|K-length|# matches|</span>
+<span id="cb8-357"><a href="#cb8-357" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|</span>
+<span id="cb8-358"><a href="#cb8-358" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | 10 |</span>
+<span id="cb8-359"><a href="#cb8-359" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 16 | 5 |</span>
+<span id="cb8-360"><a href="#cb8-360" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 17 | 2 |</span>
+<span id="cb8-361"><a href="#cb8-361" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | 3 |</span>
+<span id="cb8-362"><a href="#cb8-362" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 16 | 1 |</span>
+<span id="cb8-363"><a href="#cb8-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-364"><a href="#cb8-364" aria-hidden="true" tabindex="-1"></a>Now, that we know for SARS-CoV-2 is k=17 and for SARS-CoV is K=16, we found the longest kmers:</span>
+<span id="cb8-365"><a href="#cb8-365" aria-hidden="true" tabindex="-1"></a>Longest k-mers in SARS-CoV-2:  <span class="co">[</span><span class="ot">&#39;ATCAGACAACTACTATT&#39;, &#39;CAATTATTATAAGAAAG&#39;</span><span class="co">]</span></span>
+<span id="cb8-366"><a href="#cb8-366" aria-hidden="true" tabindex="-1"></a>Longest k-mers in SARS-CoV  :  <span class="co">[</span><span class="ot">&#39;AAAAGAAAAAGACTGA&#39;</span><span class="co">]</span></span>
+<span id="cb8-367"><a href="#cb8-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-368"><a href="#cb8-368" aria-hidden="true" tabindex="-1"></a>Comment ***</span>
+<span id="cb8-369"><a href="#cb8-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-370"><a href="#cb8-370" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E4. Develop a fast algorithm to find k-mer repeats in a given range of k</span></span>
+<span id="cb8-371"><a href="#cb8-371" aria-hidden="true" tabindex="-1"></a>Pending of coding. Part of future work.</span>
+<span id="cb8-372"><a href="#cb8-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-373"><a href="#cb8-373" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E5. Evolution of repeats in coronavirus genomes</span></span>
+<span id="cb8-374"><a href="#cb8-374" aria-hidden="true" tabindex="-1"></a>Pending of coding. Part of future work.</span>
+<span id="cb8-375"><a href="#cb8-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-376"><a href="#cb8-376" aria-hidden="true" tabindex="-1"></a><span class="fu"># Discussion</span></span>
+<span id="cb8-377"><a href="#cb8-377" aria-hidden="true" tabindex="-1"></a>Write here (Gabriel)</span>
+<span id="cb8-378"><a href="#cb8-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-379"><a href="#cb8-379" aria-hidden="true" tabindex="-1"></a><span class="fu"># Distribution of work</span></span>
+<span id="cb8-380"><a href="#cb8-380" aria-hidden="true" tabindex="-1"></a>Write here (Gabriel)</span>
+<span id="cb8-381"><a href="#cb8-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-382"><a href="#cb8-382" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
+<span id="cb8-383"><a href="#cb8-383" aria-hidden="true" tabindex="-1"></a>Write here (Gabriel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
