@@ -118,9 +118,10 @@ if __name__ == '__main__':
         print("|", file, "|", k, "|", r, "|")
 
   # Task 6
-  # Use Blast: https://blast.ncbi.nlm.nih.gov/Blast.cgi
-  # https://www.youtube.com/watch?v=WRKQGwh_Mw0
-  # https://www.news-medical.net/health/How-Does-the-SARS-Virus-Genome-Compare-to-Other-Viruses.aspx#:~:text=All%20bind%20to%20the%20ACE2,in%20SARS%2DCoV%2D2.
+  # Use Blast:
+  #  https://blast.ncbi.nlm.nih.gov/Blast.cgi
+  #  https://www.youtube.com/watch?v=WRKQGwh_Mw0
+  #  https://www.news-medical.net/health/How-Does-the-SARS-Virus-Genome-Compare-to-Other-Viruses.aspx
 
   print()
   print("================================================================================")

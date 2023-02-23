@@ -7,18 +7,19 @@ toc: true
 format:
   html:
     html-math-method: katex
+    css: styles.css
     code-tools: true
     self-contained: true
 execute:
   warning: false
 ---
 # Abstract
-Project 1 consists of implementing algorithms for finding frequent k-mers.  Understanding runtimes of all algorithms used by comparing the empirical runtime of algorithms used to show runtime increases of functions of sequence length L and k.
+Project 1 consists of implementing algorithms for finding the mnost frequent k-mers in SARS-CoV-2 Genome sequence. Understanding runtimes of all algorithms used by comparing the empirical runtime of algorithms used to show runtime, increases of functions of sequence length L and k.
 
-The next tasks included finding the most frequent k-mers in the SARS-CoV and SARS-CoV-2 genome.  Interpretation of results to provide any signifiers toward a biological understanding of Covid.  Next we developed a permutation test to determine the statistical significance of the frequency of most frequenct kmers with the SARS-CoV-2 genome sequence.  Followed by comparing the SARS Covid genome sequences to identify any major differences and potential biological interpretation.  Lastly, we found larger k-mer repeats beyond 15-mers found in both SARS-CoV-2 and SARS-CoV.    
+The next tasks included finding the most frequent k-mers in the SARS-CoV and SARS-CoV-2 genome sequences. Interpretation of results to provide any signifiers towards a biological understanding of Covid. Next, we developed a permutation test to determine the statistical significance of the frequency of the most frequenct kmers within the SARS-CoV-2 genome sequence. Followed by comparing the SARS Covid genome sequences to identify any major differences and potential biological interpretation. Lastly, we found larger k-mer repeats beyond 15-mers found in both SARS-CoV-2 and SARS-CoV.    
 
 # Introduction
-Understanding nucleotides and genomes can be a seemingly impossible question to answer.  The reality of the fact is there are many solutions to solve the seemingly endless problems that are related to proteins, and other genomic structures.  Solutions that require a variety of scientific fields to combine expertise to solve one of the worlds most complex problems.  In particular, bioinformatics is evolving to explain biology motivated questions into information to address molecular biology.  This includes implementing algorithms such as sequence alignment, pattern matching, and genome assembly.  Lastly, it is important to evaluate the performance of algorithms and data structures on real data sets to solve these biological motivated questions.  This project was a stepping stone in motivation and understanding for the field of bioinformatics.   
+Understanding nucleotides and genomes can be a seemingly impossible question to answer, the reality of the fact is there are many solutions to solve the seemingly endless problems that are related to proteins, and other genomic structures. Solutions that require a variety of scientific fields to combine expertise to solve one of the worlds most complex problems. In particular, Bioinformatics is evolving to explain biology motivated questions into information to address molecular biology. This includes implementing algorithms such as sequence alignment, pattern matching, and genome assembly. Lastly, it is important to evaluate the performance of algorithms and data structures on real data sets to solve these biological motivated questions. In this sense, this project was a stepping stone in motivation and understanding for the field of Bioinformatics.   
 
 # Methods
 We proceed in this section to describe the methods we have implemented in the Python class FrequentKmers and the way they can be used in an executable Python file main.py
@@ -178,7 +179,7 @@ This is the output of our program:
 > [['ACG', 'TTT'], 0.163] \
 > [['atgatcaag', 'ctcttgatc', 'tcttgatca', 'cttgatcat'], 89.532] \
 
-The first algorithm used is a counting method for frequent words.  It is straightforward in finding the most frequent kmers.  Interpretation of the results found that the most frequent kmer were "9-mers".
+The first algorithm used is a counting method for frequent words.  It is straightforward in finding the most frequent k-mers.  Interpretation of the results found that the most frequent kmer were 2 **3-mers** in the first test case, and 4 **9-mers** in the second test case.
 
 Understanding these results are key contribution to the field of bioinformatics.  Considering the many fields involved in the solving of "hidden messages" in these strings of 4 lettered texts, it is important that we understand what these frequent alignments mean. 
 
@@ -198,7 +199,9 @@ This is the output of our program:
 > [['ACG', 'TTT'], 0.1] \
 > [['atgatcaag', 'ctcttgatc', 'tcttgatca', 'cttgatcat'], 0.792] \
 
-When analyzing the hashing algorithm, the results of finding the most and longest kmers are exactly the same.  This is reassuring, because the problem was solved with exact correspondance of finding the most frequent kmers with the previous counting algorithm.  However, when looking at the algorithm analysis of the hashing method, the runtime is significantly lower than the counting method.  Now, this significant low runtime can answer a significant problem in the bioinformational question that arises.  The counting method is efficient for small string genomes, however the upper bound runtime of |Text|^2 makes it extrememly slow for larger string texts.  Since more short region sequencing throughout the genome is required to determine a potential DnaA box, this algorithm is the optimal and efficient choice in finding significant results from an extremely long genome data string. 
+When analyzing the hashing algorithm, the results of finding the most and longest kmers are exactly the same as we already explained in the prior subsection. This is reassuring, because the problem was solved with exact correspondance of finding the most frequent kmers with the previous counting algorithm.  
+
+However, when looking at the algorithm analysis of the hashing method, **the runtime is significantly lower than the counting method**.  Now, this significant low runtime can answer a significant problem in the bioinformational question that arises.  The counting method is efficient for small string genomes, however the upper bound runtime of `|Text|^2` makes it extrememly slow for larger string texts.  Since more short region sequencing throughout the genome is required to determine a potential DnaA box, this algorithm is the optimal and efficient choice in finding significant results from an extremely long genome data string. 
 
 ## Understanding the runtime
 ### Task 3. Method generates random DNA sequences of several random lengths
@@ -220,10 +223,10 @@ This is the output of our program:
 > 'CTATTGAAAG' \
 > 'TCCGTAGGTCT' \
 
-
+Our routine generated correctly fake genome sequences. It is evident that the random participation of nucleotides the strings have are correct for our purposes.
 
 ### Task 4. Analysis of empirical time comparing counting and hashing algorithms
-To empirically compare the two algorithms in terms of runtime, our program for this analysis has produced the comparison in the following charts, and also consolidated everything in a major table with these results.
+To empirically compare the two algorithms in terms of runtime, our program for this analysis has produced the comparison in the following charts, and also consolidated in a major table with these results.
 
 The following are our charts:
 
@@ -295,7 +298,7 @@ And in a consolidated table:
 
 Analyzing the empirical time comparisin of the two algorithms.  It is clear that the runtime, in milliseconds, of the counting method implementation increases significantly as the function of sequence length L increases.
 
-Looking at the consolidated table, no matter the increase of sequence length L, the runtime of the hashing algorithm stays suprisingly close to its mean.  The upper bound of the count algorithm O(|Text|^2 * k) versus the O(n)+1 hashing algorithm runtime, makes hashing the most efficient and optimal implementation of finding frequent kmer patterns.
+Looking at the consolidated table, no matter the increase of sequence length L, the runtime of the hashing algorithm stays suprisingly close to its mean.  The upper bound of the count algorithm `O(|Text|^2 * k)` versus the `O(n)+1` hashing algorithm runtime, makes hashing the most efficient and optimal implementation of finding the most frequent k-mer patterns in this benchmark.
 
 ## Frequent k-mers in the SARS-Cov-2 genome
 ### Task 5 and Task E2. SARS-CoV-2 and SARS-CoV most frequent k-mers
@@ -330,15 +333,15 @@ The following is a table of the most frequent k-mers present in the SARS-CoV-2 a
 When comparing the most frequent k-mers of SARS-CoV-2 and SARS-CoV, the 15-mer shows up the most. 
 
 ### Task 6. Interpreting the k-mers found in a biological context
-When putting the Kmers in the BLASTN database, no significant similarities where found.  In other words, there wasn't much alignment.  The differences in frequent 15mers between the RNA viruses might speak to their Phylogenetic differences and where the SARS originated from. 
+When putting the K-mers in the *BLASTN* database, no significant similarities where found. In other words, there was not much alignment. The differences in frequent 15-mers between the RNA viruses might speak to their Phylogenetic differences and where the SARS originated from. 
 
 ## Extra Credits
 ### Task E1. The null distribution of the frequency of most frequent k-mers
 Our program produced these results:
 
-> ================================================================================ \
+> ======================================================== \
 > E1: Null Distribution of the most frequent k-mers in SARS-CoV-2 genome sequence \
-> ================================================================================ \
+> ======================================================== \
 > Using the SARS-CoV-2 genome sequence, our permutation test \
 > with 1000 permutations gives. We have considered a p-value threshold of 0.05 to decide \
 > if the most frequent k-mer is unlikely to have occurred by chance alone \
@@ -350,8 +353,9 @@ Our program produced these results:
 > **12-mers give a p-value of 0.09491, then they DO NOT HAVE biological significance** \
 > 15-mers give a p-value of 0.52248, then they DO NOT HAVE biological significance \
 
-When looking at the p-value threshold of 0.05, there is one kmer that has bilogical significance, the 9-mers.  The p-value of the SARS-CoV-2 9-mers was 0.02198, which is of significance when comparing it to the 0.05 threshold.   Initially, the relevance of 9-mers traces back to the recurrence of a potential DnaA box in a DNA genome.  In reality it is important to undertand that Covid is involved in RNA metabolization, not DNA metabolization.
-One other possible significant biological finding was the 12-mer p-value threshold value of 0.9491.  Even though the p-value was higher than 0.05, we know that nonrandom findings in kmer sequencing could have possible biological value if it is unlikely to have occurred by chance alone.
+When looking at the *p-value* threshold of 0.05, there is one k-mer that has bilogical significance: the 9-mers.  The *p-value* of the SARS-CoV-2 9-mers was 0.02198, which is of significance when comparing it to the 0.05 threshold. Initially, the relevance of 9-mers traces back to the recurrence of a potential DnaA box in a DNA genome. In reality, it is important to understand that Covid is involved in RNA metabolization, not DNA metabolization.
+
+One other possible significant biological finding, it was the 12-mer p-value threshold value of 0.9491. Even though the *p-value* was higher than 0.05, we know that non-random findings in k-mer sequencing could have possible biological value if it is unlikely to have occurred by chance alone.
 
 ### Task E2. SARS-CoV versus SARS-CoV-2
 Analyzed above in Task 5. Please, go to that section.
@@ -373,19 +377,30 @@ Longest k-mers in SARS-CoV  :  ['AAAAGAAAAAGACTGA']
 
 Understanding the first longest kmer for SARS-CoV-2, was a K-length of 17 and only 2 number of matches of the genome may signify a logical biomechanism of where is unlikely to occur. However there would have to be more explanation of other short sequences throughout the RNA genome to determine any validity of the short occurance.
 
-However a more unlikely occurance happened in the the kmer of K-length 16, with 1 match of the SARs-CoV RNA genome.  This is the most unlikely occurance happening when finding the longest k-mers found in both SARS-CoV 2 and SARS-CoV-2. 
+However, a more unlikely occurance happened in the the kmer of K-length 16, with 1 match of the SARs-CoV RNA genome.  This is the most unlikely occurance happening when finding the longest k-mers found in both SARS-CoV 2 and SARS-CoV-2. 
 
 # Discussion
 Did we find a DnaA box in Task 1 and 2?
 What can the k-mers found in The SARS-CoV-2 Genome tell us about the evolution of Covid?
 
 # Distribution of work
-Lead Programmer Israel Gonzalez Sr
-Lead Author Gabriel Romero
+Our distribution was by roles as follows:
+
+* Lead Developer Israel Gonzalez S.
+* Lead Author Gabriel Romero
+* Pair-review of work
 
 # References
+
+Phillip Compeau & Pavel Pevzner. *Bioinformatics Algorithms–An Active Learning Approach. 3rd Edition*. Active Learning Publishers. La Jolla, California. 2018
+
+Blast. *Blast Search Module*. National Library of Medicine.
 https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome
+
+Shabir, O. 2021. *How Does the SARS-CoV-2 Genome Compare to Other Viruses?*. News Medical Life Science.
+https://www.news-medical.net/health/How-Does-the-SARS-Virus-Genome-Compare-to-Other-Viruses.aspx
+
+https://www.sciencedirect.com/topics/medicine-and-dentistry/rna-processing
 
 https://www.ncbi.nlm.nih.gov/nuccore/NC_045512
 
-https://www.sciencedirect.com/topics/medicine-and-dentistry/rna-processing
