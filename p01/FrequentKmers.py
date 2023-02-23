@@ -75,7 +75,7 @@ class FrequentKmers:
     return ''.join(np.random.choice(['A', 'C', 'G', 'T'], size=L, p=[0.25, 0.25, 0.25, 0.25]))
   
   # Removes polyA tail
-  def remove_polyA(self, sequence, tail_length):
+  def remove_polyA(self, sequence, tail_length=10):
     pattern = "A{" + str(tail_length) + ",}$"
     match = re.search(pattern, sequence)
     if match:

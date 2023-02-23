@@ -1,3 +1,8 @@
 *.jpg
 *.jpeg
 *.gif
+*.zip
+*.log
+*.tex
+*.toc
+*.aux

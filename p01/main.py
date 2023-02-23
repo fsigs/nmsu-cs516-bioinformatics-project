@@ -55,8 +55,8 @@ if __name__ == '__main__':
   print("Using Pandas and Matplot libraries of Python, \nwe plot the running time of our two algorithms \nfor different sequence lengths and different k-mers:")
   print("L = ", dna_length)
   print("K-mers = ", dna_kmers)
-  
   random_results = []
+
   for l in dna_length:
     s = fk.generate_dna(l)
     pies_fwt = []
@@ -127,6 +127,7 @@ if __name__ == '__main__':
   print("================================================================================")
   print("E1: Null Distribution of the most frequent k-mers in SARS-CoV-2 genome sequence")
   print("================================================================================")
+
   covid2_genome = fk.get_covid_genome('SARS-CoV-2.txt')
   k_mer = 3
   num_per = 1000
@@ -138,7 +139,7 @@ if __name__ == '__main__':
     else:
       bio_significance = "they DO NOT HAVE biological significance"
     print(f"{k_mer}-mers give a p-value of {p_value}, then {bio_significance}")
-  
+
   print()
   print("===========================================================================")
   print("E3: Find the longest k-mer repeats beyond 15 in SARS-CoV-2 genome sequence")
@@ -164,5 +165,25 @@ if __name__ == '__main__':
   print("Longest k-mers in SARS-CoV-2: ", longest_covid2[0])
   print("Longest k-mers in SARS-CoV  : ", longest_covid1[0])
   print()
+
+  print()
+  print("================================================")
+  print("E5: Evolution of repeats in coronavirus genomes")
+  print("================================================")
+  
+  print("\nThe following is a table of the most frequent k-mers present in MERS-Cov, Bat coronavirus RaTG13, Human coronavirus NL63 (China), Wuhan-Hu-1-Cov2 (China) genomes:\n")
+  print("|Genome|K-length|K-mer|")
+  print("|:----:|:---:|:-----:|")
+  file_names = ['MERS-Cov','RaTG13-Cov', 'NL63-Cov', 'Wuhan-Hu-2-Cov']
+  covid_k = [3, 6, 9, 12, 15, 16, 17]
+  for file in file_names: 
+    covid2_genome = fk.get_covid_genome(file + '.txt')
+    for k in covid_k:
+      result = fk.better_frequent_words(covid2_genome, k)
+      rs = result[0]
+      r_len = len(result[0])
+      if r_len < 1000:
+        for r in rs:
+          print("|", file, "|", k, "|", r, "|")
 
   exit()

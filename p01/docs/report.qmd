@@ -164,8 +164,8 @@ To exercise correctly these methods, we have developed a `main.py` program. The 
 **Important note**: Make sure you have installed the following Python 3 modules/libraries before:
 pandas, matplotlib, numpy, pprint, random, re, and timeit.
 
-# Results
-In this section, we proceed to describe our results. We have structured this section in the same schema the project tasks appears in the project prompt.
+# Results and Discussions
+In this section, we proceed to describe our results showing them and discussing the related implications. We have structured this section in the same schema the project tasks appears in the project prompt.
 
 ## Algorithms for finding frequent k-mers
 ### Task 1. Frequent words by counting
@@ -379,7 +379,147 @@ Understanding the first longest kmer for SARS-CoV-2, was a K-length of 17 and on
 
 However, a more unlikely occurance happened in the the kmer of K-length 16, with 1 match of the SARs-CoV RNA genome.  This is the most unlikely occurance happening when finding the longest k-mers found in both SARS-CoV 2 and SARS-CoV-2. 
 
-# Discussion
+### Task E5. Analysis of most frequent k-mers in other Covid related genomes
+
+The following is a table of the most frequent k-mers present in MERS-Cov, Bat coronavirus RaTG13, Human coronavirus NL63 (China), Wuhan-Hu-1-Cov2 (China) genomes:
+
+|Genome|K-length|K-mer|
+|:----:|:---:|:-----:|
+| MERS-Cov | 3 | TTT |
+| MERS-Cov | 6 | TGTTGT |
+| MERS-Cov | 9 | TTAACGAAC |
+| MERS-Cov | 9 | TAACGAACT |
+| MERS-Cov | 12 | GATTTTAACGAA |
+| MERS-Cov | 12 | AATTAACGAACT |
+| MERS-Cov | 15 | GTGGTTATCACTACA |
+| RaTG13-Cov | 3 | TTT |
+| RaTG13-Cov | 6 | TTGTTA |
+| RaTG13-Cov | 9 | TAAACGAAC |
+| RaTG13-Cov | 12 | TCTAAACGAACT |
+| RaTG13-Cov | 12 | TTGAAAAAGGTG |
+| RaTG13-Cov | 12 | TAGGACCTGAGC |
+| RaTG13-Cov | 12 | AAGTGCTTTTGT |
+| RaTG13-Cov | 12 | TTTAAAGTTACA |
+| RaTG13-Cov | 12 | TGGTGTTGTTCA |
+| RaTG13-Cov | 12 | TGTTTATGAGAA |
+| RaTG13-Cov | 12 | ACATTCTTTAAG |
+| RaTG13-Cov | 12 | TGTTAACAGAGG |
+| RaTG13-Cov | 12 | TTGAAGCCCCAT |
+| RaTG13-Cov | 12 | TGAAGCCCCATT |
+| RaTG13-Cov | 12 | TGATGGTAACAA |
+| RaTG13-Cov | 12 | GATGGTAACAAA |
+| RaTG13-Cov | 12 | CTTGTTACAATG |
+| RaTG13-Cov | 12 | ACACATGGTTTA |
+| RaTG13-Cov | 12 | CCTGAAGAACAT |
+| RaTG13-Cov | 12 | TCTTTGAAAGAA |
+| RaTG13-Cov | 12 | CTTTGAAAGAAG |
+| RaTG13-Cov | 12 | AATGGTTTAACT |
+| RaTG13-Cov | 12 | CATGGTACATTT |
+| RaTG13-Cov | 12 | AGAGCAACCAAT |
+| RaTG13-Cov | 12 | GAAAGACATTCT |
+| RaTG13-Cov | 12 | AGCCTTTTCTTA |
+| RaTG13-Cov | 12 | GTACTTTTACTA |
+| RaTG13-Cov | 12 | GCTACAGAGAAG |
+| RaTG13-Cov | 12 | GTGTTTGTCTTA |
+| RaTG13-Cov | 12 | TTGCAGAGTGGT |
+| RaTG13-Cov | 12 | TGCAGAGTGGTT |
+| RaTG13-Cov | 12 | GCAGAGTGGTTT |
+| RaTG13-Cov | 12 | CAGAGTGGTTTT |
+| RaTG13-Cov | 12 | GTTAATGGTGTT |
+| RaTG13-Cov | 12 | TGCAAAGAATGT |
+| RaTG13-Cov | 12 | TTAATGTTGTAA |
+| RaTG13-Cov | 12 | CTAATGGTGACT |
+| RaTG13-Cov | 12 | TGCTTCTGGTAA |
+| RaTG13-Cov | 12 | GAAGGTTCTGTT |
+| RaTG13-Cov | 12 | TTATGTACTCAT |
+| RaTG13-Cov | 12 | TATGTTCACACC |
+| RaTG13-Cov | 12 | CTTACTAATGAT |
+| RaTG13-Cov | 12 | TGTTCTTTATCA |
+| RaTG13-Cov | 12 | TAAAAGACTGTG |
+| RaTG13-Cov | 12 | AAAAGACTGTGT |
+| RaTG13-Cov | 12 | AAAGACTGTGTT |
+| RaTG13-Cov | 12 | CTAAAATGTCAG |
+| RaTG13-Cov | 12 | TAAAATGTCAGA |
+| RaTG13-Cov | 12 | TACACTTAAAAA |
+| RaTG13-Cov | 12 | CTTAAAAACACA |
+| RaTG13-Cov | 12 | TTAAAAACACAG |
+| RaTG13-Cov | 12 | TAAAAACACAGT |
+| RaTG13-Cov | 12 | ACTGGTATGATT |
+| RaTG13-Cov | 12 | CTGGTATGATTT |
+| RaTG13-Cov | 12 | TGTAGAAAACCC |
+| RaTG13-Cov | 12 | GTTGATGGTGTT |
+| RaTG13-Cov | 12 | CGGTAATTTTAA |
+| RaTG13-Cov | 12 | GGTAATTTTAAC |
+| RaTG13-Cov | 12 | AGACAAATCAGC |
+| RaTG13-Cov | 12 | GACAAATCAGCT |
+| RaTG13-Cov | 12 | TGATGCTGTTGT |
+| RaTG13-Cov | 12 | ATGTGACTCAAC |
+| RaTG13-Cov | 12 | TGGTACTGGTAA |
+| RaTG13-Cov | 12 | AGTCATTTTGCT |
+| RaTG13-Cov | 12 | GATGTTTCATCT |
+| RaTG13-Cov | 12 | AACGAACATGAA |
+| RaTG13-Cov | 12 | ACGAACATGAAA |
+| RaTG13-Cov | 15 | TTGCAGAGTGGTTTT |
+| NL63-Cov | 3 | TTT |
+| NL63-Cov | 6 | TGTTTT |
+| NL63-Cov | 9 | TTTGTTTTG |
+| NL63-Cov | 12 | AATTGTAATGTT |
+| NL63-Cov | 12 | GTTGTTGGTGTT |
+| NL63-Cov | 12 | GTGTTTTTGGTG |
+| NL63-Cov | 12 | GTTTGTACTTAT |
+| NL63-Cov | 15 | GTCTACTCTTCTCAA |
+| NL63-Cov | 15 | TCTACTCTTCTCAAC |
+| NL63-Cov | 15 | CTACTCTTCTCAACT |
+| NL63-Cov | 15 | TACTCTTCTCAACTA |
+| NL63-Cov | 15 | TTTGGTGATTTTGTT |
+| NL63-Cov | 15 | ATTCTTATTTTGATA |
+| NL63-Cov | 15 | TTACTTATCTTAATG |
+| NL63-Cov | 16 | GTCTACTCTTCTCAAC |
+| NL63-Cov | 16 | TCTACTCTTCTCAACT |
+| NL63-Cov | 16 | CTACTCTTCTCAACTA |
+| NL63-Cov | 17 | GTCTACTCTTCTCAACT |
+| NL63-Cov | 17 | TCTACTCTTCTCAACTA |
+| Wuhan-Hu-2-Cov | 3 | TTT |
+| Wuhan-Hu-2-Cov | 6 | TTGTTA |
+| Wuhan-Hu-2-Cov | 9 | TAAACGAAC |
+| Wuhan-Hu-2-Cov | 12 | GTTGATGGTGTT |
+| Wuhan-Hu-2-Cov | 15 | ATCAGACAACTACTA |
+| Wuhan-Hu-2-Cov | 15 | TCAGACAACTACTAT |
+| Wuhan-Hu-2-Cov | 15 | CAGACAACTACTATT |
+| Wuhan-Hu-2-Cov | 15 | CAATTATTATAAGAA |
+| Wuhan-Hu-2-Cov | 15 | AATTATTATAAGAAA |
+| Wuhan-Hu-2-Cov | 15 | ATTATTATAAGAAAG |
+| Wuhan-Hu-2-Cov | 15 | TTGCAGAGTGGTTTT |
+| Wuhan-Hu-2-Cov | 15 | AAAGTTGATGGTGTT |
+| Wuhan-Hu-2-Cov | 15 | AAGTTGATGGTGTTG |
+| Wuhan-Hu-2-Cov | 15 | TAAACGAACATGAAA |
+| Wuhan-Hu-2-Cov | 16 | ATCAGACAACTACTAT |
+| Wuhan-Hu-2-Cov | 16 | TCAGACAACTACTATT |
+| Wuhan-Hu-2-Cov | 16 | CAATTATTATAAGAAA |
+| Wuhan-Hu-2-Cov | 16 | AATTATTATAAGAAAG |
+| Wuhan-Hu-2-Cov | 16 | AAAGTTGATGGTGTTG |
+| Wuhan-Hu-2-Cov | 17 | ATCAGACAACTACTATT |
+| Wuhan-Hu-2-Cov | 17 | CAATTATTATAAGAAAG |
+
+Now, if we group and analize what are the common longest k-mers we have foun in this work with the found ones here, we can show them in this table:
+
+::: {#fig-scenario}
+
+![LC](images/common-longest-kmers.png){#qT}
+
+Common Longest k-mers found in several Covid Genomes
+
+:::
+
+We highlight the special cases in yellow since we think they represent an interest commonality between all the Covid Genomes, which are:
+
+* **9-mer TAAACGAAC** present in RaTG13-Cov, SARS-CoV-2, and Wuhan-Hu-2-Cov
+* **12-mer GTTGATGGTGTT** present in RaTG13-Cov, SARS-CoV, SARS-CoV-2, and Wuhan-Hu-2-Cov
+* **15-mer TTGCAGAGTGGTTTT** present in RaTG13-Cov, SARS-CoV-2, and Wuhan-Hu-2-Cov
+
+Also, it is interesting to note that MERS has almost nothing in common with the rest of variants; and, that SARS-CoV- and Wuhan-Hu-2-Cov have a 100% of coincidence. This can be due to they have minor mutations of the same virus.
+
+## Interesting questions
 Did we find a DnaA box in Task 1 and 2?
 What can the k-mers found in The SARS-CoV-2 Genome tell us about the evolution of Covid?
 
