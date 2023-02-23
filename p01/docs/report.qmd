@@ -322,10 +322,10 @@ The following is a table of the most frequent k-mers present in the SARS-CoV-2 a
 | SARS-CoV | 15 | AAAGAAAAAGACTGA |
 | SARS-CoV | 15 | ATTATAATTATAAAT |
 
-When comparing the most frequent k-mers of SARS-CoV-2 and SARS-CoV, the 15-mer shows up the most.  It seems that SARS-CoV-2 might have a faster mutation rate than SARS-CoV.
+When comparing the most frequent k-mers of SARS-CoV-2 and SARS-CoV, the 15-mer shows up the most. 
 
 ### Task 6. Interpreting the k-mers found in a biological context
-
+When putting the Kmers in the blastn database, no significant similarities where found.  In other words there wasn't much alignment.  The differences in frequent 15mers between the RNA viruses might speak to their Phylogenetic differences and where it originated from. 
 
 ## Extra Credits
 ### Task E1. The null distribution of the frequency of most frequent k-mers
