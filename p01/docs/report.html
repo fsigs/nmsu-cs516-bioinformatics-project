@@ -2783,7 +2783,7 @@ we show the list of frequent words and running time in ms for our implementation
 [[‘atgatcaag’, ‘ctcttgatc’, ‘tcttgatca’, ‘cttgatcat’], 89.532]<br>
 </p>
 </blockquote>
-<p>Comment these results here (Gabriel)</p>
+<p>This algorithm using the counting method for frequent words is straightforward in finding the most frequent kmers. What is interesting about these results, is that the most frequent kmers were “9-mers”. According to biological experiments, bacterial DnaA boxes are usually nine nucleotides long. The likelihood of four 9-mers showing up in a genome sequence lead to the hypothesis that one of these four 9-mers might represent a potential DnaA box. However, before concluding that this is a DnaA box, we would still need to sequence other short regions in the genome to determine if these strings exhibit throughout the entire genome. If they are exhibited throughout the genome, rather than just in the ori region, then these results are considered insignificant.</p>
 </section>
 <section id="task-2.-frequent-words-by-hashing" class="level3">
 <h3 class="anchored" data-anchor-id="task-2.-frequent-words-by-hashing">Task 2. Frequent words by hashing</h3>
@@ -2798,7 +2798,7 @@ we show the list of frequent words and running time in ms for our implementation
 [[‘atgatcaag’, ‘ctcttgatc’, ‘tcttgatca’, ‘cttgatcat’], 0.792]<br>
 </p>
 </blockquote>
-<p>Comment these results here (Gabriel)</p>
+<p>When analyzing the hashing algorithm, the results of finding the most and longest kmers are exactly the same. This is reassuring that the problem was solved with coinciding results of finding the most frequent kmers with both algorithms worked. However, when looking at the algorithm analysis of the hashing method, the runtime is significantly lower than the counting method. Now, this significant lower runtime can answer a lot of problems in bioinformational questions. The counting method is efficient for small string genomes, however the upper bound runtime of |Text|^2 makes it extrememly slow for larger string texts. Since more short region sequencing throughout the genome is required to determine a potential DnaA box, this algorithm is the optimal choice in finding significant results from the string data.</p>
 </section>
 </section>
 <section id="understanding-the-runtime" class="level2">
@@ -2824,7 +2824,6 @@ we generate 10 random DNA sequences of variable lenght:<br>
 ‘TCCGTAGGTCT’<br>
 </p>
 </blockquote>
-<p>Comment these results here (Gabriel)</p>
 </section>
 <section id="task-4.-analysis-of-empirical-time-comparing-counting-and-hashing-algorithms" class="level3">
 <h3 class="anchored" data-anchor-id="task-4.-analysis-of-empirical-time-comparing-counting-and-hashing-algorithms">Task 4. Analysis of empirical time comparing counting and hashing algorithms</h3>
@@ -3160,7 +3159,7 @@ we generate 10 random DNA sequences of variable lenght:<br>
 </tr>
 </tbody>
 </table>
-<p>Comment these results here (Gabriel)</p>
+<p>Analyzing the empirical time comparisin of the two algorithms. It is clear that the runtime (ms) of the counting method implementation increases significantly as the function of sequence length L increases. Looking at the consolidated table, no matter the increase of sequence length L, the runtime of the hashing algorithm stays suprisingly close to its mean. The upper bound of the count algorithm O(|Text|^2 * k) versus the O(n)+1 hashing algorithm runtime.</p>
 </section>
 </section>
 <section id="frequent-k-mers-in-the-sars-cov-2-genome" class="level2">
@@ -3289,11 +3288,10 @@ we generate 10 random DNA sequences of variable lenght:<br>
 </tr>
 </tbody>
 </table>
-<p>Comment these results here (Gabriel)</p>
+<p>When comparing the most frequent k-mers of SARS-CoV-2 and SARS-CoV, the 15-mer shows up the most. It seems that SARS-CoV-2 might have a faster mutation rate than SARS-CoV.</p>
 </section>
 <section id="task-6.-interpreting-the-k-mers-found-in-a-biological-context" class="level3">
 <h3 class="anchored" data-anchor-id="task-6.-interpreting-the-k-mers-found-in-a-biological-context">Task 6. Interpreting the k-mers found in a biological context</h3>
-<p>Comment your research about this question here (Gabriel)</p>
 </section>
 </section>
 <section id="extra-credits" class="level2">
@@ -3317,7 +3315,7 @@ and consequently, it has biological significance:<br>
 15-mers give a p-value of 0.52248, then they DO NOT HAVE biological significance<br>
 </p>
 </blockquote>
-<p>Comment your research about this question here (Gabriel)</p>
+<p>research about this question here **</p>
 </section>
 <section id="task-e2.-sars-cov-versus-sars-cov-2" class="level3">
 <h3 class="anchored" data-anchor-id="task-e2.-sars-cov-versus-sars-cov-2">Task E2. SARS-CoV versus SARS-CoV-2</h3>
@@ -3363,7 +3361,7 @@ and consequently, it has biological significance:<br>
 </tbody>
 </table>
 <p>Now, that we know for SARS-CoV-2 is k=17 and for SARS-CoV is K=16, we found the longest kmers: Longest k-mers in SARS-CoV-2: [‘ATCAGACAACTACTATT’, ‘CAATTATTATAAGAAAG’] Longest k-mers in SARS-CoV : [‘AAAAGAAAAAGACTGA’]</p>
-<p>Comment your research about this question here (Gabriel)</p>
+<p>Comment ***</p>
 </section>
 <section id="task-e4.-develop-a-fast-algorithm-to-find-k-mer-repeats-in-a-given-range-of-k" class="level3">
 <h3 class="anchored" data-anchor-id="task-e4.-develop-a-fast-algorithm-to-find-k-mer-repeats-in-a-given-range-of-k">Task E4. Develop a fast algorithm to find k-mer repeats in a given range of k</h3>
@@ -3697,205 +3695,211 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;ACG&#39;, &#39;TTT&#39;</span><span class="co">]</span><span class="at">, 0.163] \</span></span>
 <span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;atgatcaag&#39;, &#39;ctcttgatc&#39;, &#39;tcttgatca&#39;, &#39;cttgatcat&#39;</span><span class="co">]</span><span class="at">, 89.532] \</span></span>
 <span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a>Comment these results here (Gabriel)</span>
-<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 2. Frequent words by hashing</span></span>
-<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a>This is the output of our program:</span>
-<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================= \</span></span>
-<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Task 2: Algorithm Better Frequent Words (hashing) \</span></span>
-<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================= \</span></span>
-<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using test cases from class slides (Ch 1 slides 64 and 99), \</span></span>
-<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; we show the list of frequent words and running time in ms for our implementation are correct: \</span></span>
-<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;ACG&#39;, &#39;TTT&#39;</span><span class="co">]</span><span class="at">, 0.1] \</span></span>
-<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;atgatcaag&#39;, &#39;ctcttgatc&#39;, &#39;tcttgatca&#39;, &#39;cttgatcat&#39;</span><span class="co">]</span><span class="at">, 0.792] \</span></span>
-<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a>Comment these results here (Gabriel)</span>
-<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a><span class="fu">## Understanding the runtime</span></span>
-<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 3. Method generates random DNA sequences of several random lengths</span></span>
-<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a>This is the output of our program:</span>
-<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ======================================== \</span></span>
-<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Task 3: Generating Random DNA Sequences \</span></span>
-<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ======================================== \</span></span>
-<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using Numpy random choice function of Python, \</span></span>
-<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; we generate 10 random DNA sequences of variable lenght: \</span></span>
-<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GACTCGGATATGT&#39; \</span></span>
-<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GAATATGTGCAA&#39; \</span></span>
-<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;AGGGGATACTACT&#39; \</span></span>
-<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GTACATATCA&#39; \</span></span>
-<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;TTGGGATAACA&#39; \</span></span>
-<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GTGGGAAGCACGT&#39; \</span></span>
-<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;ACATACAGACGCA&#39; \</span></span>
-<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;ATTCTTAACAAGGC&#39; \</span></span>
-<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;CTATTGAAAG&#39; \</span></span>
-<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;TCCGTAGGTCT&#39; \</span></span>
-<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a>Comment these results here (Gabriel)</span>
-<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 4. Analysis of empirical time comparing counting and hashing algorithms</span></span>
-<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a>To empirically compare the two algorithms in terms of runtime, our program for this analysis has produced the comparison in the following charts, and also consolidated everything in a major table with these results.</span>
+<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a>This algorithm using the counting method for frequent words is straightforward in finding</span>
+<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a>the most frequent kmers.  What is interesting about these results, is that the most frequent kmers were &quot;9-mers&quot;.  According to biological experiments, bacterial DnaA boxes are usually </span>
+<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a>nine nucleotides long.  The likelihood of four 9-mers showing up in a genome sequence lead </span>
+<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a>to the hypothesis that one of these four 9-mers might represent a potential DnaA box. </span>
+<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a>However, before concluding that this is a DnaA box, we would still need to sequence other short regions in the genome to determine if these strings exhibit throughout the entire genome. If they are exhibited throughout the genome, rather than just in the ori region, then these results are considered insignificant.</span>
+<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 2. Frequent words by hashing</span></span>
+<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a>This is the output of our program:</span>
+<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================= \</span></span>
+<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Task 2: Algorithm Better Frequent Words (hashing) \</span></span>
+<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================= \</span></span>
+<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using test cases from class slides (Ch 1 slides 64 and 99), \</span></span>
+<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; we show the list of frequent words and running time in ms for our implementation are correct: \</span></span>
+<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;ACG&#39;, &#39;TTT&#39;</span><span class="co">]</span><span class="at">, 0.1] \</span></span>
+<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; [</span><span class="co">[</span><span class="ot">&#39;atgatcaag&#39;, &#39;ctcttgatc&#39;, &#39;tcttgatca&#39;, &#39;cttgatcat&#39;</span><span class="co">]</span><span class="at">, 0.792] \</span></span>
+<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a>When analyzing the hashing algorithm, the results of finding the most and longest kmers are exactly the same.  This is reassuring that the problem was solved with coinciding results of finding the most frequent kmers with both algorithms worked.  However, when looking at the algorithm analysis of the hashing method, the runtime is significantly lower than the counting method.  Now, this significant lower runtime can answer a lot of problems in bioinformational questions.  The counting method is efficient for small string genomes, however the upper bound runtime of |Text|^2 makes it extrememly slow for larger string texts.  Since more short region sequencing throughout the genome is required to determine a potential DnaA box, this algorithm is the optimal choice in finding significant results from the string data. </span>
+<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Understanding the runtime</span></span>
+<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 3. Method generates random DNA sequences of several random lengths</span></span>
+<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a>This is the output of our program:</span>
+<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ======================================== \</span></span>
+<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Task 3: Generating Random DNA Sequences \</span></span>
+<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ======================================== \</span></span>
+<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using Numpy random choice function of Python, \</span></span>
+<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; we generate 10 random DNA sequences of variable lenght: \</span></span>
+<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GACTCGGATATGT&#39; \</span></span>
+<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GAATATGTGCAA&#39; \</span></span>
+<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;AGGGGATACTACT&#39; \</span></span>
+<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GTACATATCA&#39; \</span></span>
+<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;TTGGGATAACA&#39; \</span></span>
+<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;GTGGGAAGCACGT&#39; \</span></span>
+<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;ACATACAGACGCA&#39; \</span></span>
+<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;ATTCTTAACAAGGC&#39; \</span></span>
+<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;CTATTGAAAG&#39; \</span></span>
+<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &#39;TCCGTAGGTCT&#39; \</span></span>
 <span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a>The following are our charts:</span>
+<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a>::: {#fig-scenario layout-ncol=2}</span>
-<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a><span class="al">![L25](images/q4_25.png)</span>{#q4_25}</span>
-<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a><span class="al">![L50](images/q4_50.png)</span>{#q4_50}</span>
-<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a><span class="al">![L75](images/q4_75.png)</span>{#q4_75}</span>
-<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a><span class="al">![L100](images/q4_100.png)</span>{#q4_100}</span>
-<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a><span class="al">![L250](images/q4_75.png)</span>{#q4_250}</span>
-<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a><span class="al">![L500](images/q4_500.png)</span>{#q4_500}</span>
-<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a><span class="al">![L750](images/q4_750.png)</span>{#q4_750}</span>
-<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a><span class="al">![L1000](images/q4_1000.png)</span>{#q4_1000}</span>
-<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a>Runtime comparison using a Random Genome length of 25, 50, 75, 100, 250, 500, 750, and 1000 nucleotides, and k-lengths of 3, 6, 9, 12, and 15</span>
-<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 4. Analysis of empirical time comparing counting and hashing algorithms</span></span>
+<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a>To empirically compare the two algorithms in terms of runtime, our program for this analysis has produced the comparison in the following charts, and also consolidated everything in a major table with these results.</span>
+<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a>The following are our charts:</span>
+<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a>::: {#fig-scenario layout-ncol=2}</span>
+<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a><span class="al">![L25](images/q4_25.png)</span>{#q4_25}</span>
+<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a><span class="al">![L50](images/q4_50.png)</span>{#q4_50}</span>
+<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a><span class="al">![L75](images/q4_75.png)</span>{#q4_75}</span>
+<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a><span class="al">![L100](images/q4_100.png)</span>{#q4_100}</span>
+<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a><span class="al">![L250](images/q4_75.png)</span>{#q4_250}</span>
+<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a><span class="al">![L500](images/q4_500.png)</span>{#q4_500}</span>
+<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a><span class="al">![L750](images/q4_750.png)</span>{#q4_750}</span>
 <span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a>And in a consolidated table:</span>
+<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a><span class="al">![L1000](images/q4_1000.png)</span>{#q4_1000}</span>
 <span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a>|Length|K-length|FW(ms)|BFW(ms)|</span>
-<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|:------:|</span>
-<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a>| 25 | 3 | 0.369 | 0.04 |</span>
-<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>| 25 | 6 | 0.263 | 0.029 |</span>
-<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>| 25 | 9 | 0.201 | 0.026 |</span>
-<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>| 25 | 12 | 0.148 | 0.022 |</span>
-<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a>| 25 | 15 | 0.117 | 0.019 |</span>
-<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a>| 50 | 3 | 2.672 | 0.107 |</span>
-<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a>| 50 | 6 | 2.848 | 0.149 |</span>
-<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a>| 50 | 9 | 2.291 | 0.121 |</span>
-<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a>| 50 | 12 | 1.878 | 0.132 |</span>
-<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a>| 50 | 15 | 1.687 | 0.112 |</span>
-<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a>| 75 | 3 | 7.455 | 0.151 |</span>
-<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a>| 75 | 6 | 7.312 | 0.224 |</span>
-<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a>| 75 | 9 | 5.965 | 0.155 |</span>
-<span id="cb4-202"><a href="#cb4-202" aria-hidden="true" tabindex="-1"></a>| 75 | 12 | 6.064 | 0.214 |</span>
-<span id="cb4-203"><a href="#cb4-203" aria-hidden="true" tabindex="-1"></a>| 75 | 15 | 6.115 | 0.143 |</span>
-<span id="cb4-204"><a href="#cb4-204" aria-hidden="true" tabindex="-1"></a>| 100 | 3 | 9.436 | 0.21 |</span>
-<span id="cb4-205"><a href="#cb4-205" aria-hidden="true" tabindex="-1"></a>| 100 | 6 | 10.619 | 0.19 |</span>
-<span id="cb4-206"><a href="#cb4-206" aria-hidden="true" tabindex="-1"></a>| 100 | 9 | 9.054 | 0.316 |</span>
-<span id="cb4-207"><a href="#cb4-207" aria-hidden="true" tabindex="-1"></a>| 100 | 12 | 7.918 | 0.24 |</span>
-<span id="cb4-208"><a href="#cb4-208" aria-hidden="true" tabindex="-1"></a>| 100 | 15 | 6.889 | 0.117 |</span>
-<span id="cb4-209"><a href="#cb4-209" aria-hidden="true" tabindex="-1"></a>| 250 | 3 | 55.049 | 0.269 |</span>
-<span id="cb4-210"><a href="#cb4-210" aria-hidden="true" tabindex="-1"></a>| 250 | 6 | 35.782 | 0.282 |</span>
-<span id="cb4-211"><a href="#cb4-211" aria-hidden="true" tabindex="-1"></a>| 250 | 9 | 42.438 | 0.283 |</span>
-<span id="cb4-212"><a href="#cb4-212" aria-hidden="true" tabindex="-1"></a>| 250 | 12 | 26.598 | 0.276 |</span>
-<span id="cb4-213"><a href="#cb4-213" aria-hidden="true" tabindex="-1"></a>| 250 | 15 | 27.295 | 0.288 |</span>
-<span id="cb4-214"><a href="#cb4-214" aria-hidden="true" tabindex="-1"></a>| 500 | 3 | 198.86 | 0.467 |</span>
-<span id="cb4-215"><a href="#cb4-215" aria-hidden="true" tabindex="-1"></a>| 500 | 6 | 125.661 | 0.563 |</span>
-<span id="cb4-216"><a href="#cb4-216" aria-hidden="true" tabindex="-1"></a>| 500 | 9 | 156.53 | 0.874 |</span>
-<span id="cb4-217"><a href="#cb4-217" aria-hidden="true" tabindex="-1"></a>| 500 | 12 | 157.304 | 0.867 |</span>
-<span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a>| 500 | 15 | 157.182 | 2.094 |</span>
-<span id="cb4-219"><a href="#cb4-219" aria-hidden="true" tabindex="-1"></a>| 750 | 3 | 334.105 | 0.696 |</span>
-<span id="cb4-220"><a href="#cb4-220" aria-hidden="true" tabindex="-1"></a>| 750 | 6 | 261.337 | 0.798 |</span>
-<span id="cb4-221"><a href="#cb4-221" aria-hidden="true" tabindex="-1"></a>| 750 | 9 | 291.711 | 0.824 |</span>
-<span id="cb4-222"><a href="#cb4-222" aria-hidden="true" tabindex="-1"></a>| 750 | 12 | 259.805 | 0.803 |</span>
-<span id="cb4-223"><a href="#cb4-223" aria-hidden="true" tabindex="-1"></a>| 750 | 15 | 268.239 | 0.808 |</span>
-<span id="cb4-224"><a href="#cb4-224" aria-hidden="true" tabindex="-1"></a>| 1000 | 3 | 602.367 | 0.915 |</span>
-<span id="cb4-225"><a href="#cb4-225" aria-hidden="true" tabindex="-1"></a>| 1000 | 6 | 501.437 | 1.017 |</span>
-<span id="cb4-226"><a href="#cb4-226" aria-hidden="true" tabindex="-1"></a>| 1000 | 9 | 475.136 | 0.967 |</span>
-<span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a>| 1000 | 12 | 476.967 | 1.067 |</span>
-<span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a>| 1000 | 15 | 472.738 | 1.058 |</span>
-<span id="cb4-229"><a href="#cb4-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-230"><a href="#cb4-230" aria-hidden="true" tabindex="-1"></a>Comment these results here (Gabriel)</span>
-<span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a><span class="fu">## Frequent k-mers in the SARS-Cov-2 genome</span></span>
-<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 5 and Task E2. SARS-CoV-2 and SARS-CoV most frequent k-mers</span></span>
+<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a>Runtime comparison using a Random Genome length of 25, 50, 75, 100, 250, 500, 750, and 1000 nucleotides, and k-lengths of 3, 6, 9, 12, and 15</span>
+<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>And in a consolidated table:</span>
+<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>|Length|K-length|FW(ms)|BFW(ms)|</span>
+<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|:------:|</span>
+<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a>| 25 | 3 | 0.369 | 0.04 |</span>
+<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a>| 25 | 6 | 0.263 | 0.029 |</span>
+<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a>| 25 | 9 | 0.201 | 0.026 |</span>
+<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a>| 25 | 12 | 0.148 | 0.022 |</span>
+<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a>| 25 | 15 | 0.117 | 0.019 |</span>
+<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a>| 50 | 3 | 2.672 | 0.107 |</span>
+<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a>| 50 | 6 | 2.848 | 0.149 |</span>
+<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a>| 50 | 9 | 2.291 | 0.121 |</span>
+<span id="cb4-202"><a href="#cb4-202" aria-hidden="true" tabindex="-1"></a>| 50 | 12 | 1.878 | 0.132 |</span>
+<span id="cb4-203"><a href="#cb4-203" aria-hidden="true" tabindex="-1"></a>| 50 | 15 | 1.687 | 0.112 |</span>
+<span id="cb4-204"><a href="#cb4-204" aria-hidden="true" tabindex="-1"></a>| 75 | 3 | 7.455 | 0.151 |</span>
+<span id="cb4-205"><a href="#cb4-205" aria-hidden="true" tabindex="-1"></a>| 75 | 6 | 7.312 | 0.224 |</span>
+<span id="cb4-206"><a href="#cb4-206" aria-hidden="true" tabindex="-1"></a>| 75 | 9 | 5.965 | 0.155 |</span>
+<span id="cb4-207"><a href="#cb4-207" aria-hidden="true" tabindex="-1"></a>| 75 | 12 | 6.064 | 0.214 |</span>
+<span id="cb4-208"><a href="#cb4-208" aria-hidden="true" tabindex="-1"></a>| 75 | 15 | 6.115 | 0.143 |</span>
+<span id="cb4-209"><a href="#cb4-209" aria-hidden="true" tabindex="-1"></a>| 100 | 3 | 9.436 | 0.21 |</span>
+<span id="cb4-210"><a href="#cb4-210" aria-hidden="true" tabindex="-1"></a>| 100 | 6 | 10.619 | 0.19 |</span>
+<span id="cb4-211"><a href="#cb4-211" aria-hidden="true" tabindex="-1"></a>| 100 | 9 | 9.054 | 0.316 |</span>
+<span id="cb4-212"><a href="#cb4-212" aria-hidden="true" tabindex="-1"></a>| 100 | 12 | 7.918 | 0.24 |</span>
+<span id="cb4-213"><a href="#cb4-213" aria-hidden="true" tabindex="-1"></a>| 100 | 15 | 6.889 | 0.117 |</span>
+<span id="cb4-214"><a href="#cb4-214" aria-hidden="true" tabindex="-1"></a>| 250 | 3 | 55.049 | 0.269 |</span>
+<span id="cb4-215"><a href="#cb4-215" aria-hidden="true" tabindex="-1"></a>| 250 | 6 | 35.782 | 0.282 |</span>
+<span id="cb4-216"><a href="#cb4-216" aria-hidden="true" tabindex="-1"></a>| 250 | 9 | 42.438 | 0.283 |</span>
+<span id="cb4-217"><a href="#cb4-217" aria-hidden="true" tabindex="-1"></a>| 250 | 12 | 26.598 | 0.276 |</span>
+<span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a>| 250 | 15 | 27.295 | 0.288 |</span>
+<span id="cb4-219"><a href="#cb4-219" aria-hidden="true" tabindex="-1"></a>| 500 | 3 | 198.86 | 0.467 |</span>
+<span id="cb4-220"><a href="#cb4-220" aria-hidden="true" tabindex="-1"></a>| 500 | 6 | 125.661 | 0.563 |</span>
+<span id="cb4-221"><a href="#cb4-221" aria-hidden="true" tabindex="-1"></a>| 500 | 9 | 156.53 | 0.874 |</span>
+<span id="cb4-222"><a href="#cb4-222" aria-hidden="true" tabindex="-1"></a>| 500 | 12 | 157.304 | 0.867 |</span>
+<span id="cb4-223"><a href="#cb4-223" aria-hidden="true" tabindex="-1"></a>| 500 | 15 | 157.182 | 2.094 |</span>
+<span id="cb4-224"><a href="#cb4-224" aria-hidden="true" tabindex="-1"></a>| 750 | 3 | 334.105 | 0.696 |</span>
+<span id="cb4-225"><a href="#cb4-225" aria-hidden="true" tabindex="-1"></a>| 750 | 6 | 261.337 | 0.798 |</span>
+<span id="cb4-226"><a href="#cb4-226" aria-hidden="true" tabindex="-1"></a>| 750 | 9 | 291.711 | 0.824 |</span>
+<span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a>| 750 | 12 | 259.805 | 0.803 |</span>
+<span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a>| 750 | 15 | 268.239 | 0.808 |</span>
+<span id="cb4-229"><a href="#cb4-229" aria-hidden="true" tabindex="-1"></a>| 1000 | 3 | 602.367 | 0.915 |</span>
+<span id="cb4-230"><a href="#cb4-230" aria-hidden="true" tabindex="-1"></a>| 1000 | 6 | 501.437 | 1.017 |</span>
+<span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a>| 1000 | 9 | 475.136 | 0.967 |</span>
+<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a>| 1000 | 12 | 476.967 | 1.067 |</span>
+<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a>| 1000 | 15 | 472.738 | 1.058 |</span>
 <span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a>The following is a table of the most frequent k-mers present in the SARS-CoV-2 and SARS-CoV genomes:</span>
-<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a>|Genome|K-length|K-mer|</span>
-<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|</span>
-<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 3 | TTT |</span>
-<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 6 | TTGTTA |</span>
-<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 9 | TAAACGAAC |</span>
-<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 12 | GTTGATGGTGTT |</span>
-<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | ATCAGACAACTACTA |</span>
-<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | TCAGACAACTACTAT |</span>
-<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | CAGACAACTACTATT |</span>
-<span id="cb4-246"><a href="#cb4-246" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | CAATTATTATAAGAA |</span>
-<span id="cb4-247"><a href="#cb4-247" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | AATTATTATAAGAAA |</span>
-<span id="cb4-248"><a href="#cb4-248" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | ATTATTATAAGAAAG |</span>
-<span id="cb4-249"><a href="#cb4-249" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | TTGCAGAGTGGTTTT |</span>
-<span id="cb4-250"><a href="#cb4-250" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | AAAGTTGATGGTGTT |</span>
-<span id="cb4-251"><a href="#cb4-251" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | AAGTTGATGGTGTTG |</span>
-<span id="cb4-252"><a href="#cb4-252" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | TAAACGAACATGAAA |</span>
-<span id="cb4-253"><a href="#cb4-253" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 3 | TTT |</span>
-<span id="cb4-254"><a href="#cb4-254" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 6 | TTGCTG |</span>
-<span id="cb4-255"><a href="#cb4-255" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 9 | TAAACGAAC |</span>
-<span id="cb4-256"><a href="#cb4-256" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 12 | TGAGGAAGAAGA |</span>
-<span id="cb4-257"><a href="#cb4-257" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 12 | TAAAATGTCTGA |</span>
-<span id="cb4-258"><a href="#cb4-258" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | AAAAGAAAAAGACTG |</span>
-<span id="cb4-259"><a href="#cb4-259" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | AAAGAAAAAGACTGA |</span>
-<span id="cb4-260"><a href="#cb4-260" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | ATTATAATTATAAAT |</span>
-<span id="cb4-261"><a href="#cb4-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-262"><a href="#cb4-262" aria-hidden="true" tabindex="-1"></a>Comment these results here (Gabriel)</span>
-<span id="cb4-263"><a href="#cb4-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-264"><a href="#cb4-264" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 6. Interpreting the k-mers found in a biological context</span></span>
-<span id="cb4-265"><a href="#cb4-265" aria-hidden="true" tabindex="-1"></a>Comment your research about this question here (Gabriel)</span>
-<span id="cb4-266"><a href="#cb4-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-267"><a href="#cb4-267" aria-hidden="true" tabindex="-1"></a><span class="fu">## Extra Credits</span></span>
-<span id="cb4-268"><a href="#cb4-268" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E1. The null distribution of the frequency of most frequent k-mers</span></span>
-<span id="cb4-269"><a href="#cb4-269" aria-hidden="true" tabindex="-1"></a>Our program produced these results:</span>
-<span id="cb4-270"><a href="#cb4-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-271"><a href="#cb4-271" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================================================ \</span></span>
-<span id="cb4-272"><a href="#cb4-272" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; E1: Null Distribution of the most frequent k-mers in SARS-CoV-2 genome sequence \</span></span>
-<span id="cb4-273"><a href="#cb4-273" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================================================ \</span></span>
-<span id="cb4-274"><a href="#cb4-274" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using the SARS-CoV-2 genome sequence, our permutation test \</span></span>
-<span id="cb4-275"><a href="#cb4-275" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; with 1000 permutations gives. We have considered a p-value threshold of 0.05 to decide \</span></span>
-<span id="cb4-276"><a href="#cb4-276" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; if the most frequent k-mer is unlikely to have occurred by chance alone \</span></span>
-<span id="cb4-277"><a href="#cb4-277" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; and consequently, it has biological significance: \</span></span>
-<span id="cb4-278"><a href="#cb4-278" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb4-279"><a href="#cb4-279" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 3-mers give a p-value of 0.33067, then they DO NOT HAVE biological significance \</span></span>
-<span id="cb4-280"><a href="#cb4-280" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 6-mers give a p-value of 0.34366, then they DO NOT HAVE biological significance \</span></span>
-<span id="cb4-281"><a href="#cb4-281" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **9-mers give a p-value of 0.02198, then they DO HAVE biological significance** \</span></span>
-<span id="cb4-282"><a href="#cb4-282" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **12-mers give a p-value of 0.09491, then they DO NOT HAVE biological significance** \</span></span>
-<span id="cb4-283"><a href="#cb4-283" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 15-mers give a p-value of 0.52248, then they DO NOT HAVE biological significance \</span></span>
-<span id="cb4-284"><a href="#cb4-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-285"><a href="#cb4-285" aria-hidden="true" tabindex="-1"></a>Comment your research about this question here (Gabriel)</span>
-<span id="cb4-286"><a href="#cb4-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-287"><a href="#cb4-287" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E2. SARS-CoV versus SARS-CoV-2</span></span>
-<span id="cb4-288"><a href="#cb4-288" aria-hidden="true" tabindex="-1"></a>Analyzed above in Task 5. Please, go to that section.</span>
-<span id="cb4-289"><a href="#cb4-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-290"><a href="#cb4-290" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E3. Find the longest k-mer repeats beyond 15</span></span>
-<span id="cb4-291"><a href="#cb4-291" aria-hidden="true" tabindex="-1"></a>First, we find what is the max value for k in each Genome:</span>
+<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a>Analyzing the empirical time comparisin of the two algorithms.  It is clear that the runtime (ms) of the counting method implementation increases significantly as the function of sequence length L increases.</span>
+<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a>Looking at the consolidated table, no matter the increase of sequence length L, the runtime of the hashing algorithm stays suprisingly close to its mean.  The upper bound of the count algorithm O(|Text|^2 * k) versus the O(n)+1 hashing algorithm runtime.</span>
+<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a><span class="fu">## Frequent k-mers in the SARS-Cov-2 genome</span></span>
+<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 5 and Task E2. SARS-CoV-2 and SARS-CoV most frequent k-mers</span></span>
+<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a>The following is a table of the most frequent k-mers present in the SARS-CoV-2 and SARS-CoV genomes:</span>
+<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a>|Genome|K-length|K-mer|</span>
+<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|</span>
+<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 3 | TTT |</span>
+<span id="cb4-246"><a href="#cb4-246" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 6 | TTGTTA |</span>
+<span id="cb4-247"><a href="#cb4-247" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 9 | TAAACGAAC |</span>
+<span id="cb4-248"><a href="#cb4-248" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 12 | GTTGATGGTGTT |</span>
+<span id="cb4-249"><a href="#cb4-249" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | ATCAGACAACTACTA |</span>
+<span id="cb4-250"><a href="#cb4-250" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | TCAGACAACTACTAT |</span>
+<span id="cb4-251"><a href="#cb4-251" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | CAGACAACTACTATT |</span>
+<span id="cb4-252"><a href="#cb4-252" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | CAATTATTATAAGAA |</span>
+<span id="cb4-253"><a href="#cb4-253" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | AATTATTATAAGAAA |</span>
+<span id="cb4-254"><a href="#cb4-254" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | ATTATTATAAGAAAG |</span>
+<span id="cb4-255"><a href="#cb4-255" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | TTGCAGAGTGGTTTT |</span>
+<span id="cb4-256"><a href="#cb4-256" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | AAAGTTGATGGTGTT |</span>
+<span id="cb4-257"><a href="#cb4-257" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | AAGTTGATGGTGTTG |</span>
+<span id="cb4-258"><a href="#cb4-258" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | TAAACGAACATGAAA |</span>
+<span id="cb4-259"><a href="#cb4-259" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 3 | TTT |</span>
+<span id="cb4-260"><a href="#cb4-260" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 6 | TTGCTG |</span>
+<span id="cb4-261"><a href="#cb4-261" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 9 | TAAACGAAC |</span>
+<span id="cb4-262"><a href="#cb4-262" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 12 | TGAGGAAGAAGA |</span>
+<span id="cb4-263"><a href="#cb4-263" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 12 | TAAAATGTCTGA |</span>
+<span id="cb4-264"><a href="#cb4-264" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | AAAAGAAAAAGACTG |</span>
+<span id="cb4-265"><a href="#cb4-265" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | AAAGAAAAAGACTGA |</span>
+<span id="cb4-266"><a href="#cb4-266" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | ATTATAATTATAAAT |</span>
+<span id="cb4-267"><a href="#cb4-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-268"><a href="#cb4-268" aria-hidden="true" tabindex="-1"></a>When comparing the most frequent k-mers of SARS-CoV-2 and SARS-CoV, the 15-mer shows up the most.  It seems that SARS-CoV-2 might have a faster mutation rate than SARS-CoV.</span>
+<span id="cb4-269"><a href="#cb4-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-270"><a href="#cb4-270" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 6. Interpreting the k-mers found in a biological context</span></span>
+<span id="cb4-271"><a href="#cb4-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-272"><a href="#cb4-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-273"><a href="#cb4-273" aria-hidden="true" tabindex="-1"></a><span class="fu">## Extra Credits</span></span>
+<span id="cb4-274"><a href="#cb4-274" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E1. The null distribution of the frequency of most frequent k-mers</span></span>
+<span id="cb4-275"><a href="#cb4-275" aria-hidden="true" tabindex="-1"></a>Our program produced these results:</span>
+<span id="cb4-276"><a href="#cb4-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-277"><a href="#cb4-277" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================================================ \</span></span>
+<span id="cb4-278"><a href="#cb4-278" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; E1: Null Distribution of the most frequent k-mers in SARS-CoV-2 genome sequence \</span></span>
+<span id="cb4-279"><a href="#cb4-279" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ================================================================================ \</span></span>
+<span id="cb4-280"><a href="#cb4-280" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using the SARS-CoV-2 genome sequence, our permutation test \</span></span>
+<span id="cb4-281"><a href="#cb4-281" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; with 1000 permutations gives. We have considered a p-value threshold of 0.05 to decide \</span></span>
+<span id="cb4-282"><a href="#cb4-282" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; if the most frequent k-mer is unlikely to have occurred by chance alone \</span></span>
+<span id="cb4-283"><a href="#cb4-283" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; and consequently, it has biological significance: \</span></span>
+<span id="cb4-284"><a href="#cb4-284" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb4-285"><a href="#cb4-285" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 3-mers give a p-value of 0.33067, then they DO NOT HAVE biological significance \</span></span>
+<span id="cb4-286"><a href="#cb4-286" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 6-mers give a p-value of 0.34366, then they DO NOT HAVE biological significance \</span></span>
+<span id="cb4-287"><a href="#cb4-287" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **9-mers give a p-value of 0.02198, then they DO HAVE biological significance** \</span></span>
+<span id="cb4-288"><a href="#cb4-288" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **12-mers give a p-value of 0.09491, then they DO NOT HAVE biological significance** \</span></span>
+<span id="cb4-289"><a href="#cb4-289" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 15-mers give a p-value of 0.52248, then they DO NOT HAVE biological significance \</span></span>
+<span id="cb4-290"><a href="#cb4-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-291"><a href="#cb4-291" aria-hidden="true" tabindex="-1"></a>research about this question here **</span>
 <span id="cb4-292"><a href="#cb4-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-293"><a href="#cb4-293" aria-hidden="true" tabindex="-1"></a>|Genome|K-length|# matches|</span>
-<span id="cb4-294"><a href="#cb4-294" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|</span>
-<span id="cb4-295"><a href="#cb4-295" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | 10 |</span>
-<span id="cb4-296"><a href="#cb4-296" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 16 | 5 |</span>
-<span id="cb4-297"><a href="#cb4-297" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 17 | 2 |</span>
-<span id="cb4-298"><a href="#cb4-298" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | 3 |</span>
-<span id="cb4-299"><a href="#cb4-299" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 16 | 1 |</span>
-<span id="cb4-300"><a href="#cb4-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-301"><a href="#cb4-301" aria-hidden="true" tabindex="-1"></a>Now, that we know for SARS-CoV-2 is k=17 and for SARS-CoV is K=16, we found the longest kmers:</span>
-<span id="cb4-302"><a href="#cb4-302" aria-hidden="true" tabindex="-1"></a>Longest k-mers in SARS-CoV-2:  <span class="co">[</span><span class="ot">&#39;ATCAGACAACTACTATT&#39;, &#39;CAATTATTATAAGAAAG&#39;</span><span class="co">]</span></span>
-<span id="cb4-303"><a href="#cb4-303" aria-hidden="true" tabindex="-1"></a>Longest k-mers in SARS-CoV  :  <span class="co">[</span><span class="ot">&#39;AAAAGAAAAAGACTGA&#39;</span><span class="co">]</span></span>
-<span id="cb4-304"><a href="#cb4-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-305"><a href="#cb4-305" aria-hidden="true" tabindex="-1"></a>Comment your research about this question here (Gabriel)</span>
+<span id="cb4-293"><a href="#cb4-293" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E2. SARS-CoV versus SARS-CoV-2</span></span>
+<span id="cb4-294"><a href="#cb4-294" aria-hidden="true" tabindex="-1"></a>Analyzed above in Task 5. Please, go to that section.</span>
+<span id="cb4-295"><a href="#cb4-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-296"><a href="#cb4-296" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E3. Find the longest k-mer repeats beyond 15</span></span>
+<span id="cb4-297"><a href="#cb4-297" aria-hidden="true" tabindex="-1"></a>First, we find what is the max value for k in each Genome:</span>
+<span id="cb4-298"><a href="#cb4-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-299"><a href="#cb4-299" aria-hidden="true" tabindex="-1"></a>|Genome|K-length|# matches|</span>
+<span id="cb4-300"><a href="#cb4-300" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|</span>
+<span id="cb4-301"><a href="#cb4-301" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | 10 |</span>
+<span id="cb4-302"><a href="#cb4-302" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 16 | 5 |</span>
+<span id="cb4-303"><a href="#cb4-303" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 17 | 2 |</span>
+<span id="cb4-304"><a href="#cb4-304" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | 3 |</span>
+<span id="cb4-305"><a href="#cb4-305" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 16 | 1 |</span>
 <span id="cb4-306"><a href="#cb4-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-307"><a href="#cb4-307" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E4. Develop a fast algorithm to find k-mer repeats in a given range of k</span></span>
-<span id="cb4-308"><a href="#cb4-308" aria-hidden="true" tabindex="-1"></a>Pending of coding. Part of future work.</span>
-<span id="cb4-309"><a href="#cb4-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-310"><a href="#cb4-310" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E5. Evolution of repeats in coronavirus genomes</span></span>
-<span id="cb4-311"><a href="#cb4-311" aria-hidden="true" tabindex="-1"></a>Pending of coding. Part of future work.</span>
+<span id="cb4-307"><a href="#cb4-307" aria-hidden="true" tabindex="-1"></a>Now, that we know for SARS-CoV-2 is k=17 and for SARS-CoV is K=16, we found the longest kmers:</span>
+<span id="cb4-308"><a href="#cb4-308" aria-hidden="true" tabindex="-1"></a>Longest k-mers in SARS-CoV-2:  <span class="co">[</span><span class="ot">&#39;ATCAGACAACTACTATT&#39;, &#39;CAATTATTATAAGAAAG&#39;</span><span class="co">]</span></span>
+<span id="cb4-309"><a href="#cb4-309" aria-hidden="true" tabindex="-1"></a>Longest k-mers in SARS-CoV  :  <span class="co">[</span><span class="ot">&#39;AAAAGAAAAAGACTGA&#39;</span><span class="co">]</span></span>
+<span id="cb4-310"><a href="#cb4-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-311"><a href="#cb4-311" aria-hidden="true" tabindex="-1"></a>Comment ***</span>
 <span id="cb4-312"><a href="#cb4-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-313"><a href="#cb4-313" aria-hidden="true" tabindex="-1"></a><span class="fu"># Discussion</span></span>
-<span id="cb4-314"><a href="#cb4-314" aria-hidden="true" tabindex="-1"></a>Write here (Gabriel)</span>
+<span id="cb4-313"><a href="#cb4-313" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E4. Develop a fast algorithm to find k-mer repeats in a given range of k</span></span>
+<span id="cb4-314"><a href="#cb4-314" aria-hidden="true" tabindex="-1"></a>Pending of coding. Part of future work.</span>
 <span id="cb4-315"><a href="#cb4-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-316"><a href="#cb4-316" aria-hidden="true" tabindex="-1"></a><span class="fu"># Distribution of work</span></span>
-<span id="cb4-317"><a href="#cb4-317" aria-hidden="true" tabindex="-1"></a>Write here (Gabriel)</span>
+<span id="cb4-316"><a href="#cb4-316" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E5. Evolution of repeats in coronavirus genomes</span></span>
+<span id="cb4-317"><a href="#cb4-317" aria-hidden="true" tabindex="-1"></a>Pending of coding. Part of future work.</span>
 <span id="cb4-318"><a href="#cb4-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-319"><a href="#cb4-319" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
-<span id="cb4-320"><a href="#cb4-320" aria-hidden="true" tabindex="-1"></a>Write here (Gabriel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-319"><a href="#cb4-319" aria-hidden="true" tabindex="-1"></a><span class="fu"># Discussion</span></span>
+<span id="cb4-320"><a href="#cb4-320" aria-hidden="true" tabindex="-1"></a>Write here (Gabriel)</span>
+<span id="cb4-321"><a href="#cb4-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-322"><a href="#cb4-322" aria-hidden="true" tabindex="-1"></a><span class="fu"># Distribution of work</span></span>
+<span id="cb4-323"><a href="#cb4-323" aria-hidden="true" tabindex="-1"></a>Write here (Gabriel)</span>
+<span id="cb4-324"><a href="#cb4-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-325"><a href="#cb4-325" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
+<span id="cb4-326"><a href="#cb4-326" aria-hidden="true" tabindex="-1"></a>Write here (Gabriel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

@@ -119,7 +119,12 @@ This is the output of our program:
 > [['ACG', 'TTT'], 0.163] \
 > [['atgatcaag', 'ctcttgatc', 'tcttgatca', 'cttgatcat'], 89.532] \
 
-Comment these results here (Gabriel)
+This algorithm using the counting method for frequent words is straightforward in finding
+the most frequent kmers.  What is interesting about these results, is that the most frequent kmers were "9-mers".  According to biological experiments, bacterial DnaA boxes are usually 
+nine nucleotides long.  The likelihood of four 9-mers showing up in a genome sequence lead 
+to the hypothesis that one of these four 9-mers might represent a potential DnaA box. 
+However, before concluding that this is a DnaA box, we would still need to sequence other short regions in the genome to determine if these strings exhibit throughout the entire genome. If they are exhibited throughout the genome, rather than just in the ori region, then these results are considered insignificant.
+
 
 ### Task 2. Frequent words by hashing
 This is the output of our program:
@@ -132,7 +137,7 @@ This is the output of our program:
 > [['ACG', 'TTT'], 0.1] \
 > [['atgatcaag', 'ctcttgatc', 'tcttgatca', 'cttgatcat'], 0.792] \
 
-Comment these results here (Gabriel)
+When analyzing the hashing algorithm, the results of finding the most and longest kmers are exactly the same.  This is reassuring that the problem was solved with coinciding results of finding the most frequent kmers with both algorithms worked.  However, when looking at the algorithm analysis of the hashing method, the runtime is significantly lower than the counting method.  Now, this significant lower runtime can answer a lot of problems in bioinformational questions.  The counting method is efficient for small string genomes, however the upper bound runtime of |Text|^2 makes it extrememly slow for larger string texts.  Since more short region sequencing throughout the genome is required to determine a potential DnaA box, this algorithm is the optimal choice in finding significant results from the string data. 
 
 ## Understanding the runtime
 ### Task 3. Method generates random DNA sequences of several random lengths
@@ -154,7 +159,7 @@ This is the output of our program:
 > 'CTATTGAAAG' \
 > 'TCCGTAGGTCT' \
 
-Comment these results here (Gabriel)
+
 
 ### Task 4. Analysis of empirical time comparing counting and hashing algorithms
 To empirically compare the two algorithms in terms of runtime, our program for this analysis has produced the comparison in the following charts, and also consolidated everything in a major table with these results.
@@ -227,7 +232,8 @@ And in a consolidated table:
 | 1000 | 12 | 476.967 | 1.067 |
 | 1000 | 15 | 472.738 | 1.058 |
 
-Comment these results here (Gabriel)
+Analyzing the empirical time comparisin of the two algorithms.  It is clear that the runtime (ms) of the counting method implementation increases significantly as the function of sequence length L increases.
+Looking at the consolidated table, no matter the increase of sequence length L, the runtime of the hashing algorithm stays suprisingly close to its mean.  The upper bound of the count algorithm O(|Text|^2 * k) versus the O(n)+1 hashing algorithm runtime.
 
 ## Frequent k-mers in the SARS-Cov-2 genome
 ### Task 5 and Task E2. SARS-CoV-2 and SARS-CoV most frequent k-mers
@@ -259,10 +265,10 @@ The following is a table of the most frequent k-mers present in the SARS-CoV-2 a
 | SARS-CoV | 15 | AAAGAAAAAGACTGA |
 | SARS-CoV | 15 | ATTATAATTATAAAT |
 
-Comment these results here (Gabriel)
+When comparing the most frequent k-mers of SARS-CoV-2 and SARS-CoV, the 15-mer shows up the most.  It seems that SARS-CoV-2 might have a faster mutation rate than SARS-CoV.
 
 ### Task 6. Interpreting the k-mers found in a biological context
-Comment your research about this question here (Gabriel)
+
 
 ## Extra Credits
 ### Task E1. The null distribution of the frequency of most frequent k-mers
@@ -282,7 +288,7 @@ Our program produced these results:
 > **12-mers give a p-value of 0.09491, then they DO NOT HAVE biological significance** \
 > 15-mers give a p-value of 0.52248, then they DO NOT HAVE biological significance \
 
-Comment your research about this question here (Gabriel)
+research about this question here **
 
 ### Task E2. SARS-CoV versus SARS-CoV-2
 Analyzed above in Task 5. Please, go to that section.
@@ -302,7 +308,7 @@ Now, that we know for SARS-CoV-2 is k=17 and for SARS-CoV is K=16, we found the 
 Longest k-mers in SARS-CoV-2:  ['ATCAGACAACTACTATT', 'CAATTATTATAAGAAAG']
 Longest k-mers in SARS-CoV  :  ['AAAAGAAAAAGACTGA']
 
-Comment your research about this question here (Gabriel)
+Comment ***
 
 ### Task E4. Develop a fast algorithm to find k-mer repeats in a given range of k
 Pending of coding. Part of future work.
