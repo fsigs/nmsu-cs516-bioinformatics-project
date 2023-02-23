@@ -333,7 +333,7 @@ The following is a table of the most frequent k-mers present in the SARS-CoV-2 a
 When comparing the most frequent k-mers of SARS-CoV-2 and SARS-CoV, the 15-mer shows up the most. 
 
 ### Task 6. Interpreting the k-mers found in a biological context
-When putting the K-mers in the *BLASTN* database, no significant similarities where found. In other words, there was not much alignment. The differences in frequent 15-mers between the RNA viruses might speak to their Phylogenetic differences and where the SARS originated from. 
+When putting the K-mers in the *BLASTN* database, no significant information was found. We had an expert look at the differences in frequent 15-mers between the RNA viruses. he said it might speak to their Phylogenetic differences and where the SARS originated from.  However, this might be due to the stronger mutation rate of SARS-CoV-2 virus.
 
 ## Extra Credits
 ### Task E1. The null distribution of the frequency of most frequent k-mers
