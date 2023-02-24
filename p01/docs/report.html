@@ -3344,7 +3344,12 @@ we generate 10 random DNA sequences of variable lenght:<br>
 </section>
 <section id="task-6.-interpreting-the-k-mers-found-in-a-biological-context" class="level3">
 <h3 class="anchored" data-anchor-id="task-6.-interpreting-the-k-mers-found-in-a-biological-context">Task 6. Interpreting the k-mers found in a biological context</h3>
-<p>When putting the K-mers in the <em>BLASTN</em> database, no significant similarities where found. In other words, there was not much alignment. The differences in frequent 15-mers between the RNA viruses might speak to their Phylogenetic differences and where the SARS originated from.</p>
+<p>To analize this question, we tried different strategies:</p>
+<ul>
+<li>Use of <em>BLAST</em> alignment: When putting the K-mers in the <em>BLASTn</em> database, no significant information was found. This could be possibly because of lack of expertise in this tool.</li>
+<li>Asking a domain expert: We had an expert look at the differences in frequent 9/12/15-mers between the RNA viruses. He said it might speak to their Phylogenetic differences and where the SARS originated from. However, the more frequent k-mers in SARS-CoV-2 might be due to the stronger evoloution mutation of the virus.</li>
+<li>Analysis of Genome sequences of other species of Covid: Later on in task E6, we found that SARS-CoV-2 and SARS-CoV have minimal alignment taking into consideration their common most frequent k-mers but SARS-CoV-2 it has interesting coincidences with Bat coronavirus RaTG13 and Wuhan-Hu-1-Cov2 (China). This possibly is due to a common origin, environment, or small mutations of SARS-CoV-2.</li>
+</ul>
 </section>
 </section>
 <section id="extra-credits" class="level2">
@@ -4574,216 +4579,221 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-333"><a href="#cb8-333" aria-hidden="true" tabindex="-1"></a>When comparing the most frequent k-mers of SARS-CoV-2 and SARS-CoV, the 15-mer shows up the most. </span>
 <span id="cb8-334"><a href="#cb8-334" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-335"><a href="#cb8-335" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 6. Interpreting the k-mers found in a biological context</span></span>
-<span id="cb8-336"><a href="#cb8-336" aria-hidden="true" tabindex="-1"></a>When putting the K-mers in the *BLASTN* database, no significant similarities where found. In other words, there was not much alignment. The differences in frequent 15-mers between the RNA viruses might speak to their Phylogenetic differences and where the SARS originated from. </span>
-<span id="cb8-337"><a href="#cb8-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-338"><a href="#cb8-338" aria-hidden="true" tabindex="-1"></a><span class="fu">## Extra Credits</span></span>
-<span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E1. The null distribution of the frequency of most frequent k-mers</span></span>
-<span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a>Our program produced these results:</span>
-<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ======================================================== \</span></span>
-<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; E1: Null Distribution of the most frequent k-mers in SARS-CoV-2 genome sequence \</span></span>
-<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ======================================================== \</span></span>
-<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using the SARS-CoV-2 genome sequence, our permutation test \</span></span>
-<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; with 1000 permutations gives. We have considered a p-value threshold of 0.05 to decide \</span></span>
-<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; if the most frequent k-mer is unlikely to have occurred by chance alone \</span></span>
-<span id="cb8-348"><a href="#cb8-348" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; and consequently, it has biological significance: \</span></span>
-<span id="cb8-349"><a href="#cb8-349" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb8-350"><a href="#cb8-350" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 3-mers give a p-value of 0.33067, then they DO NOT HAVE biological significance \</span></span>
-<span id="cb8-351"><a href="#cb8-351" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 6-mers give a p-value of 0.34366, then they DO NOT HAVE biological significance \</span></span>
-<span id="cb8-352"><a href="#cb8-352" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **9-mers give a p-value of 0.02198, then they DO HAVE biological significance** \</span></span>
-<span id="cb8-353"><a href="#cb8-353" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **12-mers give a p-value of 0.09491, then they DO NOT HAVE biological significance** \</span></span>
-<span id="cb8-354"><a href="#cb8-354" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 15-mers give a p-value of 0.52248, then they DO NOT HAVE biological significance \</span></span>
-<span id="cb8-355"><a href="#cb8-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-356"><a href="#cb8-356" aria-hidden="true" tabindex="-1"></a>When looking at the *p-value* threshold of 0.05, there is one k-mer that has bilogical significance: the 9-mers.  The *p-value* of the SARS-CoV-2 9-mers was 0.02198, which is of significance when comparing it to the 0.05 threshold. Initially, the relevance of 9-mers traces back to the recurrence of a potential DnaA box in a DNA genome. In reality, it is important to understand that Covid is involved in RNA metabolization, not DNA metabolization.</span>
-<span id="cb8-357"><a href="#cb8-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-358"><a href="#cb8-358" aria-hidden="true" tabindex="-1"></a>One other possible significant biological finding, it was the 12-mer p-value threshold value of 0.9491. Even though the *p-value* was higher than 0.05, we know that non-random findings in k-mer sequencing could have possible biological value if it is unlikely to have occurred by chance alone.</span>
-<span id="cb8-359"><a href="#cb8-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-360"><a href="#cb8-360" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E2. SARS-CoV versus SARS-CoV-2</span></span>
-<span id="cb8-361"><a href="#cb8-361" aria-hidden="true" tabindex="-1"></a>Analyzed above in Task 5. Please, go to that section.</span>
+<span id="cb8-336"><a href="#cb8-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-337"><a href="#cb8-337" aria-hidden="true" tabindex="-1"></a>To analize this question, we tried different strategies:</span>
+<span id="cb8-338"><a href="#cb8-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Use of *BLAST* alignment: When putting the K-mers in the *BLASTn* database, no significant information was found. This could be possibly because of lack of expertise in this tool.</span>
+<span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Asking a domain expert: We had an expert look at the differences in frequent 9/12/15-mers between the RNA viruses. He said it might speak to their Phylogenetic differences and where the SARS originated from. However, the more frequent k-mers in SARS-CoV-2 might be due to the stronger evoloution mutation of the virus. </span>
+<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Analysis of Genome sequences of other species of Covid: Later on in task E6, we found that SARS-CoV-2 and SARS-CoV have minimal alignment taking into consideration their common most frequent k-mers but SARS-CoV-2 it has interesting coincidences with Bat coronavirus RaTG13 and Wuhan-Hu-1-Cov2 (China). This possibly is due to a common origin, environment, or small mutations of SARS-CoV-2. </span>
+<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a><span class="fu">## Extra Credits</span></span>
+<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E1. The null distribution of the frequency of most frequent k-mers</span></span>
+<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a>Our program produced these results:</span>
+<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ======================================================== \</span></span>
+<span id="cb8-348"><a href="#cb8-348" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; E1: Null Distribution of the most frequent k-mers in SARS-CoV-2 genome sequence \</span></span>
+<span id="cb8-349"><a href="#cb8-349" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ======================================================== \</span></span>
+<span id="cb8-350"><a href="#cb8-350" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Using the SARS-CoV-2 genome sequence, our permutation test \</span></span>
+<span id="cb8-351"><a href="#cb8-351" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; with 1000 permutations gives. We have considered a p-value threshold of 0.05 to decide \</span></span>
+<span id="cb8-352"><a href="#cb8-352" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; if the most frequent k-mer is unlikely to have occurred by chance alone \</span></span>
+<span id="cb8-353"><a href="#cb8-353" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; and consequently, it has biological significance: \</span></span>
+<span id="cb8-354"><a href="#cb8-354" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb8-355"><a href="#cb8-355" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 3-mers give a p-value of 0.33067, then they DO NOT HAVE biological significance \</span></span>
+<span id="cb8-356"><a href="#cb8-356" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 6-mers give a p-value of 0.34366, then they DO NOT HAVE biological significance \</span></span>
+<span id="cb8-357"><a href="#cb8-357" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **9-mers give a p-value of 0.02198, then they DO HAVE biological significance** \</span></span>
+<span id="cb8-358"><a href="#cb8-358" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **12-mers give a p-value of 0.09491, then they DO NOT HAVE biological significance** \</span></span>
+<span id="cb8-359"><a href="#cb8-359" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 15-mers give a p-value of 0.52248, then they DO NOT HAVE biological significance \</span></span>
+<span id="cb8-360"><a href="#cb8-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-361"><a href="#cb8-361" aria-hidden="true" tabindex="-1"></a>When looking at the *p-value* threshold of 0.05, there is one k-mer that has bilogical significance: the 9-mers.  The *p-value* of the SARS-CoV-2 9-mers was 0.02198, which is of significance when comparing it to the 0.05 threshold. Initially, the relevance of 9-mers traces back to the recurrence of a potential DnaA box in a DNA genome. In reality, it is important to understand that Covid is involved in RNA metabolization, not DNA metabolization.</span>
 <span id="cb8-362"><a href="#cb8-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-363"><a href="#cb8-363" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E3. Find the longest k-mer repeats beyond 15</span></span>
-<span id="cb8-364"><a href="#cb8-364" aria-hidden="true" tabindex="-1"></a>First, we find what is the max value for k in each Genome:</span>
-<span id="cb8-365"><a href="#cb8-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-366"><a href="#cb8-366" aria-hidden="true" tabindex="-1"></a>|Genome|K-length|# matches|</span>
-<span id="cb8-367"><a href="#cb8-367" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|</span>
-<span id="cb8-368"><a href="#cb8-368" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | 10 |</span>
-<span id="cb8-369"><a href="#cb8-369" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 16 | 5 |</span>
-<span id="cb8-370"><a href="#cb8-370" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 17 | 2 |</span>
-<span id="cb8-371"><a href="#cb8-371" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | 3 |</span>
-<span id="cb8-372"><a href="#cb8-372" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 16 | 1 |</span>
-<span id="cb8-373"><a href="#cb8-373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-374"><a href="#cb8-374" aria-hidden="true" tabindex="-1"></a>Now, that we know for SARS-CoV-2 is k=17 and for SARS-CoV is K=16, we found the longest kmers:</span>
-<span id="cb8-375"><a href="#cb8-375" aria-hidden="true" tabindex="-1"></a>Longest k-mers in SARS-CoV-2:  <span class="co">[</span><span class="ot">&#39;ATCAGACAACTACTATT&#39;, &#39;CAATTATTATAAGAAAG&#39;</span><span class="co">]</span></span>
-<span id="cb8-376"><a href="#cb8-376" aria-hidden="true" tabindex="-1"></a>Longest k-mers in SARS-CoV  :  <span class="co">[</span><span class="ot">&#39;AAAAGAAAAAGACTGA&#39;</span><span class="co">]</span></span>
-<span id="cb8-377"><a href="#cb8-377" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-378"><a href="#cb8-378" aria-hidden="true" tabindex="-1"></a>Understanding the first longest kmer for SARS-CoV-2, was a K-length of 17 and only 2 number of matches of the genome may signify a logical biomechanism of where is unlikely to occur. However there would have to be more explanation of other short sequences throughout the RNA genome to determine any validity of the short occurance.</span>
-<span id="cb8-379"><a href="#cb8-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-380"><a href="#cb8-380" aria-hidden="true" tabindex="-1"></a>However, a more unlikely occurance happened in the the kmer of K-length 16, with 1 match of the SARs-CoV RNA genome.  This is the most unlikely occurance happening when finding the longest k-mers found in both SARS-CoV 2 and SARS-CoV-2. </span>
-<span id="cb8-381"><a href="#cb8-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-382"><a href="#cb8-382" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E5. Analysis of most frequent k-mers in other Covid related genomes</span></span>
-<span id="cb8-383"><a href="#cb8-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-384"><a href="#cb8-384" aria-hidden="true" tabindex="-1"></a>The following is a table of the most frequent k-mers present in MERS-Cov, Bat coronavirus RaTG13, Human coronavirus NL63 (China), Wuhan-Hu-1-Cov2 (China) genomes:</span>
-<span id="cb8-385"><a href="#cb8-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-386"><a href="#cb8-386" aria-hidden="true" tabindex="-1"></a>|Genome|K-length|K-mer|</span>
-<span id="cb8-387"><a href="#cb8-387" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|</span>
-<span id="cb8-388"><a href="#cb8-388" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 3 | TTT |</span>
-<span id="cb8-389"><a href="#cb8-389" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 6 | TGTTGT |</span>
-<span id="cb8-390"><a href="#cb8-390" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 9 | TTAACGAAC |</span>
-<span id="cb8-391"><a href="#cb8-391" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 9 | TAACGAACT |</span>
-<span id="cb8-392"><a href="#cb8-392" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 12 | GATTTTAACGAA |</span>
-<span id="cb8-393"><a href="#cb8-393" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 12 | AATTAACGAACT |</span>
-<span id="cb8-394"><a href="#cb8-394" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 15 | GTGGTTATCACTACA |</span>
-<span id="cb8-395"><a href="#cb8-395" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 3 | TTT |</span>
-<span id="cb8-396"><a href="#cb8-396" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 6 | TTGTTA |</span>
-<span id="cb8-397"><a href="#cb8-397" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 9 | TAAACGAAC |</span>
-<span id="cb8-398"><a href="#cb8-398" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TCTAAACGAACT |</span>
-<span id="cb8-399"><a href="#cb8-399" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTGAAAAAGGTG |</span>
-<span id="cb8-400"><a href="#cb8-400" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TAGGACCTGAGC |</span>
-<span id="cb8-401"><a href="#cb8-401" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AAGTGCTTTTGT |</span>
-<span id="cb8-402"><a href="#cb8-402" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTTAAAGTTACA |</span>
-<span id="cb8-403"><a href="#cb8-403" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGGTGTTGTTCA |</span>
-<span id="cb8-404"><a href="#cb8-404" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGTTTATGAGAA |</span>
-<span id="cb8-405"><a href="#cb8-405" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | ACATTCTTTAAG |</span>
-<span id="cb8-406"><a href="#cb8-406" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGTTAACAGAGG |</span>
-<span id="cb8-407"><a href="#cb8-407" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTGAAGCCCCAT |</span>
-<span id="cb8-408"><a href="#cb8-408" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGAAGCCCCATT |</span>
-<span id="cb8-409"><a href="#cb8-409" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGATGGTAACAA |</span>
-<span id="cb8-410"><a href="#cb8-410" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GATGGTAACAAA |</span>
-<span id="cb8-411"><a href="#cb8-411" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTTGTTACAATG |</span>
-<span id="cb8-412"><a href="#cb8-412" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | ACACATGGTTTA |</span>
-<span id="cb8-413"><a href="#cb8-413" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CCTGAAGAACAT |</span>
-<span id="cb8-414"><a href="#cb8-414" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TCTTTGAAAGAA |</span>
-<span id="cb8-415"><a href="#cb8-415" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTTTGAAAGAAG |</span>
-<span id="cb8-416"><a href="#cb8-416" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AATGGTTTAACT |</span>
-<span id="cb8-417"><a href="#cb8-417" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CATGGTACATTT |</span>
-<span id="cb8-418"><a href="#cb8-418" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AGAGCAACCAAT |</span>
-<span id="cb8-419"><a href="#cb8-419" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GAAAGACATTCT |</span>
-<span id="cb8-420"><a href="#cb8-420" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AGCCTTTTCTTA |</span>
-<span id="cb8-421"><a href="#cb8-421" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GTACTTTTACTA |</span>
-<span id="cb8-422"><a href="#cb8-422" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GCTACAGAGAAG |</span>
-<span id="cb8-423"><a href="#cb8-423" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GTGTTTGTCTTA |</span>
-<span id="cb8-424"><a href="#cb8-424" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTGCAGAGTGGT |</span>
-<span id="cb8-425"><a href="#cb8-425" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGCAGAGTGGTT |</span>
-<span id="cb8-426"><a href="#cb8-426" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GCAGAGTGGTTT |</span>
-<span id="cb8-427"><a href="#cb8-427" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CAGAGTGGTTTT |</span>
-<span id="cb8-428"><a href="#cb8-428" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GTTAATGGTGTT |</span>
-<span id="cb8-429"><a href="#cb8-429" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGCAAAGAATGT |</span>
-<span id="cb8-430"><a href="#cb8-430" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTAATGTTGTAA |</span>
-<span id="cb8-431"><a href="#cb8-431" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTAATGGTGACT |</span>
-<span id="cb8-432"><a href="#cb8-432" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGCTTCTGGTAA |</span>
-<span id="cb8-433"><a href="#cb8-433" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GAAGGTTCTGTT |</span>
-<span id="cb8-434"><a href="#cb8-434" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTATGTACTCAT |</span>
-<span id="cb8-435"><a href="#cb8-435" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TATGTTCACACC |</span>
-<span id="cb8-436"><a href="#cb8-436" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTTACTAATGAT |</span>
-<span id="cb8-437"><a href="#cb8-437" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGTTCTTTATCA |</span>
-<span id="cb8-438"><a href="#cb8-438" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TAAAAGACTGTG |</span>
-<span id="cb8-439"><a href="#cb8-439" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AAAAGACTGTGT |</span>
-<span id="cb8-440"><a href="#cb8-440" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AAAGACTGTGTT |</span>
-<span id="cb8-441"><a href="#cb8-441" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTAAAATGTCAG |</span>
-<span id="cb8-442"><a href="#cb8-442" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TAAAATGTCAGA |</span>
-<span id="cb8-443"><a href="#cb8-443" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TACACTTAAAAA |</span>
-<span id="cb8-444"><a href="#cb8-444" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTTAAAAACACA |</span>
-<span id="cb8-445"><a href="#cb8-445" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTAAAAACACAG |</span>
-<span id="cb8-446"><a href="#cb8-446" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TAAAAACACAGT |</span>
-<span id="cb8-447"><a href="#cb8-447" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | ACTGGTATGATT |</span>
-<span id="cb8-448"><a href="#cb8-448" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTGGTATGATTT |</span>
-<span id="cb8-449"><a href="#cb8-449" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGTAGAAAACCC |</span>
-<span id="cb8-450"><a href="#cb8-450" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GTTGATGGTGTT |</span>
-<span id="cb8-451"><a href="#cb8-451" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CGGTAATTTTAA |</span>
-<span id="cb8-452"><a href="#cb8-452" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GGTAATTTTAAC |</span>
-<span id="cb8-453"><a href="#cb8-453" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AGACAAATCAGC |</span>
-<span id="cb8-454"><a href="#cb8-454" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GACAAATCAGCT |</span>
-<span id="cb8-455"><a href="#cb8-455" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGATGCTGTTGT |</span>
-<span id="cb8-456"><a href="#cb8-456" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | ATGTGACTCAAC |</span>
-<span id="cb8-457"><a href="#cb8-457" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGGTACTGGTAA |</span>
-<span id="cb8-458"><a href="#cb8-458" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AGTCATTTTGCT |</span>
-<span id="cb8-459"><a href="#cb8-459" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GATGTTTCATCT |</span>
-<span id="cb8-460"><a href="#cb8-460" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AACGAACATGAA |</span>
-<span id="cb8-461"><a href="#cb8-461" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | ACGAACATGAAA |</span>
-<span id="cb8-462"><a href="#cb8-462" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 15 | TTGCAGAGTGGTTTT |</span>
-<span id="cb8-463"><a href="#cb8-463" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 3 | TTT |</span>
-<span id="cb8-464"><a href="#cb8-464" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 6 | TGTTTT |</span>
-<span id="cb8-465"><a href="#cb8-465" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 9 | TTTGTTTTG |</span>
-<span id="cb8-466"><a href="#cb8-466" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 12 | AATTGTAATGTT |</span>
-<span id="cb8-467"><a href="#cb8-467" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 12 | GTTGTTGGTGTT |</span>
-<span id="cb8-468"><a href="#cb8-468" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 12 | GTGTTTTTGGTG |</span>
-<span id="cb8-469"><a href="#cb8-469" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 12 | GTTTGTACTTAT |</span>
-<span id="cb8-470"><a href="#cb8-470" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | GTCTACTCTTCTCAA |</span>
-<span id="cb8-471"><a href="#cb8-471" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | TCTACTCTTCTCAAC |</span>
-<span id="cb8-472"><a href="#cb8-472" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | CTACTCTTCTCAACT |</span>
-<span id="cb8-473"><a href="#cb8-473" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | TACTCTTCTCAACTA |</span>
-<span id="cb8-474"><a href="#cb8-474" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | TTTGGTGATTTTGTT |</span>
-<span id="cb8-475"><a href="#cb8-475" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | ATTCTTATTTTGATA |</span>
-<span id="cb8-476"><a href="#cb8-476" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | TTACTTATCTTAATG |</span>
-<span id="cb8-477"><a href="#cb8-477" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 16 | GTCTACTCTTCTCAAC |</span>
-<span id="cb8-478"><a href="#cb8-478" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 16 | TCTACTCTTCTCAACT |</span>
-<span id="cb8-479"><a href="#cb8-479" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 16 | CTACTCTTCTCAACTA |</span>
-<span id="cb8-480"><a href="#cb8-480" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 17 | GTCTACTCTTCTCAACT |</span>
-<span id="cb8-481"><a href="#cb8-481" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 17 | TCTACTCTTCTCAACTA |</span>
-<span id="cb8-482"><a href="#cb8-482" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 3 | TTT |</span>
-<span id="cb8-483"><a href="#cb8-483" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 6 | TTGTTA |</span>
-<span id="cb8-484"><a href="#cb8-484" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 9 | TAAACGAAC |</span>
-<span id="cb8-485"><a href="#cb8-485" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 12 | GTTGATGGTGTT |</span>
-<span id="cb8-486"><a href="#cb8-486" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | ATCAGACAACTACTA |</span>
-<span id="cb8-487"><a href="#cb8-487" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | TCAGACAACTACTAT |</span>
-<span id="cb8-488"><a href="#cb8-488" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | CAGACAACTACTATT |</span>
-<span id="cb8-489"><a href="#cb8-489" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | CAATTATTATAAGAA |</span>
-<span id="cb8-490"><a href="#cb8-490" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | AATTATTATAAGAAA |</span>
-<span id="cb8-491"><a href="#cb8-491" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | ATTATTATAAGAAAG |</span>
-<span id="cb8-492"><a href="#cb8-492" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | TTGCAGAGTGGTTTT |</span>
-<span id="cb8-493"><a href="#cb8-493" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | AAAGTTGATGGTGTT |</span>
-<span id="cb8-494"><a href="#cb8-494" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | AAGTTGATGGTGTTG |</span>
-<span id="cb8-495"><a href="#cb8-495" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | TAAACGAACATGAAA |</span>
-<span id="cb8-496"><a href="#cb8-496" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 16 | ATCAGACAACTACTAT |</span>
-<span id="cb8-497"><a href="#cb8-497" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 16 | TCAGACAACTACTATT |</span>
-<span id="cb8-498"><a href="#cb8-498" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 16 | CAATTATTATAAGAAA |</span>
-<span id="cb8-499"><a href="#cb8-499" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 16 | AATTATTATAAGAAAG |</span>
-<span id="cb8-500"><a href="#cb8-500" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 16 | AAAGTTGATGGTGTTG |</span>
-<span id="cb8-501"><a href="#cb8-501" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 17 | ATCAGACAACTACTATT |</span>
-<span id="cb8-502"><a href="#cb8-502" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 17 | CAATTATTATAAGAAAG |</span>
-<span id="cb8-503"><a href="#cb8-503" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-504"><a href="#cb8-504" aria-hidden="true" tabindex="-1"></a>Now, if we group and analize what are the common longest k-mers we have foun in this work with the found ones here, we can show them in this table:</span>
-<span id="cb8-505"><a href="#cb8-505" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-506"><a href="#cb8-506" aria-hidden="true" tabindex="-1"></a>::: {#fig-scenario}</span>
-<span id="cb8-507"><a href="#cb8-507" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-508"><a href="#cb8-508" aria-hidden="true" tabindex="-1"></a><span class="al">![LC](images/common-longest-kmers.png)</span>{#qT}</span>
-<span id="cb8-509"><a href="#cb8-509" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-510"><a href="#cb8-510" aria-hidden="true" tabindex="-1"></a>Common Longest k-mers found in several Covid Genomes</span>
-<span id="cb8-511"><a href="#cb8-511" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-512"><a href="#cb8-512" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-513"><a href="#cb8-513" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-514"><a href="#cb8-514" aria-hidden="true" tabindex="-1"></a>We highlight the special cases in yellow since we think they represent an interest commonality between all the Covid Genomes, which are:</span>
-<span id="cb8-515"><a href="#cb8-515" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-516"><a href="#cb8-516" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**9-mer TAAACGAAC** present in RaTG13-Cov, SARS-CoV-2, and Wuhan-Hu-2-Cov</span>
-<span id="cb8-517"><a href="#cb8-517" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**12-mer GTTGATGGTGTT** present in RaTG13-Cov, SARS-CoV, SARS-CoV-2, and Wuhan-Hu-2-Cov</span>
-<span id="cb8-518"><a href="#cb8-518" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**15-mer TTGCAGAGTGGTTTT** present in RaTG13-Cov, SARS-CoV-2, and Wuhan-Hu-2-Cov</span>
-<span id="cb8-519"><a href="#cb8-519" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-520"><a href="#cb8-520" aria-hidden="true" tabindex="-1"></a>Also, it is interesting to note that MERS has almost nothing in common with the rest of variants; and, that SARS-CoV- and Wuhan-Hu-2-Cov have a 100% of coincidence. This can be due to they have minor mutations of the same virus.</span>
-<span id="cb8-521"><a href="#cb8-521" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-522"><a href="#cb8-522" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interesting questions</span></span>
-<span id="cb8-523"><a href="#cb8-523" aria-hidden="true" tabindex="-1"></a>Did we find a DnaA box in Task 1 and 2?</span>
-<span id="cb8-524"><a href="#cb8-524" aria-hidden="true" tabindex="-1"></a>What can the k-mers found in The SARS-CoV-2 Genome tell us about the evolution of Covid?</span>
-<span id="cb8-525"><a href="#cb8-525" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-526"><a href="#cb8-526" aria-hidden="true" tabindex="-1"></a><span class="fu"># Distribution of work</span></span>
-<span id="cb8-527"><a href="#cb8-527" aria-hidden="true" tabindex="-1"></a>Our distribution was by roles as follows:</span>
-<span id="cb8-528"><a href="#cb8-528" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-529"><a href="#cb8-529" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Lead Developer Israel Gonzalez S.</span>
-<span id="cb8-530"><a href="#cb8-530" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Lead Author Gabriel Romero</span>
-<span id="cb8-531"><a href="#cb8-531" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Pair-review of work</span>
-<span id="cb8-532"><a href="#cb8-532" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-533"><a href="#cb8-533" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
-<span id="cb8-534"><a href="#cb8-534" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-535"><a href="#cb8-535" aria-hidden="true" tabindex="-1"></a>Phillip Compeau &amp; Pavel Pevzner. *Bioinformatics Algorithms–An Active Learning Approach. 3rd Edition*. Active Learning Publishers. La Jolla, California. 2018</span>
-<span id="cb8-536"><a href="#cb8-536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-537"><a href="#cb8-537" aria-hidden="true" tabindex="-1"></a>Blast. *Blast Search Module*. National Library of Medicine.</span>
-<span id="cb8-538"><a href="#cb8-538" aria-hidden="true" tabindex="-1"></a>https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&amp;PAGE_TYPE=BlastSearch&amp;LINK_LOC=blasthome</span>
+<span id="cb8-363"><a href="#cb8-363" aria-hidden="true" tabindex="-1"></a>One other possible significant biological finding, it was the 12-mer p-value threshold value of 0.9491. Even though the *p-value* was higher than 0.05, we know that non-random findings in k-mer sequencing could have possible biological value if it is unlikely to have occurred by chance alone.</span>
+<span id="cb8-364"><a href="#cb8-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-365"><a href="#cb8-365" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E2. SARS-CoV versus SARS-CoV-2</span></span>
+<span id="cb8-366"><a href="#cb8-366" aria-hidden="true" tabindex="-1"></a>Analyzed above in Task 5. Please, go to that section.</span>
+<span id="cb8-367"><a href="#cb8-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-368"><a href="#cb8-368" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E3. Find the longest k-mer repeats beyond 15</span></span>
+<span id="cb8-369"><a href="#cb8-369" aria-hidden="true" tabindex="-1"></a>First, we find what is the max value for k in each Genome:</span>
+<span id="cb8-370"><a href="#cb8-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-371"><a href="#cb8-371" aria-hidden="true" tabindex="-1"></a>|Genome|K-length|# matches|</span>
+<span id="cb8-372"><a href="#cb8-372" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|</span>
+<span id="cb8-373"><a href="#cb8-373" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 15 | 10 |</span>
+<span id="cb8-374"><a href="#cb8-374" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 16 | 5 |</span>
+<span id="cb8-375"><a href="#cb8-375" aria-hidden="true" tabindex="-1"></a>| SARS-CoV-2 | 17 | 2 |</span>
+<span id="cb8-376"><a href="#cb8-376" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 15 | 3 |</span>
+<span id="cb8-377"><a href="#cb8-377" aria-hidden="true" tabindex="-1"></a>| SARS-CoV | 16 | 1 |</span>
+<span id="cb8-378"><a href="#cb8-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-379"><a href="#cb8-379" aria-hidden="true" tabindex="-1"></a>Now, that we know for SARS-CoV-2 is k=17 and for SARS-CoV is K=16, we found the longest kmers:</span>
+<span id="cb8-380"><a href="#cb8-380" aria-hidden="true" tabindex="-1"></a>Longest k-mers in SARS-CoV-2:  <span class="co">[</span><span class="ot">&#39;ATCAGACAACTACTATT&#39;, &#39;CAATTATTATAAGAAAG&#39;</span><span class="co">]</span></span>
+<span id="cb8-381"><a href="#cb8-381" aria-hidden="true" tabindex="-1"></a>Longest k-mers in SARS-CoV  :  <span class="co">[</span><span class="ot">&#39;AAAAGAAAAAGACTGA&#39;</span><span class="co">]</span></span>
+<span id="cb8-382"><a href="#cb8-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-383"><a href="#cb8-383" aria-hidden="true" tabindex="-1"></a>Understanding the first longest kmer for SARS-CoV-2, was a K-length of 17 and only 2 number of matches of the genome may signify a logical biomechanism of where is unlikely to occur. However there would have to be more explanation of other short sequences throughout the RNA genome to determine any validity of the short occurance.</span>
+<span id="cb8-384"><a href="#cb8-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-385"><a href="#cb8-385" aria-hidden="true" tabindex="-1"></a>However, a more unlikely occurance happened in the the kmer of K-length 16, with 1 match of the SARs-CoV RNA genome.  This is the most unlikely occurance happening when finding the longest k-mers found in both SARS-CoV 2 and SARS-CoV-2. </span>
+<span id="cb8-386"><a href="#cb8-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-387"><a href="#cb8-387" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task E5. Analysis of most frequent k-mers in other Covid related genomes</span></span>
+<span id="cb8-388"><a href="#cb8-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-389"><a href="#cb8-389" aria-hidden="true" tabindex="-1"></a>The following is a table of the most frequent k-mers present in MERS-Cov, Bat coronavirus RaTG13, Human coronavirus NL63 (China), Wuhan-Hu-1-Cov2 (China) genomes:</span>
+<span id="cb8-390"><a href="#cb8-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-391"><a href="#cb8-391" aria-hidden="true" tabindex="-1"></a>|Genome|K-length|K-mer|</span>
+<span id="cb8-392"><a href="#cb8-392" aria-hidden="true" tabindex="-1"></a>|:----:|:---:|:-----:|</span>
+<span id="cb8-393"><a href="#cb8-393" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 3 | TTT |</span>
+<span id="cb8-394"><a href="#cb8-394" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 6 | TGTTGT |</span>
+<span id="cb8-395"><a href="#cb8-395" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 9 | TTAACGAAC |</span>
+<span id="cb8-396"><a href="#cb8-396" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 9 | TAACGAACT |</span>
+<span id="cb8-397"><a href="#cb8-397" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 12 | GATTTTAACGAA |</span>
+<span id="cb8-398"><a href="#cb8-398" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 12 | AATTAACGAACT |</span>
+<span id="cb8-399"><a href="#cb8-399" aria-hidden="true" tabindex="-1"></a>| MERS-Cov | 15 | GTGGTTATCACTACA |</span>
+<span id="cb8-400"><a href="#cb8-400" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 3 | TTT |</span>
+<span id="cb8-401"><a href="#cb8-401" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 6 | TTGTTA |</span>
+<span id="cb8-402"><a href="#cb8-402" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 9 | TAAACGAAC |</span>
+<span id="cb8-403"><a href="#cb8-403" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TCTAAACGAACT |</span>
+<span id="cb8-404"><a href="#cb8-404" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTGAAAAAGGTG |</span>
+<span id="cb8-405"><a href="#cb8-405" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TAGGACCTGAGC |</span>
+<span id="cb8-406"><a href="#cb8-406" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AAGTGCTTTTGT |</span>
+<span id="cb8-407"><a href="#cb8-407" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTTAAAGTTACA |</span>
+<span id="cb8-408"><a href="#cb8-408" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGGTGTTGTTCA |</span>
+<span id="cb8-409"><a href="#cb8-409" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGTTTATGAGAA |</span>
+<span id="cb8-410"><a href="#cb8-410" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | ACATTCTTTAAG |</span>
+<span id="cb8-411"><a href="#cb8-411" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGTTAACAGAGG |</span>
+<span id="cb8-412"><a href="#cb8-412" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTGAAGCCCCAT |</span>
+<span id="cb8-413"><a href="#cb8-413" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGAAGCCCCATT |</span>
+<span id="cb8-414"><a href="#cb8-414" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGATGGTAACAA |</span>
+<span id="cb8-415"><a href="#cb8-415" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GATGGTAACAAA |</span>
+<span id="cb8-416"><a href="#cb8-416" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTTGTTACAATG |</span>
+<span id="cb8-417"><a href="#cb8-417" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | ACACATGGTTTA |</span>
+<span id="cb8-418"><a href="#cb8-418" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CCTGAAGAACAT |</span>
+<span id="cb8-419"><a href="#cb8-419" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TCTTTGAAAGAA |</span>
+<span id="cb8-420"><a href="#cb8-420" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTTTGAAAGAAG |</span>
+<span id="cb8-421"><a href="#cb8-421" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AATGGTTTAACT |</span>
+<span id="cb8-422"><a href="#cb8-422" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CATGGTACATTT |</span>
+<span id="cb8-423"><a href="#cb8-423" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AGAGCAACCAAT |</span>
+<span id="cb8-424"><a href="#cb8-424" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GAAAGACATTCT |</span>
+<span id="cb8-425"><a href="#cb8-425" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AGCCTTTTCTTA |</span>
+<span id="cb8-426"><a href="#cb8-426" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GTACTTTTACTA |</span>
+<span id="cb8-427"><a href="#cb8-427" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GCTACAGAGAAG |</span>
+<span id="cb8-428"><a href="#cb8-428" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GTGTTTGTCTTA |</span>
+<span id="cb8-429"><a href="#cb8-429" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTGCAGAGTGGT |</span>
+<span id="cb8-430"><a href="#cb8-430" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGCAGAGTGGTT |</span>
+<span id="cb8-431"><a href="#cb8-431" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GCAGAGTGGTTT |</span>
+<span id="cb8-432"><a href="#cb8-432" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CAGAGTGGTTTT |</span>
+<span id="cb8-433"><a href="#cb8-433" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GTTAATGGTGTT |</span>
+<span id="cb8-434"><a href="#cb8-434" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGCAAAGAATGT |</span>
+<span id="cb8-435"><a href="#cb8-435" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTAATGTTGTAA |</span>
+<span id="cb8-436"><a href="#cb8-436" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTAATGGTGACT |</span>
+<span id="cb8-437"><a href="#cb8-437" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGCTTCTGGTAA |</span>
+<span id="cb8-438"><a href="#cb8-438" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GAAGGTTCTGTT |</span>
+<span id="cb8-439"><a href="#cb8-439" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTATGTACTCAT |</span>
+<span id="cb8-440"><a href="#cb8-440" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TATGTTCACACC |</span>
+<span id="cb8-441"><a href="#cb8-441" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTTACTAATGAT |</span>
+<span id="cb8-442"><a href="#cb8-442" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGTTCTTTATCA |</span>
+<span id="cb8-443"><a href="#cb8-443" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TAAAAGACTGTG |</span>
+<span id="cb8-444"><a href="#cb8-444" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AAAAGACTGTGT |</span>
+<span id="cb8-445"><a href="#cb8-445" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AAAGACTGTGTT |</span>
+<span id="cb8-446"><a href="#cb8-446" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTAAAATGTCAG |</span>
+<span id="cb8-447"><a href="#cb8-447" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TAAAATGTCAGA |</span>
+<span id="cb8-448"><a href="#cb8-448" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TACACTTAAAAA |</span>
+<span id="cb8-449"><a href="#cb8-449" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTTAAAAACACA |</span>
+<span id="cb8-450"><a href="#cb8-450" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TTAAAAACACAG |</span>
+<span id="cb8-451"><a href="#cb8-451" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TAAAAACACAGT |</span>
+<span id="cb8-452"><a href="#cb8-452" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | ACTGGTATGATT |</span>
+<span id="cb8-453"><a href="#cb8-453" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CTGGTATGATTT |</span>
+<span id="cb8-454"><a href="#cb8-454" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGTAGAAAACCC |</span>
+<span id="cb8-455"><a href="#cb8-455" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GTTGATGGTGTT |</span>
+<span id="cb8-456"><a href="#cb8-456" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | CGGTAATTTTAA |</span>
+<span id="cb8-457"><a href="#cb8-457" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GGTAATTTTAAC |</span>
+<span id="cb8-458"><a href="#cb8-458" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AGACAAATCAGC |</span>
+<span id="cb8-459"><a href="#cb8-459" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GACAAATCAGCT |</span>
+<span id="cb8-460"><a href="#cb8-460" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGATGCTGTTGT |</span>
+<span id="cb8-461"><a href="#cb8-461" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | ATGTGACTCAAC |</span>
+<span id="cb8-462"><a href="#cb8-462" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | TGGTACTGGTAA |</span>
+<span id="cb8-463"><a href="#cb8-463" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AGTCATTTTGCT |</span>
+<span id="cb8-464"><a href="#cb8-464" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | GATGTTTCATCT |</span>
+<span id="cb8-465"><a href="#cb8-465" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | AACGAACATGAA |</span>
+<span id="cb8-466"><a href="#cb8-466" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 12 | ACGAACATGAAA |</span>
+<span id="cb8-467"><a href="#cb8-467" aria-hidden="true" tabindex="-1"></a>| RaTG13-Cov | 15 | TTGCAGAGTGGTTTT |</span>
+<span id="cb8-468"><a href="#cb8-468" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 3 | TTT |</span>
+<span id="cb8-469"><a href="#cb8-469" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 6 | TGTTTT |</span>
+<span id="cb8-470"><a href="#cb8-470" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 9 | TTTGTTTTG |</span>
+<span id="cb8-471"><a href="#cb8-471" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 12 | AATTGTAATGTT |</span>
+<span id="cb8-472"><a href="#cb8-472" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 12 | GTTGTTGGTGTT |</span>
+<span id="cb8-473"><a href="#cb8-473" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 12 | GTGTTTTTGGTG |</span>
+<span id="cb8-474"><a href="#cb8-474" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 12 | GTTTGTACTTAT |</span>
+<span id="cb8-475"><a href="#cb8-475" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | GTCTACTCTTCTCAA |</span>
+<span id="cb8-476"><a href="#cb8-476" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | TCTACTCTTCTCAAC |</span>
+<span id="cb8-477"><a href="#cb8-477" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | CTACTCTTCTCAACT |</span>
+<span id="cb8-478"><a href="#cb8-478" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | TACTCTTCTCAACTA |</span>
+<span id="cb8-479"><a href="#cb8-479" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | TTTGGTGATTTTGTT |</span>
+<span id="cb8-480"><a href="#cb8-480" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | ATTCTTATTTTGATA |</span>
+<span id="cb8-481"><a href="#cb8-481" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 15 | TTACTTATCTTAATG |</span>
+<span id="cb8-482"><a href="#cb8-482" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 16 | GTCTACTCTTCTCAAC |</span>
+<span id="cb8-483"><a href="#cb8-483" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 16 | TCTACTCTTCTCAACT |</span>
+<span id="cb8-484"><a href="#cb8-484" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 16 | CTACTCTTCTCAACTA |</span>
+<span id="cb8-485"><a href="#cb8-485" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 17 | GTCTACTCTTCTCAACT |</span>
+<span id="cb8-486"><a href="#cb8-486" aria-hidden="true" tabindex="-1"></a>| NL63-Cov | 17 | TCTACTCTTCTCAACTA |</span>
+<span id="cb8-487"><a href="#cb8-487" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 3 | TTT |</span>
+<span id="cb8-488"><a href="#cb8-488" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 6 | TTGTTA |</span>
+<span id="cb8-489"><a href="#cb8-489" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 9 | TAAACGAAC |</span>
+<span id="cb8-490"><a href="#cb8-490" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 12 | GTTGATGGTGTT |</span>
+<span id="cb8-491"><a href="#cb8-491" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | ATCAGACAACTACTA |</span>
+<span id="cb8-492"><a href="#cb8-492" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | TCAGACAACTACTAT |</span>
+<span id="cb8-493"><a href="#cb8-493" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | CAGACAACTACTATT |</span>
+<span id="cb8-494"><a href="#cb8-494" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | CAATTATTATAAGAA |</span>
+<span id="cb8-495"><a href="#cb8-495" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | AATTATTATAAGAAA |</span>
+<span id="cb8-496"><a href="#cb8-496" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | ATTATTATAAGAAAG |</span>
+<span id="cb8-497"><a href="#cb8-497" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | TTGCAGAGTGGTTTT |</span>
+<span id="cb8-498"><a href="#cb8-498" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | AAAGTTGATGGTGTT |</span>
+<span id="cb8-499"><a href="#cb8-499" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | AAGTTGATGGTGTTG |</span>
+<span id="cb8-500"><a href="#cb8-500" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 15 | TAAACGAACATGAAA |</span>
+<span id="cb8-501"><a href="#cb8-501" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 16 | ATCAGACAACTACTAT |</span>
+<span id="cb8-502"><a href="#cb8-502" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 16 | TCAGACAACTACTATT |</span>
+<span id="cb8-503"><a href="#cb8-503" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 16 | CAATTATTATAAGAAA |</span>
+<span id="cb8-504"><a href="#cb8-504" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 16 | AATTATTATAAGAAAG |</span>
+<span id="cb8-505"><a href="#cb8-505" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 16 | AAAGTTGATGGTGTTG |</span>
+<span id="cb8-506"><a href="#cb8-506" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 17 | ATCAGACAACTACTATT |</span>
+<span id="cb8-507"><a href="#cb8-507" aria-hidden="true" tabindex="-1"></a>| Wuhan-Hu-2-Cov | 17 | CAATTATTATAAGAAAG |</span>
+<span id="cb8-508"><a href="#cb8-508" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-509"><a href="#cb8-509" aria-hidden="true" tabindex="-1"></a>Now, if we group and analize what are the common longest k-mers we have foun in this work with the found ones here, we can show them in this table:</span>
+<span id="cb8-510"><a href="#cb8-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-511"><a href="#cb8-511" aria-hidden="true" tabindex="-1"></a>::: {#fig-scenario}</span>
+<span id="cb8-512"><a href="#cb8-512" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-513"><a href="#cb8-513" aria-hidden="true" tabindex="-1"></a><span class="al">![LC](images/common-longest-kmers.png)</span>{#qT}</span>
+<span id="cb8-514"><a href="#cb8-514" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-515"><a href="#cb8-515" aria-hidden="true" tabindex="-1"></a>Common Longest k-mers found in several Covid Genomes</span>
+<span id="cb8-516"><a href="#cb8-516" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-517"><a href="#cb8-517" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-518"><a href="#cb8-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-519"><a href="#cb8-519" aria-hidden="true" tabindex="-1"></a>We highlight the special cases in yellow since we think they represent an interest commonality between all the Covid Genomes, which are:</span>
+<span id="cb8-520"><a href="#cb8-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-521"><a href="#cb8-521" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**9-mer TAAACGAAC** present in RaTG13-Cov, SARS-CoV-2, and Wuhan-Hu-2-Cov</span>
+<span id="cb8-522"><a href="#cb8-522" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**12-mer GTTGATGGTGTT** present in RaTG13-Cov, SARS-CoV, SARS-CoV-2, and Wuhan-Hu-2-Cov</span>
+<span id="cb8-523"><a href="#cb8-523" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**15-mer TTGCAGAGTGGTTTT** present in RaTG13-Cov, SARS-CoV-2, and Wuhan-Hu-2-Cov</span>
+<span id="cb8-524"><a href="#cb8-524" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-525"><a href="#cb8-525" aria-hidden="true" tabindex="-1"></a>Also, it is interesting to note that MERS has almost nothing in common with the rest of variants; and, that SARS-CoV- and Wuhan-Hu-2-Cov have a 100% of coincidence. This can be due to they have minor mutations of the same virus.</span>
+<span id="cb8-526"><a href="#cb8-526" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-527"><a href="#cb8-527" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interesting questions</span></span>
+<span id="cb8-528"><a href="#cb8-528" aria-hidden="true" tabindex="-1"></a>Did we find a DnaA box in Task 1 and 2?</span>
+<span id="cb8-529"><a href="#cb8-529" aria-hidden="true" tabindex="-1"></a>What can the k-mers found in The SARS-CoV-2 Genome tell us about the evolution of Covid?</span>
+<span id="cb8-530"><a href="#cb8-530" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-531"><a href="#cb8-531" aria-hidden="true" tabindex="-1"></a><span class="fu"># Distribution of work</span></span>
+<span id="cb8-532"><a href="#cb8-532" aria-hidden="true" tabindex="-1"></a>Our distribution was by roles as follows:</span>
+<span id="cb8-533"><a href="#cb8-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-534"><a href="#cb8-534" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Lead Developer Israel Gonzalez S.</span>
+<span id="cb8-535"><a href="#cb8-535" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Lead Author Gabriel Romero</span>
+<span id="cb8-536"><a href="#cb8-536" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Pair-review of work</span>
+<span id="cb8-537"><a href="#cb8-537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-538"><a href="#cb8-538" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
 <span id="cb8-539"><a href="#cb8-539" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-540"><a href="#cb8-540" aria-hidden="true" tabindex="-1"></a>Shabir, O. 2021. *How Does the SARS-CoV-2 Genome Compare to Other Viruses?*. News Medical Life Science.</span>
-<span id="cb8-541"><a href="#cb8-541" aria-hidden="true" tabindex="-1"></a>https://www.news-medical.net/health/How-Does-the-SARS-Virus-Genome-Compare-to-Other-Viruses.aspx</span>
-<span id="cb8-542"><a href="#cb8-542" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-543"><a href="#cb8-543" aria-hidden="true" tabindex="-1"></a>https://www.sciencedirect.com/topics/medicine-and-dentistry/rna-processing</span>
+<span id="cb8-540"><a href="#cb8-540" aria-hidden="true" tabindex="-1"></a>Phillip Compeau &amp; Pavel Pevzner. *Bioinformatics Algorithms–An Active Learning Approach. 3rd Edition*. Active Learning Publishers. La Jolla, California. 2018</span>
+<span id="cb8-541"><a href="#cb8-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-542"><a href="#cb8-542" aria-hidden="true" tabindex="-1"></a>Blast. *Blast Search Module*. National Library of Medicine.</span>
+<span id="cb8-543"><a href="#cb8-543" aria-hidden="true" tabindex="-1"></a>https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&amp;PAGE_TYPE=BlastSearch&amp;LINK_LOC=blasthome</span>
 <span id="cb8-544"><a href="#cb8-544" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-545"><a href="#cb8-545" aria-hidden="true" tabindex="-1"></a>https://www.ncbi.nlm.nih.gov/nuccore/NC_045512</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-545"><a href="#cb8-545" aria-hidden="true" tabindex="-1"></a>Shabir, O. 2021. *How Does the SARS-CoV-2 Genome Compare to Other Viruses?*. News Medical Life Science.</span>
+<span id="cb8-546"><a href="#cb8-546" aria-hidden="true" tabindex="-1"></a>https://www.news-medical.net/health/How-Does-the-SARS-Virus-Genome-Compare-to-Other-Viruses.aspx</span>
+<span id="cb8-547"><a href="#cb8-547" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-548"><a href="#cb8-548" aria-hidden="true" tabindex="-1"></a>https://www.sciencedirect.com/topics/medicine-and-dentistry/rna-processing</span>
+<span id="cb8-549"><a href="#cb8-549" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-550"><a href="#cb8-550" aria-hidden="true" tabindex="-1"></a>https://www.ncbi.nlm.nih.gov/nuccore/NC_045512</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
