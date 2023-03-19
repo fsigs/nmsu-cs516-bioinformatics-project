@@ -1,4 +1,6 @@
 from collections import defaultdict
+from pyllist import dllist
+from DiGraph import DiGraph, Node
 
 class DNAHasher:
   # Hash function used for DNA sequence

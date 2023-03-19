@@ -1,4 +1,5 @@
-from k_assembler import Node
+from pyllist import dllist
+from DiGraph import DiGraph, Node
 
 def create_deBruijn_graph_by_string_comp(kmers, g):
   nodes = []

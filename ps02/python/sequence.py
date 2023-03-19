@@ -1,4 +1,6 @@
 import random
+from pyllist import dllist
+from DiGraph import DiGraph, Node
 from k_assembler import assemble_kmers
 from k_assembler import build_sequence
 

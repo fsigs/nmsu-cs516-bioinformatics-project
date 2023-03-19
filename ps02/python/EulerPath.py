@@ -1,4 +1,7 @@
 
+from pyllist import dllist
+from DiGraph import DiGraph, Node
+
 def source(g):
   # Find a source node from g: the node has one more
   # outgoing edge than incoming edge. When such a node
