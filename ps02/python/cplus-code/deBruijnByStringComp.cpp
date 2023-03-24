@@ -25,7 +25,7 @@ void create_deBruijn_graph_by_string_comp(const vector<string> & kmers, DiGraph 
                 break;
             }
         }
-        
+
         if(i >= nodes.size()) {
             // if the k-1 prefix does not exist as a node
             //   in the graph, create a new node
@@ -38,10 +38,8 @@ void create_deBruijn_graph_by_string_comp(const vector<string> & kmers, DiGraph 
         }
         
         auto from_itr = itr;
-        
         // The "to" node:
         string suffix = kmer.substr(1, k-1);
-        
         // find the k-1 suffix
         size_t j=0;
         itr = nodes.begin();
