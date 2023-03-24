@@ -1,33 +1,23 @@
 import random
-from pyllist import dllist
-from DiGraph import DiGraph, Node
-from k_assembler import assemble_kmers
-from k_assembler import build_sequence
 
 def random_DNA_sequence(min_length=10, max_length=10000):
-  # generate a DNA sequence of length in the given range
   length = random.randint(min_length, max_length)
-  
-  # random generate the DNA sequence using alphabet atgc
-  nucleotides = "atgc"
-  DNA = ''.join(random.choices(nucleotides, k=length))
-  
+  DNA = ''.join(random.choice('atgc') for _ in range(length))
   return DNA
 
 def get_kmers(seq, k, randomized=True):
-  # obtain all k-mers of a given sequence. The order of the k-mers
-  # is randomized by default.
   kmers = [seq[i:i+k] for i in range(len(seq) - k + 1)]
-  
   if randomized:
-    # shuffle the order of the kmers
-    random.shuffle(kmers)
-  
-  return kmers
+    randomized_kmers = list(kmers)
+    nkmers = len(kmers)
+    for i in range(nkmers - 1):
+      j = random.randint(i, nkmers - 1)
+      randomized_kmers[i], randomized_kmers[j] = randomized_kmers[j], randomized_kmers[i]
+    return randomized_kmers
+  else:
+    return kmers
 
-def compare_composition(s1, s2, k):
-  # compare the canonical composition of two sequences. Canonical
-  # composition is all k-mers arranged in dictionary order.
+def compare_composition(s1: str, s2: str, k: int) -> bool:
   same_composition = True
   
   if len(s1) != len(s2):
@@ -40,5 +30,5 @@ def compare_composition(s1, s2, k):
     composition2 = get_kmers(s2, k)
     composition2.sort()
     same_composition = composition1 == composition2
-  
+      
   return same_composition

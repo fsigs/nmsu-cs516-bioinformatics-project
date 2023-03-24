@@ -18,9 +18,7 @@
 
 using namespace std;
 
-void test_and_print_message(const string & seq, const string & seq_truth,
-                            size_t k, const string & message)
-{
+void test_and_print_message(const string & seq, const string & seq_truth, size_t k, const string & message) {
     if(seq == seq_truth) {
         cout << "Passed " << message <<
             " (assembled original sequence). Congratulations!" << endl;
@@ -32,8 +30,7 @@ void test_and_print_message(const string & seq, const string & seq_truth,
     }
 }
 
-static void test_1(const string & method)
-{
+static void test_1(const string & method) {
     cout << "Testing k-assembler by " << method << endl;
     
     // Testing sequences:

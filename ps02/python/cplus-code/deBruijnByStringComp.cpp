@@ -9,24 +9,18 @@
 
 #include "k-assembler.hpp"
 
-void create_deBruijn_graph_by_string_comp(const vector<string> & kmers, DiGraph & g)
 // Insert all k mers into graph g by pair-wise sequence comparison
-{
+void create_deBruijn_graph_by_string_comp(const vector<string> & kmers, DiGraph & g) {
     list<Node> nodes;
     
-    for (auto & kmer: kmers) { // for each kmer of size k
-        
+    for (auto & kmer: kmers) { // for each kmer of size k   
         size_t k = kmer.size();
-        
         // The "from" node:
         string prefix = kmer.substr(0, k-1);
-        
         // find for a node that matches the k-1 prefix
         size_t i=0; // i is the node id
-        
         auto itr=nodes.begin();
-        for (;
-             itr!=nodes.end(); ++itr, ++i) {
+        for (;itr!=nodes.end(); ++itr, ++i) {
             if (itr->m_label == prefix) {
                 break;
             }
@@ -35,7 +29,6 @@ void create_deBruijn_graph_by_string_comp(const vector<string> & kmers, DiGraph 
         if(i >= nodes.size()) {
             // if the k-1 prefix does not exist as a node
             //   in the graph, create a new node
-            
             Node from;
             from.m_label = prefix;
             from.m_num_of_incoming = 0;
