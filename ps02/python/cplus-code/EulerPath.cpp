@@ -130,10 +130,9 @@ list<size_t> find_Eulerian_path(DiGraph & g)
     return path;
 }
 
-bool has_Eulerian_path(const DiGraph & g)
 // determine if graph g has an Eulerian path. This path could
 //   be a cycle in special cases.
-{
+bool has_Eulerian_path(const DiGraph & g) {
     bool exist = true;
     
     size_t numSources=0;

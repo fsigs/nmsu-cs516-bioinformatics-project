@@ -1,8 +1,11 @@
 
 import sys
-import time
+from timeit import default_timer as timer
 from DiGraph import DiGraph, Node
 from sequence import random_DNA_sequence, get_kmers, compare_composition
+from deBrujinByString import create_deBruijn_graph_by_string_comp
+from deBrujinByHash import create_deBruijn_graph_by_hashing
+from EulerPath import has_Eulerian_path
 
 def test_and_print_message(seq, seq_truth, k, message):
   if seq == seq_truth:
@@ -34,11 +37,8 @@ def test_1(method):
     
     kmers = get_kmers(seq_truth, k, True)
 
-    #print("********* Iteration ", i,"seq:",seq_truth,"K:",k)
-    #print(kmers)
-
     g = DiGraph()
-    begin = time.clock()
+    begin = timer()
     
     if method == "k-mer pairwise comparison":
       create_deBruijn_graph_by_string_comp(kmers, g)
@@ -48,16 +48,16 @@ def test_1(method):
       sys.stderr.write("ERROR: unknown method!\n")
       return
     
-    end = time.clock()
-    elapsed_secs = end - begin
+    end = timer()
+    elapsed_secs = round((end - begin) * 1000,2)
     
     print(f"Elapsed time for building de Bruijn graph: {elapsed_secs}")
-    '''
+    
     if has_Eulerian_path(g):
       print("Passed test for existence of Eulerian path. Congratulations!")
     else:
       print("Failed test for existence of Eulerian path!")
-    
+    '''
     try:
       path = find_Eulerian_path(g)
       seq = build_sequence(path, g)
