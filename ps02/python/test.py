@@ -4,10 +4,12 @@ from timeit import default_timer as timer
 from DiGraph import DiGraph, Node
 from sequence import random_DNA_sequence, get_kmers, compare_composition
 from deBrujinByString import create_deBruijn_graph_by_string_comp
-from deBrujinByHash import create_deBruijn_graph_by_hashing
-from EulerPath import has_Eulerian_path
+from deBrujinByHash import DNAHasher, create_deBruijn_graph_by_hashing
+from EulerPath import has_Eulerian_path, find_Eulerian_path
+from k_assembler import build_sequence
 
 def test_and_print_message(seq, seq_truth, k, message):
+  print(seq, seq_truth)
   if seq == seq_truth:
     print("Passed", message, "(assembled original sequence). Congratulations!")
   elif compare_composition(seq, seq_truth, k):
@@ -23,7 +25,7 @@ def test_1(method):
     "aaaaaaaaaaa",
     "agcagctcagc",
     "agcagctcagg",
-    #random_DNA_sequence(10000, 20000)
+    #random_DNA_sequence(100, 200) #(10000, 20000)
   ]
   
   # The value of k for k-mers to be used for each test sequence:
@@ -34,22 +36,22 @@ def test_1(method):
     
     seq_truth = seqs_truth[i]
     k = ks[i]
-    
     kmers = get_kmers(seq_truth, k, True)
 
     g = DiGraph()
-    begin = timer()
     
+    begin = timer()
+
     if method == "k-mer pairwise comparison":
-      create_deBruijn_graph_by_string_comp(kmers, g)
+      g = create_deBruijn_graph_by_string_comp(kmers, g)
     elif method == "k-mer hashing":
-      create_deBruijn_graph_by_hashing(kmers, g)
+      g = create_deBruijn_graph_by_hashing(kmers, g)
     else:
       sys.stderr.write("ERROR: unknown method!\n")
       return
-    
+
     end = timer()
-    elapsed_secs = round((end - begin) * 1000,2)
+    elapsed_secs = round((end - begin) * 1000, 2)
     
     print(f"Elapsed time for building de Bruijn graph: {elapsed_secs}")
     
@@ -57,18 +59,15 @@ def test_1(method):
       print("Passed test for existence of Eulerian path. Congratulations!")
     else:
       print("Failed test for existence of Eulerian path!")
-    '''
-    try:
-      path = find_Eulerian_path(g)
-      seq = build_sequence(path, g)
-      
-      message = f"Test 1 Example {i}"
-      test_and_print_message(seq, seq_truth, k, message)
-        
-    except Exception as e:
+    
+    #try:
+    path = find_Eulerian_path(g)
+    seq = build_sequence(path, g)
+    message = f"Test 1 Example {i}"
+    test_and_print_message(seq, seq_truth, k, message)
+    '''except Exception as e:
       sys.stderr.write(f"ERROR: {e}\n")
-      return
-    '''
+      return'''
 
 def test_2(method):
   print(method)
@@ -90,6 +89,3 @@ def test_seq_assembly():
   #print("-----------")
   #test_3("k-mer hashing")
 
-'''
-Minitests to detele after doing them
-'''

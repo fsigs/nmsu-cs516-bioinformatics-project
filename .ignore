@@ -6,3 +6,5 @@
 *.tex
 *.toc
 *.aux
+*.exe
+__pycache__

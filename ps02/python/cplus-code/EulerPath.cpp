@@ -59,8 +59,8 @@ list<size_t> find_Eulerian_cycle(DiGraph & g) {
     return cycle;
 }
 
-list<size_t> find_Eulerian_path(DiGraph & g)
 // find an Eulerian path from graph g, assuming g has such a path
+list<size_t> find_Eulerian_path(DiGraph & g)
 {
     list <size_t> path, cycle;
     
@@ -163,5 +163,3 @@ bool has_Eulerian_path(const DiGraph & g) {
     
     return exist;
 }
-
-

@@ -52,11 +52,11 @@ struct AlphabetHasher
 
 typedef unordered_multimap<string, size_t, DNAHasher> CSeqHash;
 
-CSeqHash create_hash_table(const vector<string> & kmers)
 // create one hash table by inserting both the prefix and suffix of each
 //   k-mer. The prefix and suffix is the key. Associated with each element
 //   in the hash table is the node id for that prefix or suffix in the
 //   de Bruijn graph to be constructed.
+CSeqHash create_hash_table(const vector<string> & kmers)
 {
     CSeqHash ht;
     size_t node_id=0; // the node id will be used in the de Bruijn graph

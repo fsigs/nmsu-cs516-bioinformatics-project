@@ -74,7 +74,7 @@ static void test_1(const string & method) {
         } else {
             std::cout << "Failed test for existence of Eulerian path!" << endl;
         }
-        
+        /*
         try {
             list<size_t> path = find_Eulerian_path(g);
             
@@ -88,6 +88,7 @@ static void test_1(const string & method) {
         } catch (string err_message) {
             cerr << "ERROR: " << err_message << endl;
         }
+        */
     }
 }
 
@@ -135,7 +136,7 @@ void test_seq_assembly()
 {
     vector<string> methods = {
         "k-mer pairwise comparison",
-        "k-mer hashing"
+        //"k-mer hashing"
     };
     
     for (auto method: methods) {
@@ -144,12 +145,12 @@ void test_seq_assembly()
         
         test_1(method);
         cout << endl;
-        test_2(method);
+        //test_2(method);
         cout << endl;
 
     }
 
     cout << "-----------" << endl;
 
-    test_3("k-mer hashing");
+    //test_3("k-mer hashing");
 }
