@@ -19,3 +19,20 @@ class DiGraph:
     for node in self.m_nodes:
       node.print()
     print("---------------------------------------")
+  def textRepresentation(self, hide_labels = True):
+    answer = ""
+    for i in range(0, len(self.m_nodes)):
+      node = self.m_nodes[i]
+      if hide_labels:
+        answer += str(i) + ' -> '
+      else:
+        answer += str(i) + '(' + node.m_label + ')' + ' -> '
+      elems = list(node.m_outgoing)
+      edges = []
+      for elem in elems:
+        if elem is not None:
+          edges.append(str(elem))
+      answer += ','.join(edges)
+      answer += '\n'
+    return answer
+

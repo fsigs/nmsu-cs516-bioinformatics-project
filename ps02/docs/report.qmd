@@ -1,0 +1,67 @@
+---
+title: "K-mer Sequence Assembler"
+subtitle: "CS516 Bioinformatics - Project 2"
+author: "Israel Gonzalez S., Gabriel Romero"
+date: "February 27, 2023"
+toc: true
+format:
+  html:
+    html-math-method: katex
+    css: styles.css
+    code-tools: true
+    self-contained: true
+execute:
+  warning: false
+---
+# Abstract
+In this project, we assemble input DNA k-mers to an output sequence, such that the assembled sequence will have the same k-composition with the true unknown sequence. Also, it implements the de Bruijn graph to represent k-mers and then find a Eulerian path from the graph. For this, we implement a hash function to match the prefix and suffix of a k-mer to those of other k-mers, implement de Bruijn graph construction to represent k-mers by a directed graph, and implement a Eulerian cycle finding algorithm to find a cycle on a directed graph.
+
+# Introduction
+Assembling genomes is a critical task in bioinformatics, as it allows researchers to study the genetic material of various organisms, including humans, animals, and plants. High-throughput sequencing technologies such as Illumina, Ion Torrent, and Pacific Biosciences generate massive amounts of short reads that need to be assembled into longer contiguous sequences (contigs). The de Bruijn graph approach is a widely used method for genome assembly that is based on constructing a graph where the nodes correspond to k-mers (substrings of length k) present in the reads, and the edges represent the overlaps between the k-mers. By traversing the graph using Eulerian cycles or paths, we can reconstruct the original sequence of the genome.
+
+The advantage of using the de Bruijn graph approach is that it can handle large amounts of data efficiently and accurately, even for genomes with repetitive regions that are difficult to assemble using other methods. The approach also allows for the detection of genomic variations, such as single nucleotide polymorphisms (SNPs) and structural variations (SVs), by comparing the assembled genome to a reference genome or other assembled genomes.
+
+Overall, the de Bruijn graph approach, coupled with the use of Eulerian cycles or paths, has revolutionized the field of genome assembly and has enabled researchers to study the genetics of a wide range of organisms with unprecedented accuracy and speed.
+
+# Methods
+
+## Data structures and algorithms used
+
+Complete
+
+## How to compile your code and run our code
+
+Complete
+
+# Results
+
+## Screenshot of the required test cases
+
+Complete
+
+## The k-assembler run time as a function of the number of k-mers
+
+![Figure 1: Run time of kmer hassembler by pairwise comparison](images/k-mer-pairwise-comparison.png){#q_25}
+
+![Figure 2: Run time of kmer assembler by hashing](images/k-mer-hashing.png){#q_50}
+
+# Discussion
+
+When using sequence comparison, the run time of k-assembler is proportional to the product of the number of k-mers and the length of the k-mer (complexity is quadratic). This is because the algorithm needs to compare each k-mer with every other k-mer in the dataset.
+
+When using hashing, the run time of k-assembler is proportional to the number of k-mers (complexity is linear). This is because the algorithm needs to add each k-mer to a hash table, which can be done in constant time per k-mer. Once all k-mers have been added to the hash table, the algorithm needs to check each k-mer to see if it has a corresponding reverse complement in the hash table, which again can be done in constant time per k-mer.
+
+For both methods, the value of k has a significant impact on the run time of k-assembler. Larger values of k lead to longer k-mers, which in turn lead to fewer k-mers and faster run times. However, larger values of k also increase the likelihood of errors in the assembly due to repeated regions in the genome. Therefore, there is a trade-off between run time and assembly accuracy when choosing the value of k.
+
+# Distribution of work among team members
+
+Israel Gonzalez:
+
+- Complete translation of C++ skeleton into Python
+- Development of required function
+- Visualization of run time versus the number of k-mers using Seaborn
+- Report writing 
+
+Gabriel Romero:
+
+- Compilation and run in C++ of skeleton

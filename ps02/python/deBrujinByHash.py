@@ -9,7 +9,6 @@ class DNAHasher:
     max_width = 20
     for i in range(min(len(seq), max_width)):
       val = val << 2
-      # A=00, C=01, G=10, and T=11
       c = seq[i].lower()
       if c == 'a':
         val += 0
