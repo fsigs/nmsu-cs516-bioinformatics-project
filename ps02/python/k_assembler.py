@@ -1,35 +1,63 @@
 from typing import List
 from pyllist import dllist
 from DiGraph import DiGraph, Node
+from deBrujinByString import create_deBruijn_graph_by_string_comp
+from deBrujinByHash import create_deBruijn_graph_by_hashing
+from EulerPath import has_Eulerian_path, find_Eulerian_path
 
-def get_len_and_label(nodes, element):
-    size = 0
-    label = None
-    for i in range(0, len(nodes)):
-        if nodes[i].m_label == element.value:
-            size = len(nodes[i].m_label)
-            label = nodes[i].m_label
-    return size, label
+def dllist_index(my_list, elem):
+    index = 0
+    current_node = my_list.first
+    while current_node is not None:
+        if current_node.value == elem:
+            break
+        current_node = current_node.next
+        index += 1
+    return index
 
 def build_sequence(path: dllist, g: DiGraph) -> str:
-    
+    '''
     nodes = g.m_nodes
-    size_first, label_first = get_len_and_label(nodes, path.first)
-    print(size_first, label_first)
-    k = size_first + 1
-    seq = ''
-    seq += label_first
-    print(k,seq)
-    
+    index_first = dllist_index(path, path.first.value)
+    label = nodes[index_first].m_label
+    k = len(label) + 1
+    '''
+    k = len(path.first.value) + 1
+    seq = path.first.value[:k-1]
     pos = path.first.next
-    i = k - 1
-    
     while pos != path.last:
-        m_size, m_label = get_len_and_label(nodes, pos)
-        #seq += nodes[pos.value].m_label[-1]
-        seq += m_label[-1]
-        i += 1
+        seq += pos.value[-1]
         pos = pos.next
-    print(seq) 
+    seq += path.last.value[-1]
+    #print(seq)
     return seq
-    
+
+def assemble_kmers(kmers, method, dotfile=None):
+    seq = ""
+    g = DiGraph()
+    if method == "k-mer pairwise comparison":
+        create_deBruijn_graph_by_string_comp(kmers, g)
+    elif method == "k-mer hashing":
+        create_deBruijn_graph_by_hashing(kmers, g)
+    else:
+        raise ValueError("ERROR: unknown methods!")
+    if dotfile:
+        printDOTFile(g, dotfile)
+    if not has_Eulerian_path(g):
+        raise ValueError("ERROR: Eulerian path does not exist!")
+    else:
+        path = find_Eulerian_path(g)
+        seq = build_sequence(path, g)
+    return seq
+
+def printDOTFile(g, file):
+    with open(file, 'w') as ofs:
+        ofs.write("digraph {\n")
+        ofs.write("label=\"de Bruijn graph\"\n")
+        nodes = g.m_nodes
+        for node in nodes:
+            for to in node.m_outgoing:
+                prefix = node.m_label
+                suffix = nodes[to].m_label
+                ofs.write(f"{prefix}->{suffix}[label={prefix}{suffix[-1]}];\n")
+        ofs.write("}\n")

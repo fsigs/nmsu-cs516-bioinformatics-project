@@ -66,47 +66,62 @@ def find_Eulerian_cycle(g: DiGraph) -> dllist:
     # END your code above
     return cycle
 
-def find_Eulerian_path(g:DiGraph):
-    path, cycle = dllist(), dllist()
+
+def find_Eulerian_path(g: DiGraph) -> dllist:
+    path = dllist()
+    cycle = dllist()
 
     src = source(g)
     dest = sink(g)
 
-    #print(src, len(g.m_nodes), dest)
+    #print("src,dest",src,dest)
 
+    # In the special case graph with only cycles
+    # and no source nor sink, we choose node 0 as the
+    # start and end of the Eulerian path:
     src = 0 if src >= len(g.m_nodes) else src
     dest = 0 if dest >= len(g.m_nodes) else dest
 
     nodes = g.m_nodes
+
+    # add an edge from the sink node to the source node
     nodes[dest].m_outgoing.append(src)
-    nodes[src].m_num_of_incoming +=1
-    g.m_nodes = nodes
+
+    # increase the incoming degree of the source node by one
+    nodes[src].m_num_of_incoming += 1
+
+    g.m_nodes = nodes 
+    
+    #g.print()
     
     cycle = find_Eulerian_cycle(g)
-
-    print(cycle)
     
-    start_node = cycle.first.value
+    #print("Eulerian_cycle: ", cycle)
 
-    print("start_node: ", start_node)
-    for node in cycle:
-        path.append(node)
-        if node == start_node and len(path) > 1:
-            break
-    
-    '''
-    pos_dest, pos_src = dllist(), dllist()
     pos_dest = cycle.first
-    while pos_dest != cycle.last:
-        pos_src = pos_dest.next
-        pos_dest = pos_src
-        print(src, dest, g.m_nodes[src].m_label, pos_src.value, g.m_nodes[dest].m_label, pos_dest.value)
-        if pos_src:
-            if pos_src.value == g.m_nodes[src].m_label and pos_dest.value == g.m_nodes[dest].m_label:
+    pos_src = pos_dest.next
+
+    while pos_src:
+        if pos_src.next:
+            if pos_src.value == src and pos_dest.value == dest:
                 break
         else:
             break
-    print("pos_src, pos_dest: ",pos_src, pos_dest)
-    print(pos_src, cycle.last, pos_dest, cycle.last)
-    '''
+        pos_dest = pos_src
+        pos_src = pos_src.next
+
+    if pos_src and pos_dest:
+        pos = pos_src
+        while True:
+            path.append(pos.value)
+            pos = pos.next
+            if not pos:
+                pos = cycle.first.next
+            if pos == pos_src:
+                break
+
+    else:
+        raise Exception("Searching for Eulerian path has failed!")
+
+    #print("Eulerian_path: ", path)
     return path
