@@ -20,9 +20,6 @@ def CreateAdjacencyList2(g_text_rep):
 
 def FindEulerianCycle(adj_list, circuit_max):
 
-    #Create adjacency list
-    #adj_list, circuit_max = CreateAdjacencyList(infile)
-
     #Reduced adjacency list to keep track of traveled edges   
     red_adj_list = {}            
     red_adj_list = deepcopy(adj_list)            
@@ -54,5 +51,4 @@ def FindEulerianCycle(adj_list, circuit_max):
         path += (vrtx + '->')
         path_array.append(int(vrtx))
     #print(path.strip('->'))
-    #return path.strip('->')
     return path_array

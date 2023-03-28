@@ -103,5 +103,4 @@ def find_Eulerian_path(g: DiGraph) -> dllist:
   else:
     raise Exception("Searching for Eulerian path has failed!")
 
-  #print("Eulerian_path: ", path)
   return path

@@ -12,7 +12,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 def test_and_print_message(seq, seq_truth, k, message):
-  #print("Seq_truth: ",seq_truth," Seq:", seq)
   if seq == seq_truth:
     print("Passed", message, "(assembled original sequence). Congratulations!")
   elif compare_composition(seq, seq_truth, k):
@@ -42,8 +41,6 @@ def test_1(method):
     seq_truth = seqs_truth[i]
     k = ks[i]
     kmers = get_kmers(seq_truth, k, True)
-    #print("seq_truth: ", seq_truth, ". k=",k)
-    #print("kmers: ", kmers)
     g = DiGraph()
     begin = timer()
     if method == "k-mer pairwise comparison":
@@ -56,13 +53,13 @@ def test_1(method):
     end = timer()
     elapsed_secs = round((end - begin) * 1000, 3)
 
-    #print("method: ", method)
     print(f"Elapsed time for building de Bruijn graph: {elapsed_secs}")
-    #g.print()
+    
     if has_Eulerian_path(g):
       print("Passed test for existence of Eulerian path. Congratulations!")
     else:
       print("Failed test for existence of Eulerian path!")
+    
     try:
       path = find_Eulerian_path(g)
       seq = build_sequence(path, g)
@@ -102,7 +99,6 @@ def test_3(method):
       print(e)
 
 def generate_chart(method):
-  #print("Starting generation of chart for:")
   ks = [3, 5, 7, 9, 11, 13, 15, 17, 19]
   seqs_truth = [
     random_DNA_sequence(100, 500),

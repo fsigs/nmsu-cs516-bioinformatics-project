@@ -25,9 +25,681 @@ Overall, the de Bruijn graph approach, coupled with the use of Eulerian cycles o
 
 # Methods
 
+We proceed in this section to describe the methods we have implemented in Python to emulate the skeleton code provided by Dr. Song, and the way they can be used in an executable Python file `main.py`
+
 ## Data structures and algorithms
 
-Complete
+```python
+
+from test import test_seq_assembly
+
+if __name__ == '__main__':
+  test_seq_assembly()
+
+```
+This is the main file that calls the execution of tests.
+
+```python
+
+import sys
+from timeit import default_timer as timer
+from DiGraph import DiGraph, Node
+from sequence import random_DNA_sequence, get_kmers, compare_composition
+from deBrujinByString import create_deBruijn_graph_by_string_comp
+from deBrujinByHash import DNAHasher, create_deBruijn_graph_by_hashing
+from EulerPath import has_Eulerian_path, find_Eulerian_path
+from k_assembler import build_sequence,assemble_kmers
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+def test_and_print_message(seq, seq_truth, k, message):
+  if seq == seq_truth:
+    print("Passed", message, "(assembled original sequence). Congratulations!")
+  elif compare_composition(seq, seq_truth, k):
+    print("Passed", message, "(assembled a sequence of the same composition with the original sequence). Congratulations!")
+  else:
+    sys.stderr.write("FAILED test!\n")
+
+def test_1(method):
+  print("Test 1")
+  print("======")
+  print(f"Testing k-assembler by {method}")
+  
+  # Testing sequences:
+  seqs_truth = [
+    "aaaaaaaaaaa",
+    "agcagctcagc",
+    "agcagctcagg",
+    random_DNA_sequence(10000, 20000)
+  ]
+  
+  # The value of k for k-mers to be used for each test sequence:
+  ks = [5, 3, 3, 20]
+  
+  for i in range(len(seqs_truth)):
+    print(f"\nExample {i}:")
+    
+    seq_truth = seqs_truth[i]
+    k = ks[i]
+    kmers = get_kmers(seq_truth, k, True)
+    g = DiGraph()
+    begin = timer()
+    if method == "k-mer pairwise comparison":
+      g = create_deBruijn_graph_by_string_comp(kmers, g)
+    elif method == "k-mer hashing":
+      g = create_deBruijn_graph_by_hashing(kmers, g)
+    else:
+      sys.stderr.write("ERROR: unknown method!\n")
+      return
+    end = timer()
+    elapsed_secs = round((end - begin) * 1000, 3)
+
+    print(f"Elapsed time for building de Bruijn graph: {elapsed_secs}")
+    
+    if has_Eulerian_path(g):
+      print("Passed test for existence of Eulerian path. Congratulations!")
+    else:
+      print("Failed test for existence of Eulerian path!")
+    
+    try:
+      path = find_Eulerian_path(g)
+      seq = build_sequence(path, g)
+      message = f"Test 1 Example {i}"
+      test_and_print_message(seq, seq_truth, k, message) 
+    except Exception as e:
+      sys.stderr.write(f"ERROR: {e}\n")
+      return
+
+
+def test_2(method):
+  print("Test 2")
+  print("======")
+  seq_truth = random_DNA_sequence()
+  k = 10
+  kmers = get_kmers(seq_truth, k)
+  try:
+      seq = assemble_kmers(kmers, method)
+      test_and_print_message(seq, seq_truth, k, "Test 2")
+  except Exception as e:
+      print(e)
+
+def test_3(method):
+  print("Test 3")
+  print("======")
+  seq_truth = random_DNA_sequence(15, 15)
+  k = 4
+  print("Sequence:", seq_truth)
+  kmers = get_kmers(seq_truth, k)
+  print("kmers:")
+  for kmer in kmers:
+      print(kmer)
+  try:
+      seq = assemble_kmers(kmers, method, "deBruijn.dot")
+      test_and_print_message(seq, seq_truth, k, "Test 3")
+  except Exception as e:
+      print(e)
+
+def generate_chart(method):
+  ks = [3, 5, 7, 9, 11, 13, 15, 17, 19]
+  seqs_truth = [
+    random_DNA_sequence(100, 500),
+    random_DNA_sequence(100, 1000),
+    random_DNA_sequence(1000, 2000),
+    random_DNA_sequence(1000, 3000),
+    random_DNA_sequence(1000, 4000),
+    random_DNA_sequence(1000, 5000),
+    random_DNA_sequence(1000, 6000),
+    random_DNA_sequence(1000, 7000),
+    random_DNA_sequence(1000, 8000)
+  ]
+  run_times = []
+  for i in range(len(seqs_truth)):
+    seq_truth = seqs_truth[i]
+    k = ks[i]
+    kmers = get_kmers(seq_truth, k, True)
+    g = DiGraph()
+    begin = timer()
+    if method == "k-mer pairwise comparison":
+      g = create_deBruijn_graph_by_string_comp(kmers, g)
+    elif method == "k-mer hashing":
+      g = create_deBruijn_graph_by_hashing(kmers, g)
+    else:
+      sys.stderr.write("ERROR: unknown method!\n")
+      return
+    end = timer()
+    elapsed_secs = round((end - begin) * 1000, 3)
+    run_times.append(elapsed_secs)
+
+  data = {'k':ks,'run_time':run_times}
+  df = pd.DataFrame(data)
+  sns.lineplot(data=df, x='k', y='run_time')
+  plt.xlabel('K')
+  plt.ylabel('Run Time (secs)')
+  plt.title('Method: ' + method.upper())
+  png_file_name = method.lower().replace(" ", "-")
+  plt.savefig("../docs/images/" + png_file_name + '.png')
+
+  print("|Language|Method|K-length|Run time (secs)|")
+  print("|:----:|:----:|:---:|:-----:|")
+  for i in range(0,len(ks)):
+    print("|Python|",method,"|",ks[i],"|",run_times[i])
+
+  
+def test_seq_assembly():
+  methods = [
+    "k-mer pairwise comparison",
+    "k-mer hashing"
+  ]
+  for method in methods:
+    print("-----------")
+    test_1(method)
+    print("-----------")
+    test_2(method)
+    print()
+  print("-----------")
+  test_3("k-mer hashing")
+
+  for method in methods:
+    generate_chart(method)
+
+```
+
+We have stated in this block the tests because they are a translation of what we had in the C++ skeleton for this project. We have added a function to plot a chart where we show the run time comparison between methods, and also its detail in tables.
+
+```python
+
+from pyllist import dllist
+
+class Node:
+  
+  def __init__(self, label: str):
+    self.m_label = label
+    self.m_outgoing = dllist()
+    self.m_num_of_incoming = 0
+
+  def print(self):
+    print("  ",self.m_label)
+    print("   incoming: ",str(self.m_num_of_incoming))
+    print("     edges: ",self.m_outgoing)
+    
+class DiGraph:
+
+  def __init__(self):
+    self.m_nodes = []
+
+  def print(self):
+    print("---------------------------------------")
+    print(" DiGraph ", len(self.m_nodes), " nodes")
+    for node in self.m_nodes:
+      node.print()
+    print("---------------------------------------")
+
+  def textRepresentation(self, hide_labels = True):
+    answer = ""
+    for i in range(0, len(self.m_nodes)):
+      node = self.m_nodes[i]
+      if hide_labels:
+        answer += str(i) + ' -> '
+      else:
+        answer += str(i) + '(' + node.m_label + ')' + ' -> '
+      elems = list(node.m_outgoing)
+      edges = []
+      for elem in elems:
+        if elem is not None:
+          edges.append(str(elem))
+      answer += ','.join(edges)
+      answer += '\n'
+    return answer
+
+```
+
+As task 2 in this project requires, these classes, DiGraph and Node together, implement de Bruijn graph construction to represent k-mers by a directed graph. In our case, we decided to use a double linked list (dllist) to represent the secuence of edges from a node. Also, we have added auxiliary methods to print the information or to represent the graph in its classi text representation.
+
+```python
+
+from typing import List
+from pyllist import dllist
+from DiGraph import DiGraph, Node
+
+def create_deBruijn_graph_by_string_comp(kmers: List[str], g: DiGraph):
+  
+  nodes = dllist()
+
+  for kmer in kmers:
+    k = len(kmer)
+
+    prefix = kmer[0:k-1]
+
+    itr = nodes.first
+    i = 0
+    while itr is not None:
+      if itr.value.m_label == prefix:
+        break
+      itr = itr.next
+      i += 1
+
+    if itr is None:
+      from_node = Node(prefix)
+      from_node.m_num_of_incoming = 0
+      nodes.append(from_node)
+      itr = nodes.last
+
+    from_itr = itr
+
+    suffix = kmer[1:k]
+
+    itr = nodes.first
+    j = 0
+    while itr is not None:
+      if itr.value.m_label == suffix:
+        break
+      itr = itr.next
+      j += 1
+
+    if itr is None:
+      to_node = Node(suffix)
+      to_node.m_num_of_incoming = 0
+
+      nodes.append(to_node)
+
+      itr = nodes.last
+
+    to_itr = itr
+
+    from_itr.value.m_outgoing.append(j)
+    to_itr.value.m_num_of_incoming += 1
+
+  g.m_nodes = [node for node in nodes]
+  return g
+
+```
+This is the translation we have produced in Python for the explicit function to create the de Brujin graph by k-mer string pairwise comparison.
+
+```python
+from collections import defaultdict
+from typing import List
+from pyllist import dllist
+from DiGraph import DiGraph, Node
+
+class DNAHasher:
+  def __call__(self, seq: str) -> int:
+    val = 0
+    max_width = 20
+    for i in range(min(len(seq), max_width)):
+      val = val << 2
+      c = seq[i].lower()
+      if c == 'a':
+        val += 0
+      elif c == 'c':
+        val += 1
+      elif c == 'g':
+        val += 2
+      elif c == 't':
+        val += 3
+      else:
+        raise ValueError(f"Invalid base at position {i}: {seq[i]}")
+    return val
+
+class CSeqHash:
+    def __init__(self):
+        self.ht = defaultdict(dllist)
+
+    def insert(self, key, value):
+        self.ht[key].appendright(value)
+
+    def find(self, key):
+        return self.ht.get(key, None)
+
+def create_hash_table(kmers: List[str]) -> CSeqHash:
+    ht = CSeqHash()
+    node_id = 0 
+    for kmer in kmers:
+        for j in range(2):  # j=0: prefix; j=1: suffix
+            key = kmer[j:len(kmer)-1]
+            if not ht.find(key):
+                ht.insert(key, node_id)
+                node_id += 1
+    return ht
+
+def create_deBruijn_graph_by_hashing(kmers: List[str], g: DiGraph):
+    
+    seq_hash = CSeqHash()
+
+    node_id = {}
+
+    # for each k-mer
+    for kmer in kmers:
+        kmer_len = len(kmer)
+        prefix = kmer[0:kmer_len-1]
+        suffix = kmer[1:kmer_len]
+
+        # hash the prefix and suffix strings to get unique integer ids
+        prefix_id = DNAHasher()(prefix)
+        suffix_id = DNAHasher()(suffix)
+
+        # find the prefix node id from the hash table
+        if prefix_id in node_id:
+            from_id = node_id[prefix_id]
+        else:
+            # create a new node and add it to the graph and node_id dict
+            from_node = Node(prefix)
+            g.m_nodes.append(from_node)
+            node_id[prefix_id] = len(g.m_nodes) - 1
+            from_id = node_id[prefix_id]
+            # insert the new node into the hash table
+            seq_hash.insert(prefix_id, from_id)
+
+        # update node from_id's label to prefix if necessary
+        if g.m_nodes[from_id].m_label != prefix:
+            g.m_nodes[from_id].m_label = prefix
+
+        # find the suffix node id to_id from the hash table
+        if suffix_id in node_id:
+            to_id = node_id[suffix_id]
+        else:
+            # create a new node and add it to the graph and node_id dict
+            to_node = Node(suffix)
+            g.m_nodes.append(to_node)
+            node_id[suffix_id] = len(g.m_nodes) - 1
+            to_id = node_id[suffix_id]
+            # insert the new node into the hash table
+            seq_hash.insert(suffix_id, to_id)
+
+        # update node to_id's label to suffix if necessary
+        if g.m_nodes[to_id].m_label != suffix:
+            g.m_nodes[to_id].m_label = suffix
+
+        # create a new edge (from_id, to_id) by inserting node to_id into the adjaceny list of node from_id
+        g.m_nodes[from_id].m_outgoing.appendright(to_id)
+
+        # update the number of incoming edges of node to_id
+        g.m_nodes[to_id].m_num_of_incoming += 1
+    
+    # end for loop
+    return g
+```
+
+Here, we state the function we have programmed to generate a random sequence DNA. Also, we have programmed the create_deBruijn_graph_by_hashing that basically receiving the graph and the list of kmers using appropiate the keys, produces hashes (generating the hash the prefix and suffix strings to get unique integer ids) so that the execution of the creation of the de Brujin graph is in linear time.
+
+```python
+
+from random import randint
+from copy import deepcopy
+
+def CreateAdjacencyList2(g_text_rep):
+    
+    adj_list = {}
+    circuit_max = 0
+    lines = [line.strip() for line in g_text_rep.splitlines()]
+    for line in lines:
+        node = line.strip('\n')
+        node = node.replace(' -> ', ' ')
+        node = node.split(' ')
+        adj_list.setdefault(node[0], [])
+        for number in node[1].split(','):
+            adj_list[node[0]].append(number)
+            circuit_max += 1
+    
+    return adj_list, circuit_max
+
+
+def FindEulerianCycle(adj_list, circuit_max):
+
+    #Reduced adjacency list to keep track of traveled edges   
+    red_adj_list = {}            
+    red_adj_list = deepcopy(adj_list)            
+            
+    #Arbitrary starting point (if graph is directed/balanced)
+    start = '0'
+    curr_vrtx = '0'
+
+    stack = []
+    circuit = []    
+    while len(circuit) != circuit_max:
+        
+        if red_adj_list[curr_vrtx] != []: #If neighbors exist
+            stack.append(curr_vrtx)
+            pick = randint(0,len(red_adj_list[curr_vrtx])-1)
+            temp = deepcopy(curr_vrtx)
+            curr_vrtx = red_adj_list[temp][pick]
+            red_adj_list[temp].remove(curr_vrtx)
+        
+        else:
+            circuit.append(curr_vrtx)
+            curr_vrtx = stack[len(stack)-1]
+            stack.pop()
+
+    #Formatting
+    path_array = [int(start)]
+    path = start + '->'
+    for vrtx in circuit[::-1]:
+        path += (vrtx + '->')
+        path_array.append(int(vrtx))
+    #print(path.strip('->'))
+    return path_array
+
+
+```
+
+After testing many strategies spending many days of effort, this is our last implementation of a class that produces an Eulerian Cycle based on an adjacency list that has relive success in creating correctly the Eulerian Cyles. This is something that crealy the project needs to improve because the majority of times the cycle produced is correct but there are times when is not.
+
+```python
+
+from collections import defaultdict
+from typing import List
+from pyllist import dllist
+from DiGraph import DiGraph, Node
+from random import choice
+from EulerianCycle import CreateAdjacencyList2, FindEulerianCycle
+
+def source(g:DiGraph):
+  for i, node in enumerate(g.m_nodes):
+    if len(node.m_outgoing) == node.m_num_of_incoming + 1:
+      return i
+  return 0
+
+def sink(g:DiGraph):
+  for i, node in enumerate(g.m_nodes):
+    if len(node.m_outgoing) + 1 == node.m_num_of_incoming:
+      return i
+  return 0
+
+def has_Eulerian_path(g:DiGraph):
+  exist = True
+  numSources, numSinks = 0, 0
+  for node in g.m_nodes:
+    out, incoming = len(node.m_outgoing), node.m_num_of_incoming
+    if out == incoming: # check for intermediate balanced node
+      continue
+    elif out == incoming + 1: # check for source node
+      numSources += 1
+      if numSources > 1:
+        exist = False
+        break
+    elif out + 1 == incoming: # check for sink node
+      numSinks += 1
+      if numSinks > 1:
+        exist = False
+        break
+    else:
+      exist = False
+      break
+  return exist
+
+def find_Eulerian_cycle(g: DiGraph) -> dllist:
+    cycle = dllist()
+    adj_list, circuit_max = CreateAdjacencyList2(g.textRepresentation())
+    path = FindEulerianCycle(adj_list, circuit_max)
+    for index in path:
+      cycle.append(g.m_nodes[index].m_label)
+    return cycle
+
+
+def find_Eulerian_path(g: DiGraph) -> dllist:
+  path = dllist()
+  cycle = dllist()
+
+  src = source(g)
+  dest = sink(g)
+
+  #print("src,dest: ",(src,dest))
+
+  # In the special case graph with only cycles
+  # and no source nor sink, we choose node 0 as the
+  # start and end of the Eulerian path:
+  src = 0 if src >= len(g.m_nodes) else src
+  dest = 0 if dest >= len(g.m_nodes) else dest
+
+  nodes = g.m_nodes
+
+  # add an edge from the sink node to the source node
+  nodes[dest].m_outgoing.append(src)
+
+  # increase the incoming degree of the source node by one
+  nodes[src].m_num_of_incoming += 1
+
+  g.m_nodes = nodes 
+  
+  #g.print()
+  
+  cycle = find_Eulerian_cycle(g)
+  
+  #print("Eulerian_cycle: ", cycle)
+  
+  pos_dest = cycle.first
+  pos_src = pos_dest.next
+
+  while pos_src:
+    if pos_src.next:
+      if pos_src.value == src and pos_dest.value == dest:
+        break
+    else:
+      break
+    pos_dest = pos_src
+    pos_src = pos_src.next
+
+  if pos_src and pos_dest:
+    pos = pos_src
+    while True:
+      path.append(pos.value)
+      pos = pos.next
+      if not pos:
+        pos = cycle.first.next
+      if pos == pos_src:
+        break
+  else:
+    raise Exception("Searching for Eulerian path has failed!")
+
+  return path
+
+```
+
+Here, there are the functions to detect the presence of a Eulerian cycle, detect what is the Elerian Cycle, and based on our representation of the de Brujing directed graph, produces a Eulerian path. Here, we had a bug. So that, the vast majority of the cases the path produced is incorrect. This influences to fail passing some tests. This function reuires polishing yet.
+
+```python
+
+from typing import List
+from pyllist import dllist
+from DiGraph import DiGraph, Node
+from deBrujinByString import create_deBruijn_graph_by_string_comp
+from deBrujinByHash import create_deBruijn_graph_by_hashing
+from EulerPath import has_Eulerian_path, find_Eulerian_path
+
+def dllist_index(my_list, elem):
+    index = 0
+    current_node = my_list.first
+    while current_node is not None:
+        if current_node.value == elem:
+            break
+        current_node = current_node.next
+        index += 1
+    return index
+
+def build_sequence(path: dllist, g: DiGraph) -> str:
+    k = len(path.first.value) + 1
+    seq = path.first.value[:k-1]
+    pos = path.first.next
+    while pos != path.last:
+        seq += pos.value[-1]
+        pos = pos.next
+    seq += path.last.value[-1]
+    return seq
+
+def assemble_kmers(kmers, method, dotfile=None):
+    seq = ""
+    g = DiGraph()
+    if method == "k-mer pairwise comparison":
+        create_deBruijn_graph_by_string_comp(kmers, g)
+    elif method == "k-mer hashing":
+        create_deBruijn_graph_by_hashing(kmers, g)
+    else:
+        raise ValueError("ERROR: unknown methods!")
+    if dotfile:
+        printDOTFile(g, dotfile)
+    if not has_Eulerian_path(g):
+        raise ValueError("ERROR: Eulerian path does not exist!")
+    else:
+        path = find_Eulerian_path(g)
+        seq = build_sequence(path, g)
+    return seq
+
+def printDOTFile(g, file):
+    with open(file, 'w') as ofs:
+        ofs.write("digraph {\n")
+        ofs.write("label=\"de Bruijn graph\"\n")
+        nodes = g.m_nodes
+        for node in nodes:
+            for to in node.m_outgoing:
+                prefix = node.m_label
+                suffix = nodes[to].m_label
+                ofs.write(f"{prefix}->{suffix}[label={prefix}{suffix[-1]}];\n")
+        ofs.write("}\n")
+
+```
+
+Here we have programmed in Python the functions the skeleton offers to finally build the sequence and assemble kmers. Also, the function to generate the deBrujin.dot persistence file.
+
+```python
+
+import random
+
+def random_DNA_sequence(min_length=10, max_length=100):#min_length=10, max_length=10000
+  length = random.randint(min_length, max_length)
+  DNA = ''.join(random.choice('atgc') for _ in range(length))
+  return DNA
+
+def get_kmers(seq, k, randomized=True):
+  kmers = [seq[i:i+k] for i in range(len(seq) - k + 1)]
+  if randomized:
+    randomized_kmers = list(kmers)
+    nkmers = len(kmers)
+    for i in range(nkmers - 1):
+      j = random.randint(i, nkmers - 1)
+      randomized_kmers[i], randomized_kmers[j] = randomized_kmers[j], randomized_kmers[i]
+    return randomized_kmers
+  else:
+    return kmers
+
+def compare_composition(s1: str, s2: str, k: int) -> bool:
+  same_composition = True
+  
+  if len(s1) != len(s2):
+    same_composition = False
+  elif s1 == s2:
+    same_composition = True
+  else:
+    composition1 = get_kmers(s1, k)
+    composition1.sort()
+    composition2 = get_kmers(s2, k)
+    composition2.sort()
+    same_composition = composition1 == composition2
+      
+  return same_composition
+
+```
+
+Finally, we state in our project the functions to generate the random DNA sequence, get kmers given a sequence and a length for k, and the function that inspects if two kmers have the same composition.
 
 ## How to compile and run project's code
 

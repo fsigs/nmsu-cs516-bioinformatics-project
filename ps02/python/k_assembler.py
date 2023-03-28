@@ -16,12 +16,6 @@ def dllist_index(my_list, elem):
     return index
 
 def build_sequence(path: dllist, g: DiGraph) -> str:
-    '''
-    nodes = g.m_nodes
-    index_first = dllist_index(path, path.first.value)
-    label = nodes[index_first].m_label
-    k = len(label) + 1
-    '''
     k = len(path.first.value) + 1
     seq = path.first.value[:k-1]
     pos = path.first.next
@@ -29,7 +23,6 @@ def build_sequence(path: dllist, g: DiGraph) -> str:
         seq += pos.value[-1]
         pos = pos.next
     seq += path.last.value[-1]
-    #print(seq)
     return seq
 
 def assemble_kmers(kmers, method, dotfile=None):
