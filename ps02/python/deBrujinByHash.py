@@ -34,7 +34,7 @@ class CSeqHash:
 
 def create_hash_table(kmers: List[str]) -> CSeqHash:
     ht = CSeqHash()
-    node_id = 0  # the node id will be used in the de Bruijn graph
+    node_id = 0 
     for kmer in kmers:
         for j in range(2):  # j=0: prefix; j=1: suffix
             key = kmer[j:len(kmer)-1]
@@ -44,10 +44,9 @@ def create_hash_table(kmers: List[str]) -> CSeqHash:
     return ht
 
 def create_deBruijn_graph_by_hashing(kmers: List[str], g: DiGraph):
-    # create one hash table for both the k-1 prefix and suffix of each k-mer
+    
     seq_hash = CSeqHash()
 
-    # initialize an empty node vector for graph g
     node_id = {}
 
     # for each k-mer

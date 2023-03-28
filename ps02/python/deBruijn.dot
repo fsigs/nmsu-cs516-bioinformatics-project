@@ -1,15 +1,15 @@
 digraph {
 label="de Bruijn graph"
-ctg->tga[label=ctga];
-tga->gat[label=tgat];
-gac->aca[label=gaca];
+cct->ctc[label=cctc];
+ctc->tcc[label=ctcc];
+ctc->tca[label=ctca];
+tct->ctc[label=tctc];
+tcc->ccc[label=tccc];
+ccc->cct[label=ccct];
+cac->aca[label=caca];
+cac->aca[label=caca];
+aca->cat[label=acat];
 aca->cac[label=acac];
-atg->tga[label=atga];
-gta->tag[label=gtag];
-tag->aga[label=taga];
-gat->atg[label=gatg];
-cac->act[label=cact];
-tgt->gta[label=tgta];
-aga->gac[label=agac];
-act->ctg[label=actg];
+cat->att[label=catt];
+tca->cac[label=tcac];
 }
