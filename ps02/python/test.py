@@ -54,7 +54,7 @@ def test_1(method):
       sys.stderr.write("ERROR: unknown method!\n")
       return
     end = timer()
-    elapsed_secs = round((end - begin) * 1000, 2)
+    elapsed_secs = round((end - begin) * 1000, 3)
 
     #print("method: ", method)
     print(f"Elapsed time for building de Bruijn graph: {elapsed_secs}")
@@ -103,14 +103,17 @@ def test_3(method):
 
 def generate_chart(method):
   #print("Starting generation of chart for:")
-  ks = [3, 5, 7, 9, 11, 13]
+  ks = [3, 5, 7, 9, 11, 13, 15, 17, 19]
   seqs_truth = [
     random_DNA_sequence(100, 500),
     random_DNA_sequence(100, 1000),
     random_DNA_sequence(1000, 2000),
     random_DNA_sequence(1000, 3000),
     random_DNA_sequence(1000, 4000),
-    random_DNA_sequence(1000, 5000)
+    random_DNA_sequence(1000, 5000),
+    random_DNA_sequence(1000, 6000),
+    random_DNA_sequence(1000, 7000),
+    random_DNA_sequence(1000, 8000)
   ]
   run_times = []
   for i in range(len(seqs_truth)):
@@ -127,18 +130,23 @@ def generate_chart(method):
       sys.stderr.write("ERROR: unknown method!\n")
       return
     end = timer()
-    elapsed_secs = round((end - begin) * 1000, 2)
+    elapsed_secs = round((end - begin) * 1000, 3)
     run_times.append(elapsed_secs)
-  #print(ks)
-  #print(run_times)
+
   data = {'k':ks,'run_time':run_times}
   df = pd.DataFrame(data)
   sns.lineplot(data=df, x='k', y='run_time')
   plt.xlabel('K')
-  plt.ylabel('Run Time')
-  plt.title('Method: ' + method)
+  plt.ylabel('Run Time (secs)')
+  plt.title('Method: ' + method.upper())
   png_file_name = method.lower().replace(" ", "-")
   plt.savefig("../docs/images/" + png_file_name + '.png')
+
+  print("|Language|Method|K-length|Run time (secs)|")
+  print("|:----:|:----:|:---:|:-----:|")
+  for i in range(0,len(ks)):
+    print("|Python|",method,"|",ks[i],"|",run_times[i])
+
   
 def test_seq_assembly():
   methods = [

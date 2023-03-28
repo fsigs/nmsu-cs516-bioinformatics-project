@@ -14,7 +14,7 @@ execute:
   warning: false
 ---
 # Abstract
-In this project, we assemble input DNA k-mers to an output sequence, such that the assembled sequence will have the same k-composition with the true unknown sequence. Also, it implements the de Bruijn graph to represent k-mers and then find a Eulerian path from the graph. For this, we implement a hash function to match the prefix and suffix of a k-mer to those of other k-mers, implement de Bruijn graph construction to represent k-mers by a directed graph, and implement a Eulerian cycle finding algorithm to find a cycle on a directed graph.
+In this project, we assemble input DNA k-mers to an output sequence, such that the assembled sequence has the same k-composition with the true unknown sequence. Also, it implements the de Bruijn graph to represent k-mers and then find a Eulerian path from the graph. For this, the project implements a hash function to match the prefix and suffix of a k-mer to those of other k-mers, implement de Bruijn graph construction to represent k-mers by a directed graph, and implement a Eulerian cycle finding algorithm to find a cycle on a directed graph.
 
 # Introduction
 Assembling genomes is a critical task in bioinformatics, as it allows researchers to study the genetic material of various organisms, including humans, animals, and plants. High-throughput sequencing technologies such as Illumina, Ion Torrent, and Pacific Biosciences generate massive amounts of short reads that need to be assembled into longer contiguous sequences (contigs). The de Bruijn graph approach is a widely used method for genome assembly that is based on constructing a graph where the nodes correspond to k-mers (substrings of length k) present in the reads, and the edges represent the overlaps between the k-mers. By traversing the graph using Eulerian cycles or paths, we can reconstruct the original sequence of the genome.
@@ -25,11 +25,11 @@ Overall, the de Bruijn graph approach, coupled with the use of Eulerian cycles o
 
 # Methods
 
-## Data structures and algorithms used
+## Data structures and algorithms
 
 Complete
 
-## How to compile your code and run our code
+## How to compile and run project's code
 
 Complete
 
@@ -37,13 +37,114 @@ Complete
 
 ## Screenshot of the required test cases
 
-Complete
+```
+-----------
+Test 1
+======
+Testing k-assembler by k-mer pairwise comparison
+
+Example 0:
+Elapsed time for building de Bruijn graph: 0.062
+Passed test for existence of Eulerian path. Congratulations!
+Passed Test 1 Example 0 (assembled original sequence). Congratulations!
+
+Example 1:
+Elapsed time for building de Bruijn graph: 0.131
+Passed test for existence of Eulerian path. Congratulations!
+FAILED test!
+
+Example 2:
+Elapsed time for building de Bruijn graph: 0.035
+Passed test for existence of Eulerian path. Congratulations!
+FAILED test!
+
+Example 3:
+Elapsed time for building de Bruijn graph: 18191.139
+Passed test for existence of Eulerian path. Congratulations!
+FAILED test!
+-----------
+Test 2
+======
+FAILED test!
+
+-----------
+Test 1
+======
+Testing k-assembler by k-mer hashing
+
+Example 0:
+Elapsed time for building de Bruijn graph: 0.054
+Passed test for existence of Eulerian path. Congratulations!
+Passed Test 1 Example 0 (assembled original sequence). Congratulations!
+
+Example 1:
+Elapsed time for building de Bruijn graph: 0.214
+Passed test for existence of Eulerian path. Congratulations!
+Passed Test 1 Example 1 (assembled a sequence of the same composition with the original sequence). Congratulations!
+
+Example 2:
+Elapsed time for building de Bruijn graph: 0.117
+Passed test for existence of Eulerian path. Congratulations!
+FAILED test!
+
+Example 3:
+Elapsed time for building de Bruijn graph: 210.884
+Passed test for existence of Eulerian path. Congratulations!
+FAILED test!
+-----------
+Test 2
+======
+Passed Test 2 (assembled original sequence). Congratulations!
+
+-----------
+Test 3
+======
+Sequence: ctgtctgtacgcttt
+kmers:
+ctgt
+cgct
+gctt
+tgta
+cttt
+acgc
+tctg
+tgtc
+gtac
+gtct
+ctgt
+tacg
+Passed Test 3 (assembled original sequence). Congratulations!
+```
 
 ## The k-assembler run time as a function of the number of k-mers
 
 ![Figure 1: Run time of kmer hassembler by pairwise comparison](images/k-mer-pairwise-comparison.png){#q_25}
 
+|Language|Method|K-length|Run time (secs)|
+|:----:|:----:|:---:|:-----:|
+|Python| k-mer pairwise comparison | 3 | 1.104
+|Python| k-mer pairwise comparison | 5 | 20.301
+|Python| k-mer pairwise comparison | 7 | 460.319
+|Python| k-mer pairwise comparison | 9 | 239.191
+|Python| k-mer pairwise comparison | 11 | 783.015
+|Python| k-mer pairwise comparison | 13 | 1856.577
+|Python| k-mer pairwise comparison | 15 | 1890.373
+|Python| k-mer pairwise comparison | 17 | 800.143
+|Python| k-mer pairwise comparison | 19 | 5314.455
+
 ![Figure 2: Run time of kmer assembler by hashing](images/k-mer-hashing.png){#q_50}
+
+|Language|Method|K-length|Run time (secs)|
+|:----:|:----:|:---:|:-----:|
+|Python| k-mer hashing | 3 | 1.331
+|Python| k-mer hashing | 5 | 1.916
+|Python| k-mer hashing | 7 | 11.255
+|Python| k-mer hashing | 9 | 19.736
+|Python| k-mer hashing | 11 | 32.019
+|Python| k-mer hashing | 13 | 29.811
+|Python| k-mer hashing | 15 | 86.259
+|Python| k-mer hashing | 17 | 42.829
+|Python| k-mer hashing | 19 | 27.513
 
 # Discussion
 
