@@ -102,6 +102,9 @@ def test_3(method):
       print(e)
 
 def generate_chart(method):
+  print()
+  print("\033[33m{}\033[0m".format("Output for report"))
+  print("\033[33m{}\033[0m".format("=================="))
   ks = [3, 5, 7, 9, 11, 13, 15, 17, 19]
   seqs_truth = [
     random_DNA_sequence(100, 500),
@@ -141,7 +144,7 @@ def generate_chart(method):
   plt.title('Method: ' + method.upper())
   png_file_name = method.lower().replace(" ", "-")
   plt.savefig("../docs/images/" + png_file_name + '.png')
-  print("Report plots have been generated in /docs/images folder")
+  print("Report plots have been generated in /docs/images folder...\n")
 
   print("|Language|Method|K-length|Run time (secs)|")
   print("|:----:|:----:|:---:|:-----:|")

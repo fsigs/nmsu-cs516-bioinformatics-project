@@ -1,5 +1,0 @@
-https://code.visualstudio.com/docs/languages/cpp
-references useful articles
-  https://realpython.com/linked-lists-python/
-  https://learnpython.com/blog/python-array-vs-list/
-  https://charlesreid1.github.io/graphs-for-bioinformatics-part-2-finding-eulerian-paths.html
