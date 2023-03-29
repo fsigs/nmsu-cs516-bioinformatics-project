@@ -1,6 +1,6 @@
 import random
 
-def random_DNA_sequence(min_length=10, max_length=100):#min_length=10, max_length=10000
+def random_DNA_sequence(min_length=10, max_length=10000):
   length = random.randint(min_length, max_length)
   DNA = ''.join(random.choice('atgc') for _ in range(length))
   return DNA

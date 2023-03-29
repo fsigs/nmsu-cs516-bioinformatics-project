@@ -50,5 +50,5 @@ def FindEulerianCycle(adj_list, circuit_max):
     for vrtx in circuit[::-1]:
         path += (vrtx + '->')
         path_array.append(int(vrtx))
-    #print(path.strip('->'))
+    
     return path_array

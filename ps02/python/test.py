@@ -1,10 +1,10 @@
 
 import sys
 from timeit import default_timer as timer
-from DiGraph import DiGraph, Node
+from DiGraph import DiGraph
 from sequence import random_DNA_sequence, get_kmers, compare_composition
 from deBrujinByString import create_deBruijn_graph_by_string_comp
-from deBrujinByHash import DNAHasher, create_deBruijn_graph_by_hashing
+from deBrujinByHash import create_deBruijn_graph_by_hashing
 from EulerPath import has_Eulerian_path, find_Eulerian_path
 from k_assembler import build_sequence,assemble_kmers
 import pandas as pd
@@ -13,15 +13,17 @@ import matplotlib.pyplot as plt
 
 def test_and_print_message(seq, seq_truth, k, message):
   if seq == seq_truth:
-    print("Passed", message, "(assembled original sequence). Congratulations!")
+    msg = "Passed " + message + " (assembled original sequence). Congratulations!"
+    print("\033[32m{}\033[0m".format(msg))
   elif compare_composition(seq, seq_truth, k):
-    print("Passed", message, "(assembled a sequence of the same composition with the original sequence). Congratulations!")
+    msg = "Passed " + message + " (assembled a sequence of the same composition with the original sequence). Congratulations!"
+    print("\033[32m{}\033[0m".format(msg))
   else:
-    sys.stderr.write("FAILED test!\n")
+    sys.stderr.write("\033[31m{}\033[0m".format("FAILED test!\n"))
 
 def test_1(method):
-  print("Test 1")
-  print("======")
+  print("\033[33m{}\033[0m".format("Test 1"))
+  print("\033[33m{}\033[0m".format("======"))
   print(f"Testing k-assembler by {method}")
   
   # Testing sequences:
@@ -42,6 +44,7 @@ def test_1(method):
     k = ks[i]
     kmers = get_kmers(seq_truth, k, True)
     g = DiGraph()
+
     begin = timer()
     if method == "k-mer pairwise comparison":
       g = create_deBruijn_graph_by_string_comp(kmers, g)
@@ -56,9 +59,9 @@ def test_1(method):
     print(f"Elapsed time for building de Bruijn graph: {elapsed_secs}")
     
     if has_Eulerian_path(g):
-      print("Passed test for existence of Eulerian path. Congratulations!")
+      print("\033[32m{}\033[0m".format("Passed test for existence of Eulerian path. Congratulations!"))
     else:
-      print("Failed test for existence of Eulerian path!")
+      print("\033[31m{}\033[0m".format("Failed test for existence of Eulerian path!"))
     
     try:
       path = find_Eulerian_path(g)
@@ -71,8 +74,8 @@ def test_1(method):
 
 
 def test_2(method):
-  print("Test 2")
-  print("======")
+  print("\033[33m{}\033[0m".format("Test 2"))
+  print("\033[33m{}\033[0m".format("======"))
   seq_truth = random_DNA_sequence()
   k = 10
   kmers = get_kmers(seq_truth, k)
@@ -83,8 +86,8 @@ def test_2(method):
       print(e)
 
 def test_3(method):
-  print("Test 3")
-  print("======")
+  print("\033[33m{}\033[0m".format("Test 3"))
+  print("\033[33m{}\033[0m".format("======"))
   seq_truth = random_DNA_sequence(15, 15)
   k = 4
   print("Sequence:", seq_truth)
@@ -111,6 +114,7 @@ def generate_chart(method):
     random_DNA_sequence(1000, 7000),
     random_DNA_sequence(1000, 8000)
   ]
+
   run_times = []
   for i in range(len(seqs_truth)):
     seq_truth = seqs_truth[i]
@@ -137,6 +141,7 @@ def generate_chart(method):
   plt.title('Method: ' + method.upper())
   png_file_name = method.lower().replace(" ", "-")
   plt.savefig("../docs/images/" + png_file_name + '.png')
+  print("Report plots have been generated in /docs/images folder")
 
   print("|Language|Method|K-length|Run time (secs)|")
   print("|:----:|:----:|:---:|:-----:|")
@@ -150,14 +155,13 @@ def test_seq_assembly():
     "k-mer hashing"
   ]
   for method in methods:
-    print("-----------")
+    print()
     test_1(method)
-    print("-----------")
+    print()
     test_2(method)
     print()
-  print("-----------")
   test_3("k-mer hashing")
 
   for method in methods:
     generate_chart(method)
-
+  

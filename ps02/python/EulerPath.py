@@ -40,67 +40,65 @@ def has_Eulerian_path(g:DiGraph):
   return exist
 
 def find_Eulerian_cycle(g: DiGraph) -> dllist:
-    cycle = dllist()
+    cycle_labels, cycle_values = dllist(), dllist()
     adj_list, circuit_max = CreateAdjacencyList2(g.textRepresentation())
     path = FindEulerianCycle(adj_list, circuit_max)
     for index in path:
-      cycle.append(g.m_nodes[index].m_label)
-    return cycle
+      cycle_labels.append(g.m_nodes[index].m_label)
+      cycle_values.append(index)
+    return cycle_labels, cycle_values
 
 
 def find_Eulerian_path(g: DiGraph) -> dllist:
-  path = dllist()
-  cycle = dllist()
-
+  path, cycle = dllist(), dllist()
+  
   src = source(g)
   dest = sink(g)
-
-  #print("src,dest: ",(src,dest))
-
-  # In the special case graph with only cycles
-  # and no source nor sink, we choose node 0 as the
-  # start and end of the Eulerian path:
   src = 0 if src >= len(g.m_nodes) else src
   dest = 0 if dest >= len(g.m_nodes) else dest
 
   nodes = g.m_nodes
-
-  # add an edge from the sink node to the source node
   nodes[dest].m_outgoing.append(src)
-
-  # increase the incoming degree of the source node by one
   nodes[src].m_num_of_incoming += 1
+  g.m_nodes = nodes
 
-  g.m_nodes = nodes 
+  cycle_labels, cycle = find_Eulerian_cycle(g) 
+  cycle.pop()
+  cycle_labels.pop()
   
-  #g.print()
-  
-  cycle = find_Eulerian_cycle(g)
-  
-  #print("Eulerian_cycle: ", cycle)
-  
-  pos_dest = cycle.first
-  pos_src = pos_dest.next
-
-  while pos_src:
-    if pos_src.next:
-      if pos_src.value == src and pos_dest.value == dest:
-        break
-    else:
+  src_times = 0
+  for id in cycle:
+    if id == src:
+      src_times += 1
+ 
+  first_part = []
+  count = 1
+  cur_first_part = cycle.first
+  while cur_first_part.next is not None:
+    if count == src_times and cur_first_part.value == src:
       break
-    pos_dest = pos_src
-    pos_src = pos_src.next
+    if cur_first_part.value == src:
+      count += 1
+    first_part.append(cur_first_part.value)
+    cur_first_part = cur_first_part.next
 
-  if pos_src and pos_dest:
-    pos = pos_src
-    while True:
-      path.append(pos.value)
-      pos = pos.next
-      if not pos:
-        pos = cycle.first.next
-      if pos == pos_src:
-        break
+  cur_last_part = cycle.last
+  last_part = []
+  while cur_last_part.value != src:
+    last_part.append(cur_last_part.value)
+    cur_last_part = cur_last_part.prev
+  
+  path_ids = [src] 
+  if last_part is not None:
+    path_ids += last_part[::-1]
+  if first_part is not None:
+    path_ids += first_part
+  
+  path = dllist()
+  if len(path_ids) > 0:
+    for id in path_ids:
+      path.append(g.m_nodes[id].m_label)
   else:
-    raise Exception("Searching for Eulerian path has failed!")
+    path.append(src)
 
   return path
