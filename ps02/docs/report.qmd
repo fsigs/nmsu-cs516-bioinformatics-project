@@ -734,22 +734,22 @@ Test 1
 Testing k-assembler by k-mer pairwise comparison
 
 Example 0:
-Elapsed time for building de Bruijn graph: 0.025
+Elapsed time for building de Bruijn graph: 0.026
 Passed test for existence of Eulerian path. Congratulations!
 Passed Test 1 Example 0 (assembled original sequence). Congratulations!
 
 Example 1:
-Elapsed time for building de Bruijn graph: 0.035
+Elapsed time for building de Bruijn graph: 0.033
 Passed test for existence of Eulerian path. Congratulations!
 Passed Test 1 Example 1 (assembled a sequence of the same composition with the original sequence). Congratulations!
 
 Example 2:
-Elapsed time for building de Bruijn graph: 0.036
+Elapsed time for building de Bruijn graph: 0.043
 Passed test for existence of Eulerian path. Congratulations!
 Passed Test 1 Example 2 (assembled a sequence of the same composition with the original sequence). Congratulations!
 
 Example 3:
-Elapsed time for building de Bruijn graph: 66510.974
+Elapsed time for building de Bruijn graph: 47749.686
 Passed test for existence of Eulerian path. Congratulations!
 Passed Test 1 Example 3 (assembled original sequence). Congratulations!
 
@@ -763,22 +763,22 @@ Test 1
 Testing k-assembler by k-mer hashing
 
 Example 0:
-Elapsed time for building de Bruijn graph: 0.044
+Elapsed time for building de Bruijn graph: 0.065
 Passed test for existence of Eulerian path. Congratulations!
 Passed Test 1 Example 0 (assembled original sequence). Congratulations!
 
 Example 1:
-Elapsed time for building de Bruijn graph: 0.05
+Elapsed time for building de Bruijn graph: 0.065
 Passed test for existence of Eulerian path. Congratulations!
 Passed Test 1 Example 1 (assembled a sequence of the same composition with the original sequence). Congratulations!
 
 Example 2:
-Elapsed time for building de Bruijn graph: 0.053
+Elapsed time for building de Bruijn graph: 0.076
 Passed test for existence of Eulerian path. Congratulations!
 Passed Test 1 Example 2 (assembled a sequence of the same composition with the original sequence). Congratulations!
 
 Example 3:
-Elapsed time for building de Bruijn graph: 208.865
+Elapsed time for building de Bruijn graph: 267.578
 Passed test for existence of Eulerian path. Congratulations!
 Passed Test 1 Example 3 (assembled original sequence). Congratulations!
 
@@ -788,21 +788,21 @@ Passed Test 2 (assembled a sequence of the same composition with the original se
 
 Test 3
 ======
-Sequence: gtccaccacccagct
+Sequence: caagcatggtatgcg
 kmers:
-gtcc
-cacc
-ccca
-ccac
-tcca
-cacc
-acca
-ccac
-agct
-cagc
-ccag
-accc
-Passed Test 3 (assembled a sequence of the same composition with the original sequence). Congratulations!
+gcat
+atgc
+atgg
+aagc
+agca
+tatg
+tgcg
+gtat
+catg
+caag
+ggta
+tggt
+Passed Test 3 (assembled original sequence). Congratulations!
 
 ```
 
@@ -812,43 +812,43 @@ Important note: This execution is flawless. The current version (Tue 28 mar) mak
 
 ### Results for k-assembler by k-mer pairwise comparison
 
-![Figure 2: Run time of kmer hassembler by pairwise comparison](images/k-mer-pairwise-comparison.png){#q_25}
+![Figure 2: Run time of kmer hassembler by pairwise comparison](images/k-mer-pairwise-comparison-final.png){#q_25}
 
 In this chart, we clearly see that the run time is considerable when we use this method to assemble. The evolution has a quadratic pattern.
 
 |Language|Method|K-length|Run time (secs)|
 |:----:|:----:|:---:|:-----:|
-|Python| k-mer pairwise comparison | 3 | 1.21
-|Python| k-mer pairwise comparison | 5 | 22.572
-|Python| k-mer pairwise comparison | 7 | 279.383
-|Python| k-mer pairwise comparison | 9 | 846.541
-|Python| k-mer pairwise comparison | 11 | 2575.83
-|Python| k-mer pairwise comparison | 13 | 1041.696
-|Python| k-mer pairwise comparison | 15 | **227.039**
-|Python| k-mer pairwise comparison | 17 | 1473.353
-|Python| k-mer pairwise comparison | 19 | 1633.571
+|Python| k-mer pairwise comparison | 3 | 0.442
+|Python| k-mer pairwise comparison | 5 | 19.107
+|Python| k-mer pairwise comparison | 7 | 215.486
+|Python| k-mer pairwise comparison | 9 | 620.785
+|Python| k-mer pairwise comparison | 11 | **375.013**
+|Python| k-mer pairwise comparison | 13 | 4068.33
+|Python| k-mer pairwise comparison | 15 | 5573.621
+|Python| k-mer pairwise comparison | 17 | 4902.598
+|Python| k-mer pairwise comparison | 19 | 5534.268
 
-In this table we can see the exact values for run time each execution had in Python for the method **k-mer pairwise comparison**. For instance, with 3-mers, we obtain 1.21 seconds; with 9-mers, we obtain 846.541 seconds; for 17-mers, we obtain 1473.353 seconds; *interestingly, with the combination of 15-mers, we obtain much less, 227.039 seconds, just to mention some examples this table shows*.
+In this table we can see the exact values for run time each execution had in Python for the method **k-mer pairwise comparison**. For instance, with 3-mers, we obtain 0.442 seconds; with 9-mers, we obtain 620.785 seconds; for 17-mers, we obtain 4902.598 seconds; *interestingly, with the combination of 11-mers, we obtain much less, 375.013 seconds*, just to mention some examples this table shows.
 
 ### Results for k-assembler by k-mer hashing
 
-![Figure 3: Run time of kmer assembler by hashing](images/k-mer-hashing.png){#q_50}
+![Figure 3: Run time of kmer assembler by hashing](images/k-mer-hashing-final.png){#q_50}
 
 In this chart, we clearly see that the run time is much less when we use this method to assemble. The evolution has a linear pattern (orange line). Also, to compare the proportions, we have put also the previous method so that we can appreciate the efficiency this algorithm brings.
 
 |Language|Method|K-length|Run time (secs)|
 |:----:|:----:|:---:|:-----:|
-|Python| k-mer hashing | 3 | 1.363
-|Python| k-mer hashing | 5 | 3.47
-|Python| k-mer hashing | 7 | 10.037
-|Python| k-mer hashing | 9 | 18.316
-|Python| k-mer hashing | 11 | 10.426
-|Python| k-mer hashing | 13 | 14.582
-|Python| k-mer hashing | 15 | 22.92
-|Python| k-mer hashing | 17 | 59.468
-|Python| k-mer hashing | 19 | 58.216
+|Python| k-mer hashing | 3 | 1.084
+|Python| k-mer hashing | 5 | 2.459
+|Python| k-mer hashing | 7 | 8.16
+|Python| k-mer hashing | 9 | 11.505
+|Python| k-mer hashing | 11 | 19.096
+|Python| k-mer hashing | 13 | 29.36
+|Python| k-mer hashing | 15 | 90.495
+|Python| k-mer hashing | 17 | **19.332**
+|Python| k-mer hashing | 19 | 37.338
 
-In this table we can see the exact values for run time each execution had in Python for the method **k-mer hashing**. For instance, with 3-mers, we obtain 1.363 seconds which is higher than the less-efficiet method -this is correct since for low amount of data to process, a quadratic function in complexity is more efficient than a linear one-; with 9-mers, we obtain 18.316 seconds (which represent an improvement in 13 times agains the previous method); for 17-mers, we obtain 59.468 seconds (24 times better), just to mention some examples this table shows.
+In this table we can see the exact values for run time each execution had in Python for the method **k-mer hashing**. For instance, with 3-mers, we obtain 1.084 seconds which is higher than the less-efficiet method -this is correct since for low amount of data to process, a quadratic function in complexity is more efficient than a linear one-; with 9-mers, we obtain 11.505 seconds (which represent an improvement in 13 times agains the previous method); for 19-mers, we obtain 37.338 seconds (148 times better! an impressive improvement); *interestingly, with the combination of 17-mers, we obtain much less, 19.332 seconds*, just to mention some examples this table shows.
 
 # Discussion
 
