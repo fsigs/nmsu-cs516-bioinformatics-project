@@ -1,0 +1,84 @@
+---
+title: "Evolution of repetitive sequences in viruses"
+subtitle: "CS516 Bioinformatics - Project 3"
+author: "Israel Gonzalez S., Gabriel Romero"
+date: "April 27, 2023"
+toc: true
+format:
+  html:
+    html-math-method: katex
+    css: styles.css
+    code-tools: true
+    self-contained: true
+execute:
+  warning: false
+---
+# Abstract
+In this project, we 
+
+# References
+
+* Articles
+
+The Evolution and Biology of SARS-CoV-2 Variants
+https://perspectivesinmedicine.cshlp.org/content/12/5/a041390.full
+
+XBB1.5 
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10050278/
+
+* Genomes used to get 9-mers:
+
+Coronavirus 2 isolate Wuhan-Hu-1
+https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2?report=fasta
+
+Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015,
+https://www.ncbi.nlm.nih.gov/nuccore/KT225476.2?report=fasta
+
+Bat coronavirus isolate BANAL-20-236/Laos/2020
+https://www.ncbi.nlm.nih.gov/nuccore/MZ937003.2?report=fasta
+
+SARS coronavirus isolate CFB/SZ/94/03
+https://www.ncbi.nlm.nih.gov/nuccore/AY545919.1?report=fasta
+
+Pangolin coronavirus HKU4/P251T/pangolin/2018
+https://nmsu.instructure.com/courses/1526136/assignments/13532795
+
+=== Aditional Genomic Datasets
+
+Search: https://www.ncbi.nlm.nih.gov/nuccore/?term=(clade+coronavirus)+AND+%22complete+genome%22
+
+SARS coronavirus civet007
+https://www.ncbi.nlm.nih.gov/nuccore/AY572034.1?report=fasta
+
+Coronavirus 2 JP_Hiro97618 RNA
+https://www.ncbi.nlm.nih.gov/nuccore/LC594651.1?report=fasta
+
+coronavirus 2 isolate SARS-CoV-2/human/JPN/SARS-CoV-2, B.1.617.2 lineage, Delta variant/2021
+https://www.ncbi.nlm.nih.gov/nuccore/OK091006.1?report=fasta
+
+coronavirus 2 isolate SARS-CoV-2/human/CAN/Kappa_NML_P4/2021
+https://www.ncbi.nlm.nih.gov/nuccore/2182752773?report=fasta
+
+coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021
+https://www.ncbi.nlm.nih.gov/nuccore/MZ496616.1?report=fasta
+
+coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022
+https://www.ncbi.nlm.nih.gov/nuccore/OP183454.1?report=fasta
+
+ORFB1ab USA human/USA/WA-PHL-027795/2022
+https://www.ncbi.nlm.nih.gov/nuccore/OQ780237.1?report=fasta
+
+SARS-CoV-2/human/USA/WA-PHL-026151/2022
+https://www.ncbi.nlm.nih.gov/nuccore/OQ779361.1?report=fasta
+
+human/USA/NC-CDC-LC0984552/2023
+https://www.ncbi.nlm.nih.gov/nuccore/OQ258758.1?report=fasta
+
+SARS-CoV-2/human/MAR/Omicron BA.2/2022
+https://www.ncbi.nlm.nih.gov/nuccore/OQ722344.1?report=fasta
+
+SARS-CoV-2/human/BRA/ILMD2203877/2022
+https://www.ncbi.nlm.nih.gov/nuccore/OQ525773.1?report=fasta
+
+Covid Switzerland 2023
+https://www.ncbi.nlm.nih.gov/nuccore/OX460957.1?report=fasta
