@@ -41,7 +41,7 @@ SARS coronavirus isolate CFB/SZ/94/03
 https://www.ncbi.nlm.nih.gov/nuccore/AY545919.1?report=fasta
 
 Pangolin coronavirus HKU4/P251T/pangolin/2018
-https://nmsu.instructure.com/courses/1526136/assignments/13532795
+https://www.ncbi.nlm.nih.gov/nuccore/OM009282.1?report=fasta
 
 === Aditional Genomic Datasets
 
