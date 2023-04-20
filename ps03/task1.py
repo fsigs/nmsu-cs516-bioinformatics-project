@@ -17,10 +17,9 @@ def hamming_distance_matrix(sequences):
     for j in range(num_seqs):
       if i != j:
         distance_matrix[i][j] = hamming_distance(sequences[i], sequences[j])
-  #print(distance_matrix)
-  return triangular_inferior(distance_matrix.tolist())
+  return triangular_inferior_format(distance_matrix.tolist())
 
-def triangular_inferior(matrix):
+def triangular_inferior_format(matrix):
   triangular_matrix = []
   for i in range(len(matrix)):
     row = []

@@ -1,7 +1,7 @@
 ---
 title: "Evolution of repetitive sequences in viruses"
 subtitle: "CS516 Bioinformatics - Project 3"
-author: "Israel Gonzalez S., Gabriel Romero"
+author: "Israel Gonzalez S."
 date: "April 27, 2023"
 toc: true
 format:
@@ -25,6 +25,11 @@ https://perspectivesinmedicine.cshlp.org/content/12/5/a041390.full
 
 XBB1.5 
 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10050278/
+
+https://www.researchgate.net/publication/6665603_Inhibition_of_HIV-1_Replication_by_siRNA_Targeting_Conserved_Regions_of_gagpol
+
+Nucleotide 9-mers characterize the type II diabetic gut metagenome
+https://www.sciencedirect.com/science/article/pii/S0888754316300155
 
 * Genomes used to get 9-mers:
 
@@ -82,3 +87,5 @@ https://www.ncbi.nlm.nih.gov/nuccore/OQ525773.1?report=fasta
 
 Covid Switzerland 2023
 https://www.ncbi.nlm.nih.gov/nuccore/OX460957.1?report=fasta
+
+
