@@ -1,5 +1,6 @@
-import os
 #from datasets import datasets
+
+import os
 from FrequentKmers import FrequentKmers
 from task2 import tree_by_neighbor_joining
 
@@ -24,6 +25,7 @@ def get_kmers(dir_path, klength):
   files = get_genome_files(dir_path)
   covid_k = [klength]
   nine_mers = {}
+  print("| Genome | k-mer | Sequence |")
   for file in files: 
     covid2_genome = fk.get_covid_genome(dir_path + '/' + file)
     for k in covid_k:
@@ -33,7 +35,7 @@ def get_kmers(dir_path, klength):
       if r_len < 1000:
         for r in rs:
           nine_mers[r] = nine_mers[r] + 1 if r in nine_mers else 1
-          print("|", file, "|", k, "|", r, "|")
+          print(f"| {file} | {k}-mer | {r} |")
   return nine_mers
 
 def get_sequences(nine_mers):
@@ -56,22 +58,25 @@ def generate_mutations(kmer):
 if __name__ == '__main__':
   
   klength = 9
+  type_drawing = "ascii"
+  print()
   print("Coronavirus")
   print("===========")
   nine_mers = get_kmers('./genomes/Coronavirus',klength)
   sequences = get_sequences(nine_mers)
   most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
   print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
-  tree = tree_by_neighbor_joining(sequences, True, "ascii")
+  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
   print()
 
+  exit()
   print("HIV-1")
   print("=====")
   nine_mers = get_kmers('./genomes/HIV-1',klength)
   sequences = get_sequences(nine_mers)
   most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
   print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
-  tree = tree_by_neighbor_joining(sequences, True, "ascii")
+  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
  
   print("Adenovirus-2")
   print("============")
@@ -79,7 +84,7 @@ if __name__ == '__main__':
   sequences = get_sequences(nine_mers)
   most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
   print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
-  tree = tree_by_neighbor_joining(sequences, True, "ascii")
+  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
 
   print("Ebola")
   print("=====")
@@ -87,7 +92,7 @@ if __name__ == '__main__':
   sequences = get_sequences(nine_mers)
   most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
   print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
-  tree = tree_by_neighbor_joining(sequences, True, "ascii")
+  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
 
   print("Hepatitis-B")
   print("===========")
@@ -95,7 +100,7 @@ if __name__ == '__main__':
   sequences = get_sequences(nine_mers)
   most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
   print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
-  tree = tree_by_neighbor_joining(sequences, True, "ascii")
+  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
 
   print("Diabetes")
   print("===========")
@@ -103,4 +108,4 @@ if __name__ == '__main__':
   sequences = get_sequences(nine_mers)
   most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
   print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
-  tree = tree_by_neighbor_joining(sequences, True, "ascii")
+  tree = tree_by_neighbor_joining(sequences, True, type_drawing)

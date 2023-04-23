@@ -17,5 +17,7 @@ def tree_by_neighbor_joining(sequences, plot = False, plot_type='ascii'):
   return tree
 
 if __name__ == '__main__':
+  print()
   sequences = ["ACGTAGGCCT", "ATGTAAGACT", "TCGAGAGCAC", "TCGAAAGCAT"]
-  tree_by_neighbor_joining(sequences)
+  print("Rooted phylogenetic tree (Neighbor Joining) associated with sequences:\n",sequences,"\n")
+  tree_by_neighbor_joining(sequences, True, "ascii")

@@ -14,7 +14,281 @@ execute:
   warning: false
 ---
 # Abstract
-In this project, we 
+
+In this project, we study the evolution of the most frequent 9-mers in coronaviruses as main tasks and other viruses. We calculate sequence similarity, build a rooted phylogenetic tree, reconstruct ancestral sequences for the most frequent 9-mers. Also, we interpret the tree built for potentially new understanding of the evolution history of repetitive elements in viruses.
+
+# Introduction
+
+In our class, we have learned that analyzing the frequency of k-mers in genomes of living beings - like viruses - has the potential to provide relevant insights regarding the evolution and biological diversity of them. By calculating similarity or how distance are their patterns, and building phylogennetic trees, we can infer the stength of genomic relationships they have and if they possess common ancestors. In this sense, we can have a vision of the potential origin and how the spread of viruses has happened. 
+
+For instance, if a particular k-mer is found in many different viral genomes, it may indicate that this sequence has been conserved over time and is important for the virus's function or survival. On the other hand, if a k-mer is only found in a subset of viral genomes, it may indicate that this sequence has evolved more recently. In more empirical terms, this is also important because vaccines and other biological applications can be created based on these conclusions.
+
+This project has a five tasks centered on Coronavirus SARCoV-2 strains, and finally extends its methodology to two aditional taks related to Adenovirus-2, Ebola, HIV-1, and Hepatitis-B viruses; so that we, as students in the biotechnology field, can understand that the methodology is applicable to other genomic contexts also.
+
+# Methods
+
+In this section, from the seven tasks, five are purely programs. Then, we proceed to describe the methods and data structures that we have implemented in Python to accomplish each required task of this project. We have organized in functions in files `task1.py`, `task2.py`, `task3.py`, and `task4_e1.py`
+
+## Data structures and algorithms
+
+### Task 1: Calculating pairwise Hamming distance
+
+```python
+
+import numpy as np
+
+def hamming_distance(s1, s2):
+  if len(s1) != len(s2):
+    return None
+  else:
+    distance = 0
+    for i in range(len(s1)):
+      if s1[i] != s2[i]:
+        distance += 1
+    return distance
+
+def triangular_inferior_format(matrix):
+  triangular_matrix = []
+  for i in range(len(matrix)):
+    row = []
+    for j in range(len(matrix)):
+      if i >= j:
+        row.append(matrix[i][j])
+    triangular_matrix.append(row)
+  return triangular_matrix
+
+def hamming_distance_matrix(sequences, triangular=True, print_matrix=False):
+  num_seqs = len(sequences)
+  distance_matrix = np.zeros((num_seqs, num_seqs), dtype=int)
+  
+  for i in range(num_seqs):
+    for j in range(num_seqs):
+      if i != j:
+        distance_matrix[i][j] = hamming_distance(sequences[i], sequences[j])
+  
+  distance_matrix_triangular = triangular_inferior_format(distance_matrix.tolist())
+  
+  if print_matrix == True and triangular == False:
+    print(distance_matrix)
+  if print_matrix == True and triangular == True:
+    print(distance_matrix_triangular)
+
+  if triangular == True:
+    return distance_matrix_triangular
+  else:
+    return distance_matrix
+
+```
+
+The code includes three functions for calculating the Hamming distance between sequences, constructing a distance matrix, and converting the matrix to a triangular inferior format.
+
+The hamming_distance function takes two sequences as input and returns the number of differences (or mismatches) between them. If the two sequences have different lengths, the function returns None. Otherwise, it counts the number of positions where the characters in the two sequences are different and returns the count.
+
+The triangular_inferior_format function takes a matrix as input and returns a list of lists representing the lower triangular part of the matrix. It does this by iterating over the rows and columns of the input matrix and only adding values to the output list if the row index is greater than or equal to the column index. The resulting list of lists can be used to represent the distance matrix in a more compact format.
+
+The hamming_distance_matrix function takes a list of sequences as input and constructs a matrix of Hamming distances between all pairs of sequences. It first creates an empty matrix with dimensions equal to the number of sequences, and then fills in the matrix by calling the hamming_distance function for each pair of sequences. Since the matrix is symmetric, the function only calculates and stores the lower triangular part of the matrix to save space. Finally, it returns the matrix in a triangular inferior format by calling the triangular_inferior_format function.
+
+```python
+if __name__ == '__main__':
+  print()
+
+  sequences = ["ACGTAGGCCT", "ATGTAAGACT", "TCGAGAGCAC", "TCGAAAGCAT"]
+  print("Hamming distance matrix for sequences (normal format):\n",sequences)
+  hamming_distance_matrix(sequences, False, True)
+  print()
+
+  sequences = ["ACGT", "AGTT", "ATCC", "GTCA"]
+  print("Hamming distance matrix for sequences (inf. triangular format):\n",sequences)
+  hamming_distance_matrix(sequences, True, True)
+  print()
+```
+
+```
+PS C:\Development\nmsu\nmsu-cs516-bioinformatics-project\ps03> py .\task1.py
+
+Hamming distance matrix for sequences (normal format):
+ ['ACGTAGGCCT', 'ATGTAAGACT', 'TCGAGAGCAC', 'TCGAAAGCAT']      
+[[0 3 6 4]
+ [3 0 7 5]
+ [6 7 0 2]
+ [4 5 2 0]]
+
+Hamming distance matrix for sequences (inf. triangular format):
+ ['ACGT', 'AGTT', 'ATCC', 'GTCA']
+[[0], [2, 0], [3, 3, 0], [4, 4, 2, 0]]
+
+```
+
+### Task 2: Building a rooted phylogenetic tree
+
+```python
+
+from task1 import hamming_distance_matrix
+from Bio.Phylo.TreeConstruction import DistanceMatrix
+from Bio.Phylo.TreeConstruction import DistanceTreeConstructor
+from Bio import Phylo
+
+def tree_by_neighbor_joining(sequences, plot = False, plot_type='ascii'):
+  distance_matrix = hamming_distance_matrix(sequences)
+  biopython_dist_matrix = DistanceMatrix(names=sequences, matrix=distance_matrix)
+  constructor = DistanceTreeConstructor()
+  tree = constructor.nj(biopython_dist_matrix)
+  midpoint_clade = list(tree.find_clades(name="midpoint"))
+  tree.root_with_outgroup(midpoint_clade)
+  if plot and plot_type == 'ascii':
+    Phylo.draw_ascii(tree)
+  if plot and plot_type == 'image':
+    Phylo.draw(tree)
+  return tree
+
+```
+
+This code defines a function called tree_by_neighbor_joining that constructs a phylogenetic tree using the neighbor-joining method. It takes a list of sequences as input and can optionally plot the resulting tree.
+
+The first step in the function is to compute the distance matrix using the hamming_distance_matrix function from task1. The distance matrix is then converted into a DistanceMatrix object from Biopython, which is needed for the neighbor-joining algorithm.
+
+The next step is to construct the tree using the nj method from DistanceTreeConstructor, which implements the neighbor-joining algorithm. The midpoint clade is then found and used as the root of the tree.
+
+If plot is set to True, the function plots the resulting tree using either ASCII art or an image, depending on the value of plot_type. Finally, the function returns the resulting tree object.
+
+```python
+if __name__ == '__main__':
+  print()
+  sequences = ["ACGTAGGCCT", "ATGTAAGACT", "TCGAGAGCAC", "TCGAAAGCAT"]
+  print("Rooted phylogenetic tree (Neighbor Joining) associated with sequences:\n",sequences,"\n")
+  tree_by_neighbor_joining(sequences, True, "ascii")
+```
+
+```
+PS C:\Development\nmsu\nmsu-cs516-bioinformatics-project\ps03> py .\task2.py
+
+Rooted phylogenetic tree (Neighbor Joining) associated with sequences:
+ ['ACGTAGGCCT', 'ATGTAAGACT', 'TCGAGAGCAC', 'TCGAAAGCAT']
+
+                                          ____________ ACGTAGGCCT
+  _______________________________________|
+ |                                       |__________________________ ATGTAAGACT
+_|
+ |_________________________ TCGAGAGCAC
+ |
+ | TCGAAAGCAT
+```
+
+### Task 3: Inferring ancestral sequences
+
+```python
+# Pending
+```
+
+```python
+# Pending
+```
+
+```
+# Pending
+```
+
+### Task 4 and Task E1: The evolution of the most frequent 9-mer repeat in coronaviruses and in multiple aditional viruses
+
+```python
+
+import os
+from FrequentKmers import FrequentKmers
+from task2 import tree_by_neighbor_joining
+
+def get_genome_files(dir_path):
+  res = []
+  for path in os.listdir(dir_path):
+    if os.path.isfile(os.path.join(dir_path, path)):
+      res.append(path)
+  return res
+
+def get_most_frequent_nine_mer(nine_mers_dict):
+  max_value = 0
+  max_key = None
+  for index,value in enumerate(nine_mers_dict):
+    if nine_mers_dict[value] > max_value:
+      max_value = nine_mers_dict[value]
+      max_key = value
+  return max_key, max_value
+
+def get_kmers(dir_path, klength):
+  fk = FrequentKmers()
+  files = get_genome_files(dir_path)
+  covid_k = [klength]
+  nine_mers = {}
+  print("| Genome | k-mer | Sequence |")
+  for file in files: 
+    covid2_genome = fk.get_covid_genome(dir_path + '/' + file)
+    for k in covid_k:
+      result = fk.better_frequent_words(covid2_genome, k)
+      rs = result[0]
+      r_len = len(result[0])
+      if r_len < 1000:
+        for r in rs:
+          nine_mers[r] = nine_mers[r] + 1 if r in nine_mers else 1
+          print(f"| {file} | {k}-mer | {r} |")
+  return nine_mers
+
+def get_sequences(nine_mers):
+  sequences = []
+  for s in nine_mers.keys():
+    sequences.append(s)
+  return sequences
+
+```
+
+This is a script that uses the FrequentKmers class and the tree_by_neighbor_joining function to analyze genomes and generate a rooted phylogenetic tree. Here's an explanation of each function:
+
+get_genome_files(dir_path): This function takes a directory path as input and returns a list of the filenames in that directory.
+
+get_most_frequent_nine_mer(nine_mers_dict): This function takes a dictionary of 9-mers and their frequencies and returns the most frequent 9-mer and its frequency.
+
+get_kmers(dir_path, klength): This function takes a directory path and a k-mer length as inputs, and returns a dictionary of 9-mers and their frequencies. It uses the FrequentKmers class to read in genome files from the specified directory, and finds the most frequent k-mers in each file using the better_frequent_words method. It prints a table with the filename, k-mer length, and sequence for each frequent k-mer found.
+
+get_sequences(nine_mers): This function takes a dictionary of 9-mers and their frequencies and returns a list of the 9-mers.
+
+```python
+if __name__ == '__main__':
+  
+  klength = 9
+  type_drawing = "ascii"
+  print()
+  print("Coronavirus")
+  print("===========")
+  nine_mers = get_kmers('./genomes/Coronavirus',klength)
+  sequences = get_sequences(nine_mers)
+  most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
+  print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
+  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
+  print()
+  
+```
+
+```
+PS C:\Development\nmsu\nmsu-cs516-bioinformatics-project\ps03> py .\task4_e1.py
+
+Coronavirus
+===========
+| Genome | k-mer | Sequence |
+| AY545919.1.txt | 9-mer | TAAACGAAC |
+| KT225476.2.txt | 9-mer | TTAACGAAC |
+| KT225476.2.txt | 9-mer | TAACGAACT |
+| MZ937003.2.txt | 9-mer | TAAACGAAC |
+| NC_045512.2.txt | 9-mer | TAAACGAAC |
+| OM009282.1.txt | 9-mer | TAATGGTAA |
+
+* Most frequent 9-mer:  TAAACGAAC . Ocurrences:  3 in studied genomes
+
+                                              , TAAACGAAC
+  ____________________________________________|
+ |                                            |______________________ TTAACGAAC
+_|
+ |___________________________________________________________________ TAACGAACT
+ |
+ |____________________________________________ TAATGGTAA
+
+```
 
 # References
 
