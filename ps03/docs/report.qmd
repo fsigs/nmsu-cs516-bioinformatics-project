@@ -19,7 +19,7 @@ In this project, we study the evolution of the most frequent 9-mers in coronavir
 
 # Introduction
 
-In our class, we have learned that analyzing the frequency of k-mers in genomes of living beings - like viruses - has the potential to provide relevant insights regarding the evolution and biological diversity of them. By calculating similarity or how distance are their patterns, and building phylogennetic trees, we can infer the stength of genomic relationships they have and if they possess common ancestors. In this sense, we can have a vision of the potential origin and how the spread of viruses has happened. 
+In our class, we have learned that analyzing the frequency of k-mers in genomes of living beings - like viruses - has the potential to provide relevant insights regarding the evolution and biological diversity of them. By calculating similarity or how distant their patterns are, building phylogennetic trees based on the most frequen k-mers (k=9 for this study), we can infer genomic relationships and if they possess common ancestors. In this sense, we can have a vision of the potential origin and how the spread of viruses has happened. 
 
 For instance, if a particular k-mer is found in many different viral genomes, it may indicate that this sequence has been conserved over time and is important for the virus's function or survival. On the other hand, if a k-mer is only found in a subset of viral genomes, it may indicate that this sequence has evolved more recently. In more empirical terms, this is also important because vaccines and other biological applications can be created based on these conclusions.
 
@@ -33,9 +33,11 @@ In this section, from the seven tasks, five are purely programs. Then, we procee
 
 ### Task 1: Calculating pairwise Hamming distance
 
-```python
+* Python Code
 
+```python
 import numpy as np
+from timeit import default_timer as timer
 
 def hamming_distance(s1, s2):
   if len(s1) != len(s2):
@@ -57,15 +59,29 @@ def triangular_inferior_format(matrix):
     triangular_matrix.append(row)
   return triangular_matrix
 
+def get_sequences_from_fasta_file(file_path):
+  sequences = []
+  line_sequence = 1
+  file = open(file_path, 'r')
+  for line in file:
+    if line_sequence%2 == 0:
+      sequences.append(line.replace('\n', ''))
+    line_sequence += 1
+  file.close()
+  return sequences
+
 def hamming_distance_matrix(sequences, triangular=True, print_matrix=False):
   num_seqs = len(sequences)
   distance_matrix = np.zeros((num_seqs, num_seqs), dtype=int)
-  
+ 
+  start = timer()
   for i in range(num_seqs):
     for j in range(num_seqs):
       if i != j:
         distance_matrix[i][j] = hamming_distance(sequences[i], sequences[j])
-  
+  end = timer()
+  hamming_distance_matrix_time = end - start
+
   distance_matrix_triangular = triangular_inferior_format(distance_matrix.tolist())
   
   if print_matrix == True and triangular == False:
@@ -74,9 +90,9 @@ def hamming_distance_matrix(sequences, triangular=True, print_matrix=False):
     print(distance_matrix_triangular)
 
   if triangular == True:
-    return distance_matrix_triangular
+    return distance_matrix_triangular, hamming_distance_matrix_time
   else:
-    return distance_matrix
+    return distance_matrix, hamming_distance_matrix_time
 
 ```
 
@@ -86,60 +102,122 @@ The hamming_distance function takes two sequences as input and returns the numbe
 
 The triangular_inferior_format function takes a matrix as input and returns a list of lists representing the lower triangular part of the matrix. It does this by iterating over the rows and columns of the input matrix and only adding values to the output list if the row index is greater than or equal to the column index. The resulting list of lists can be used to represent the distance matrix in a more compact format.
 
-The hamming_distance_matrix function takes a list of sequences as input and constructs a matrix of Hamming distances between all pairs of sequences. It first creates an empty matrix with dimensions equal to the number of sequences, and then fills in the matrix by calling the hamming_distance function for each pair of sequences. Since the matrix is symmetric, the function only calculates and stores the lower triangular part of the matrix to save space. Finally, it returns the matrix in a triangular inferior format by calling the triangular_inferior_format function.
+Te function get_sequences_from_fasta_file takes a path where a fasta file is with kmers sequences and retrive its sequences as a list.
+
+The hamming_distance_matrix function takes a list of sequences as input and constructs a matrix of Hamming distances between all pairs of sequences. It first creates an empty matrix with dimensions equal to the number of sequences, and then fills in the matrix by calling the hamming_distance function for each pair of sequences. Since the matrix is symmetric, the function only calculates and stores the lower triangular part of the matrix to save space. Finally, it returns the matrix in a triangular inferior format by calling the triangular_inferior_format function if it is required or just the squared matrix. Also, it returns its running time in seconds.
+
+* Example of execution
 
 ```python
 if __name__ == '__main__':
   print()
+  print("\nSequences from array")
+  print("====================")
 
+  # Directly specifying arrays and getting a normal squared matrix
   sequences = ["ACGTAGGCCT", "ATGTAAGACT", "TCGAGAGCAC", "TCGAAAGCAT"]
-  print("Hamming distance matrix for sequences (normal format):\n",sequences)
-  hamming_distance_matrix(sequences, False, True)
+  print("Hamming distance matrix for sequences (normal format):\n",sequences,"\n")
+  m, t = hamming_distance_matrix(sequences, False, True)
+  print('\n  Runing time: {:.5f} seconds'.format(t))
   print()
 
+  # Directly specifying arrays and getting an inferior triangular matrix as BioPython uses
   sequences = ["ACGT", "AGTT", "ATCC", "GTCA"]
-  print("Hamming distance matrix for sequences (inf. triangular format):\n",sequences)
-  hamming_distance_matrix(sequences, True, True)
+  print("Hamming distance matrix for sequences (inf. triangular format):\n",sequences,"\n")
+  m, t = hamming_distance_matrix(sequences, True, True)
+  print('\n  Runing time: {:.5f} seconds'.format(t))
+  print()
+
+  print("\nSequences from Fasta files")
+  print("==========================")
+
+  # From fasta file, reads virus kmers and produces a normal squared matrix
+  sequences = get_sequences_from_fasta_file('./fasta-sequences/fasta2.txt')
+  print("Hamming distance matrix for sequences (normal format):\n",sequences,"\n")
+  m, t = hamming_distance_matrix(sequences, False, True)
+  print('\n  Runing time: {:.5f} seconds'.format(t))
+  print()
+
+  # From fasta file, reads virus kmers and produces an inferior triangular matrix as BioPython uses
+  sequences = get_sequences_from_fasta_file('./fasta-sequences/fasta2.txt')
+  print("Hamming distance matrix for sequences (inf. triangular format):\n",sequences,"\n")
+  m, t = hamming_distance_matrix(sequences, True, True)
+  print('\n  Runing time: {:.5f} seconds'.format(t))
   print()
 ```
 
-```
-PS C:\Development\nmsu\nmsu-cs516-bioinformatics-project\ps03> py .\task1.py
+* Output of Example of execution
 
+```
+PS C:\Development\nmsu\nmsu-cs516-bioinformatics-project\ps03> py .\task1.py        
+
+
+Sequences from array
+====================
 Hamming distance matrix for sequences (normal format):
- ['ACGTAGGCCT', 'ATGTAAGACT', 'TCGAGAGCAC', 'TCGAAAGCAT']      
+ ['ACGTAGGCCT', 'ATGTAAGACT', 'TCGAGAGCAC', 'TCGAAAGCAT']
+
 [[0 3 6 4]
  [3 0 7 5]
  [6 7 0 2]
  [4 5 2 0]]
 
+  Runing time: 0.00002 seconds
+
 Hamming distance matrix for sequences (inf. triangular format):
  ['ACGT', 'AGTT', 'ATCC', 'GTCA']
+
 [[0], [2, 0], [3, 3, 0], [4, 4, 2, 0]]
 
+  Runing time: 0.00002 seconds
+
+
+Sequences from Fasta files
+==========================
+Hamming distance matrix for sequences (normal format):
+ ['ACGTAGGCCT', 'ATGTAAGACT', 'TCGAGAGCAC', 'TCGAAAGCAT']
+
+[[0 3 6 4]
+ [3 0 7 5]
+ [6 7 0 2]
+ [4 5 2 0]]
+
+  Runing time: 0.00002 seconds
+
+Hamming distance matrix for sequences (inf. triangular format):
+ ['ACGTAGGCCT', 'ATGTAAGACT', 'TCGAGAGCAC', 'TCGAAAGCAT']
+
+[[0], [3, 0], [6, 7, 0], [4, 5, 2, 0]]
+
+  Runing time: 0.00002 seconds
 ```
 
 ### Task 2: Building a rooted phylogenetic tree
 
-```python
+* Python Code
 
-from task1 import hamming_distance_matrix
+```python
+from Bio import Phylo
 from Bio.Phylo.TreeConstruction import DistanceMatrix
 from Bio.Phylo.TreeConstruction import DistanceTreeConstructor
-from Bio import Phylo
+from task1 import hamming_distance_matrix, get_sequences_from_fasta_file
+from timeit import default_timer as timer
 
 def tree_by_neighbor_joining(sequences, plot = False, plot_type='ascii'):
-  distance_matrix = hamming_distance_matrix(sequences)
+  start = timer()
+  distance_matrix, distance_matrix_time = hamming_distance_matrix(sequences)
   biopython_dist_matrix = DistanceMatrix(names=sequences, matrix=distance_matrix)
   constructor = DistanceTreeConstructor()
   tree = constructor.nj(biopython_dist_matrix)
   midpoint_clade = list(tree.find_clades(name="midpoint"))
   tree.root_with_outgroup(midpoint_clade)
+  end = timer()
+  tree_generation_time = end - start
   if plot and plot_type == 'ascii':
     Phylo.draw_ascii(tree)
   if plot and plot_type == 'image':
     Phylo.draw(tree)
-  return tree
+  return tree, tree_generation_time
 
 ```
 
@@ -149,21 +227,29 @@ The first step in the function is to compute the distance matrix using the hammi
 
 The next step is to construct the tree using the nj method from DistanceTreeConstructor, which implements the neighbor-joining algorithm. The midpoint clade is then found and used as the root of the tree.
 
-If plot is set to True, the function plots the resulting tree using either ASCII art or an image, depending on the value of plot_type. Finally, the function returns the resulting tree object.
+If plot is set to True, the function plots the resulting tree using either ASCII art or an image, depending on the value of plot_type. Finally, the function returns the resulting tree object. . Also, it returns its running time in seconds.
+
+* Example of execution
 
 ```python
 if __name__ == '__main__':
   print()
-  sequences = ["ACGTAGGCCT", "ATGTAAGACT", "TCGAGAGCAC", "TCGAAAGCAT"]
-  print("Rooted phylogenetic tree (Neighbor Joining) associated with sequences:\n",sequences,"\n")
-  tree_by_neighbor_joining(sequences, True, "ascii")
+  #sequences = ["ACGTAGGCCT", "ATGTAAGACT", "TCGAGAGCAC", "TCGAAAGCAT"]
+  sequences = get_sequences_from_fasta_file('./fasta-sequences/fasta2.txt')
+  print("Rooted phylogenetic tree (Neighbor Joining) for sequences:\n\n",sequences,"\n")
+  tree, tree_generation_time = tree_by_neighbor_joining(sequences, True, "ascii")
+  print('Runing time: {:.5f} seconds'.format(tree_generation_time))
+  print()
 ```
+
+* Output of Example of execution
 
 ```
 PS C:\Development\nmsu\nmsu-cs516-bioinformatics-project\ps03> py .\task2.py
 
-Rooted phylogenetic tree (Neighbor Joining) associated with sequences:
- ['ACGTAGGCCT', 'ATGTAAGACT', 'TCGAGAGCAC', 'TCGAAAGCAT']
+Rooted phylogenetic tree (Neighbor Joining) for sequences:
+
+ ['ACGTAGGCCT', 'ATGTAAGACT', 'TCGAGAGCAC', 'TCGAAAGCAT'] 
 
                                           ____________ ACGTAGGCCT
   _______________________________________|
@@ -172,28 +258,155 @@ _|
  |_________________________ TCGAGAGCAC
  |
  | TCGAAAGCAT
+
+Runing time: 0.00036 seconds
 ```
 
 ### Task 3: Inferring ancestral sequences
 
-```python
-# Pending
-```
+* Python Code
 
 ```python
-# Pending
-```
+import numpy as np
+from timeit import default_timer as timer
+from task2 import tree_by_neighbor_joining
+
+nucleotides = 'ACGT'
+
+def small_parsimony(tree):
+  start = timer()
+  sequences = [node.name for node in tree.get_terminals()]
+  
+  # (i-th) letter of each sequence
+  words = []
+  for i in range(0, len(sequences[0])):
+    word = ''
+    for sequence in sequences:
+      word += str(sequence[i])
+    words.append(word)
+  
+  ancestral_sequence = ''
+  for word in words:
+    ancestral_sequence += sp(word)
+  end = timer()
+  ancestral_sequence_time = end - start
+  return ancestral_sequence, ancestral_sequence_time
+
+def sp(word):
+  left, right = [], []
+  for i, c in enumerate(word):
+    if i % 2 == 0:
+      left.append(c)
+    else:
+      right.append(c)
+  
+  aditional = False
+  if len(right) % 2 != 0:
+    aditional = True
+  
+  scores_boths = []  
+  for i, c in enumerate(left):
+    c_left = c
+    if i == len(left) - 1 and aditional == True:
+      c_right = None
+    else:
+      c_right = right[i]
+    scores_left = [0 if c_left == n else float('inf') for n in nucleotides]
+    if c_right != None:
+      scores_right = [0 if c_right == n else float('inf') for n in nucleotides]
+    else:
+      scores_right = [float('inf') for n in nucleotides]
+    scores_both = scores(scores_left, scores_right)
+    scores_boths.append(scores_both)
+
+  while len(scores_boths) > 1:
+    num_pairs = len(scores_boths) // 2
+    pairs = []
+    for i in range(num_pairs):
+      start_index = i * 2
+      end_index = start_index + 2
+      pair = scores_boths[start_index:end_index]
+      pairs.append(pair)
+    scoresb = []
+    for pair in pairs:
+      scoresb.append(scores(pair[0], pair[1]))
+    scores_boths = scoresb
+
+  scores_boths = np.array(scores_boths).flatten()
+
+  nucleotide_letter = None
+  for i, s in enumerate(scores_boths):
+    if s == min(scores_boths):
+      nucleotide_letter = nucleotides[i]
+  return nucleotide_letter
+
+def scores(scores_node_left, scores_node_right):
+  scores_internal_node = []
+  for ni, n in enumerate(nucleotides):
+    ss_left = []
+    for si,s in enumerate(scores_node_left):
+      ss = s + (0 if si == ni else 1)
+      ss_left.append(ss)
+    ss_right = []
+    for si,s in enumerate(scores_node_right):
+      ss = s + (0 if si == ni else 1)
+      ss_right.append(ss)
+    score = min(ss_left) + min(ss_right)
+    scores_internal_node.append(score)
+  return scores_internal_node   
 
 ```
-# Pending
+
+This code defines three functions: small_parsimony, sp, and scores.
+
+The small_parsimony function takes a phylogenetic tree as input, extracts the DNA sequences of the terminal nodes, computes the ancestral sequence using the small parsimony algorithm (implemented in the sp function), and returns the ancestral sequence and the time it took to compute it. Specifically, the function creates a list of strings (sequences) from the names of the terminal nodes of the tree. It then loops over the letters of the first sequence in sequences, and creates a list (words) of strings where each string contains the i-th letter of all sequences. Then, the sp function is then called on each word to compute the corresponding letter of the ancestral sequence. Finally, the ancestral sequence is built by concatenating all letters computed by the sp function. The small_parsimony function returns the ancestral sequence and the time it took to compute it in seconds.
+
+The sp function takes a DNA word as input and computes the letter of the ancestral sequence that corresponds to the DNA position represented by that word using the small parsimony algorithm. The function first splits the input word into two lists (left and right) that contain the nucleotides of the first and second sequences, the second and third sequences, and so on. It then determines whether an additional nucleotide needs to be added to the right list if the length of the original sequence list was odd. The function initializes an empty list (scores_boths) that will store the scores of all possible nucleotides for each internal node in the tree. It then loops over the nucleotides in the left list, and computes the score of each nucleotide by comparing it to the nucleotide in the corresponding position in the right list, or to None if the right list is shorter by one element. The scores function is then called to compute the scores of the internal nodes in the tree. The function repeatedly applies the scores function to pairs of internal nodes until a single score is obtained, which is then converted into a nucleotide letter by finding the index of the minimum score in the scores_boths list. The function returns the nucleotide letter.
+
+The scores function takes two lists of scores (scores_node_left and scores_node_right) as input, and returns a list of scores for the internal node in the tree. The function initializes an empty list (scores_internal_node) that will store the scores of all possible nucleotides for the internal node. It then loops over the nucleotides in the nucleotides list, and for each nucleotide, it computes the sum of the score of the nucleotide in the scores_node_left list and the score of the corresponding nucleotide in the scores_node_right list. The function returns the list of scores for the internal node.
+
+* Example of execution
+
+```python
+if __name__ == '__main__':
+  print()
+  sequences = ["ACGTAGGCCT", "ATGTAAGACT", "TCGAGAGCAC", "TCGAAAGCAT"]
+  tree = tree_by_neighbor_joining(sequences, True, "ascii")
+  ancestral_sequence, ancestral_sequence_time = small_parsimony(tree[0])
+  print("Ancestral Sequence (Small Parsimony): ",ancestral_sequence,"\n")
+  print('Runing time: {:.5f} seconds'.format(ancestral_sequence_time))
+  print()
+```
+
+* Output of Example of execution
+
+```
+PS C:\Development\nmsu\nmsu-cs516-bioinformatics-project\ps03> py .\task3.py
+
+                                          ____________ ACGTAGGCCT
+  _______________________________________|
+ |                                       |__________________________ ATGTAAGACT
+_|
+ |_________________________ TCGAGAGCAC
+ |
+ | TCGAAAGCAT
+
+Ancestral Sequence (Small Parsimony):  TCGTAAGCCT 
+
+Runing time: 0.00039 seconds
 ```
 
 ### Task 4 and Task E1: The evolution of the most frequent 9-mer repeat in coronaviruses and in multiple aditional viruses
 
-```python
+* Python Code
 
+```python
 import os
+import sys
+import numpy as np
+from collections import Counter
 from FrequentKmers import FrequentKmers
+from datasets import datasets
 from task2 import tree_by_neighbor_joining
 
 def get_genome_files(dir_path):
@@ -216,8 +429,9 @@ def get_kmers(dir_path, klength):
   fk = FrequentKmers()
   files = get_genome_files(dir_path)
   covid_k = [klength]
+  
   nine_mers = {}
-  print("| Genome | k-mer | Sequence |")
+  lst = []
   for file in files: 
     covid2_genome = fk.get_covid_genome(dir_path + '/' + file)
     for k in covid_k:
@@ -227,7 +441,24 @@ def get_kmers(dir_path, klength):
       if r_len < 1000:
         for r in rs:
           nine_mers[r] = nine_mers[r] + 1 if r in nine_mers else 1
-          print(f"| {file} | {k}-mer | {r} |")
+          virus = dir_path.split('/')[len(dir_path.split('/')) - 1]
+          dataset_virus = datasets[virus][file.replace(".txt", "")]["title"]
+          l = {}
+          l["v"] = dataset_virus
+          l["k"] = k
+          l["s"] = r
+          lst.append(l)
+
+  kmer_list = [d['s'] for d in lst]
+  counter = Counter(kmer_list)
+  sorted_counts = sorted(counter.items(), key=lambda x: x[1], reverse=True)
+  
+  print("| Sequence | Count | Genome |")
+  print("|:--------:|:-----:|:------:|")
+  for s, count in sorted_counts:
+    genome_titles = [d['v'] for d in lst if d['s'] == s]
+    print(f"| {s} | {count} | {genome_titles} |")
+
   return nine_mers
 
 def get_sequences(nine_mers):
@@ -235,6 +466,17 @@ def get_sequences(nine_mers):
   for s in nine_mers.keys():
     sequences.append(s)
   return sequences
+
+def generate_mutations(kmer):
+  mutations = []
+  nucleotides = ['A','C','T','G']
+  for i in range(len(kmer)):
+    for nucleotide in nucleotides:
+      if kmer[i] != nucleotide:
+        mutation = kmer[:i] + nucleotide + kmer[i+1:]
+        if mutation not in mutations:
+          mutations.append(mutation)
+  return mutations
 
 ```
 
@@ -248,37 +490,49 @@ get_kmers(dir_path, klength): This function takes a directory path and a k-mer l
 
 get_sequences(nine_mers): This function takes a dictionary of 9-mers and their frequencies and returns a list of the 9-mers.
 
+* Example of execution
+
 ```python
 if __name__ == '__main__':
   
-  klength = 9
+  klength = int(sys.argv[1]) if len(sys.argv) > 1 else 9
   type_drawing = "ascii"
+
+  title = f"most frequent {klength}-mers"
   print()
-  print("Coronavirus")
-  print("===========")
+  print("===========================================")
+  print(f"Analysis of the {title}")
+  print("===========================================")
+  print()
+
+  
+  print(f"Coronavirus {title}")
+  print("==========================================")
   nine_mers = get_kmers('./genomes/Coronavirus',klength)
   sequences = get_sequences(nine_mers)
-  most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
-  print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
   tree = tree_by_neighbor_joining(sequences, True, type_drawing)
+  print('Runing time: {:.5f} seconds\n'.format(tree[1]))
   print()
   
 ```
 
+* Output of Example of execution
+
 ```
-PS C:\Development\nmsu\nmsu-cs516-bioinformatics-project\ps03> py .\task4_e1.py
+PS C:\Development\nmsu\nmsu-cs516-bioinformatics-project\ps03> py .\task4_e1.py 9
 
-Coronavirus
-===========
-| Genome | k-mer | Sequence |
-| AY545919.1.txt | 9-mer | TAAACGAAC |
-| KT225476.2.txt | 9-mer | TTAACGAAC |
-| KT225476.2.txt | 9-mer | TAACGAACT |
-| MZ937003.2.txt | 9-mer | TAAACGAAC |
-| NC_045512.2.txt | 9-mer | TAAACGAAC |
-| OM009282.1.txt | 9-mer | TAATGGTAA |
+===========================================
+Analysis of the most frequent 9-mers
+===========================================
 
-* Most frequent 9-mer:  TAAACGAAC . Ocurrences:  3 in studied genomes
+Coronavirus most frequent 9-mers
+==========================================
+| Sequence | Count | Genome |
+|:--------:|:-----:|:------:|
+| TAAACGAAC | 3 | ['SARS coronavirus isolate CFB/SZ/94/03', 'Bat coronavirus isolate BANAL-20-236/Laos/2020', 'Coronavirus 2 isolate Wuhan-Hu-1'] |
+| TTAACGAAC | 1 | ['Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015'] |
+| TAACGAACT | 1 | ['Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015'] |
+| TAATGGTAA | 1 | ['Pangolin coronavirus HKU4/P251T/pangolin/2018'] |
 
                                               , TAAACGAAC
   ____________________________________________|
@@ -288,78 +542,501 @@ _|
  |
  |____________________________________________ TAATGGTAA
 
+Runing time: 0.00044 seconds
+
 ```
+
+# Results
+
+## Trees and sequences in Task 4 and Task E1
+
+In this section, we present the results for obtained sequences, tree, and runing time for each virus studied:
+
+### Brief description of viruses
+
+Our results involve the execution of the previous explained functions in these viruses:
+
+* **Coronavirus-19**: Also known as SARS-CoV-2, it is a virus responsible for the COVID-19 pandemic. It belongs to the family Coronaviridae and is a single-stranded RNA virus that primarily infects the respiratory system in humans. The first cases of COVID-19 caused by the coronavirus-2 (SARS-CoV-2) were reported in Wuhan, China in December 2019.
+* **HIV-1**: A human immunodeficiency virus that is responsible for acquired immunodeficiency syndrome (AIDS). HIV-1 is a retrovirus that primarily infects CD4+ T cells of the immune system, and if left untreated can lead to severe immune dysfunction.The first known case of HIV-1 infection was in a man from the Democratic Republic of Congo in 1959.
+* **Adenovirus-2**: A non-enveloped, double-stranded DNA virus that infects humans and other animals. It belongs to the family Adenoviridae and is a common cause of respiratory and eye infections. Adenovirus-2 was first isolated from human adenoids in 1953.
+* **Ebola**: A virus that causes severe hemorrhagic fever in humans and other primates. Ebola virus is a single-stranded RNA virus belonging to the family Filoviridae, and is spread through contact with bodily fluids of infected individuals. The first cases of Ebola virus disease (EVD) were reported in Sudan and the Democratic Republic of Congo in 1976.
+* **Hepatitis-B**: A virus that primarily infects the liver and can cause acute and chronic hepatitis. Hepatitis B virus (HBV) is a partially double-stranded DNA virus belonging to the family Hepadnaviridae, and is spread through blood and bodily fluids. It can lead to serious liver complications such as cirrhosis and liver cancer. The hepatitis B virus was discovered in the serum of an Australian Aboriginal in 1965.
+
+### List of Genomes used
+
+The are the variants by virus type with their Fasta code and description. It is important to note that we have used complete genomes in this study.
+
+| Virus Type | Fasta Genome |  Title |
+|:-----------|:-------------|:-------|
+| Coronavirus | NC_045512.2 | Coronavirus 2 isolate Wuhan-Hu-1 |
+| Coronavirus | KT225476.2 | Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015 |
+| Coronavirus | MZ937003.2 | Bat coronavirus isolate BANAL-20-236/Laos/2020 |       
+| Coronavirus | AY545919.1 | SARS coronavirus isolate CFB/SZ/94/03 |
+| Coronavirus | OM009282.1 | Pangolin coronavirus HKU4/P251T/pangolin/2018 |        
+| HIV-1 | MN692147.1 | HIV-1 isolate Pt1-M26-NFL-30-PBio from USA |
+| HIV-1 | MH327766.1 | HIV-1 isolate 1031 from Philippines |
+| HIV-1 | EU541617.1 | HIV-1 clone pIIIB from USA |
+| HIV-1 | AF224507.1 | HIV-1 strain HIV-1wk from South Korea |
+| HIV-1 | KX232629.1 | HIV-1 isolate PK040 from Pakistan |
+| HIV-1 | MG365771.1 | HIV-1 isolate 01BRRJUD508 from Brazil |
+| HIV-1 | KY498771.1 | HIV-1 isolate S4858 from Cameroon |
+| Adenovirus-2 | AC_000007.1 | Human adenovirus 2 |
+| Adenovirus-2 | KP279747.1 | Unidentified adenovirus isolate GPAdV_5 |
+| Adenovirus-2 | NC_027708.1 | Skunk adenovirus PB1 |
+| Adenovirus-2 | X73487.1 | Adenovirus type 12 DNA |
+| Adenovirus-2 | MZ073342.1 | Porcupine adenovirus isolate X-24879-18 |
+| Adenovirus-2 | MZ073341.1 | Raccoon adenovirus isolate W-0155-19B |
+| Ebola | KU143834.1 | Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9 |
+| Ebola | AF086833.2 | Ebola virus - Mayinga, Zaire, 1976 |
+| Ebola | KU182904.1 | Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626 |
+| Ebola | KM655246.1 | Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran |
+| Hepatitis-B | LC603637.1 | Hepatitis B virus HB20-0698 DNA |
+| Hepatitis-B | K01834.1 | Duck hepatitis B virus |
+| Hepatitis-B | AJ344115.1 | Hepatitis B virus complete genome, genotype A |        
+| Hepatitis-B | KR014099.1 | Hepatitis B virus strain #1958.7 |
+
+: Genomes used table {tbl-colwidths="[20,20,60]"}
+
+### Coronavirus-19 Results
+
+#### Most frequent 9-mers:
+
+The following are the results most frequent 9-mers for virus type: Coronavirus  
+
+* **Pylogenetic Tree by Neighbor Joining**:
+
+```
+                                              , TAAACGAAC
+  ____________________________________________|
+ |                                            |______________________ TTAACGAAC
+_|
+ |___________________________________________________________________ TAACGAACT
+ |
+ |____________________________________________ TAATGGTAA
+```
+
+* **Most frequent 9-mers**:
+
+| Sequence | Count | Genome |
+|:--------:|:-----:|:-------|
+| TAAACGAAC | 3 | ['SARS coronavirus isolate CFB/SZ/94/03', 'Bat coronavirus isolate BANAL-20-236/Laos/2020', 'Coronavirus 2 isolate Wuhan-Hu-1'] |
+| TTAACGAAC | 1 | ['Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015'] |
+| TAACGAACT | 1 | ['Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015'] |
+| TAATGGTAA | 1 | ['Pangolin coronavirus HKU4/P251T/pangolin/2018'] |
+
+: Most frequent 9-mers Coronavirus table {tbl-colwidths="[10,5,85]"}
+
+* **Running time**:
+```
+Runing time: 0.00049 seconds
+```
+
+#### Most frequent 8-mers:
+
+The following are the results most frequent 8-mers for virus type: Coronavirus  
+
+* **Pylogenetic Tree by Neighbor Joining**:
+
+```
+                  ___________________________ TGTTGACA
+      ___________|
+  ___|           |_______________ TGCTGCTA
+ |   |
+ |   |________________ TGATTTTA
+ |
+_|                                 __________________________________ ATGGTGTT
+ |________________________________|
+ |                                |_______________________ TTAATGGT
+ |
+ |________________ TAATGGTA
+```
+
+* **Most frequent 8-mers**:
+
+| Sequence | Count | Genome |
+|:--------:|:-----:|:-------|
+| ATGGTGTT | 2 | ['Bat coronavirus isolate BANAL-20-236/Laos/2020', 'Coronavirus 2 isolate Wuhan-Hu-1'] |
+| TGTTGACA | 1 | ['SARS coronavirus isolate CFB/SZ/94/03'] |
+| TGCTGCTA | 1 | ['SARS coronavirus isolate CFB/SZ/94/03'] |
+| TGATTTTA | 1 | ['Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015'] |
+| TTAATGGT | 1 | ['Bat coronavirus isolate BANAL-20-236/Laos/2020'] |
+| TAATGGTA | 1 | ['Pangolin coronavirus HKU4/P251T/pangolin/2018'] |
+
+: Most frequent 8-mers Coronavirus table {tbl-colwidths="[10,5,85]"}
+
+* **Running time**:
+```
+Runing time: 0.00093 seconds
+```
+
+#### Most frequent 10-mers:
+
+The following are the results most frequent 10-mers for virus type: Coronavirus  
+
+* **Pylogenetic Tree by Neighbor Joining**:
+
+```
+  __________________________________________________________________ CTAAACGAAC
+ |
+_|_____________________ TTAACGAACT
+ |
+ |__________________________________________________________________ TAATGGTGTT
+
+```
+
+* **Most frequent 10-mers**:
+
+| Sequence | Count | Genome |
+|:--------:|:-----:|:-------|
+| CTAAACGAAC | 3 | ['SARS coronavirus isolate CFB/SZ/94/03', 'Bat coronavirus isolate BANAL-20-236/Laos/2020', 'Coronavirus 2 isolate Wuhan-Hu-1'] |
+| TTAACGAACT | 2 | ['Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015', 'Pangolin coronavirus HKU4/P251T/pangolin/2018'] |
+| TAATGGTGTT | 1 | ['Coronavirus 2 isolate Wuhan-Hu-1'] |
+
+: Most frequent 10-mers Coronavirus table {tbl-colwidths="[10,5,85]"}
+
+* **Running time**:
+```
+Runing time: 0.00054 seconds
+```
+
+### HIV-1 Results
+
+#### Most frequent 9-mers:
+
+The following are the results most frequent 9-mers for virus type: HIV-1
+
+* **Pylogenetic Tree by Neighbor Joining**:
+
+```
+     ________________ AAGAAAAAA
+    |
+  __|       ___________ AAAGAAAAA
+ |  |      |
+ |  |______|          ___________________________ ATAGTAGGA
+ |         |  _______|
+ |         |_|       |___________ AAAGGAGAA
+ |           |
+ |           |_____________________________________________________ AATGGCACT
+
+ |
+_|                          ____________________________________ CTAATGCTA   
+ |    _____________________|
+ |   |                     |_____________________________ CAAATTTAT
+ |___|
+ |   |        _______________ TTAAAAGAA
+ |   |_______|
+ |           |________________________ GGGAAAGAA
+ |
+ |___________________ AGAAAAAAT
+
+```
+
+* **Most frequent 9-mers**:
+
+| Sequence | Count | Genome |
+|:--------:|:-----:|:-------|
+| AAGAAAAAA | 3 | ['HIV-1 strain HIV-1wk from South Korea', 'HIV-1 clone pIIIB from USA', 'HIV-1 isolate Pt1-M26-NFL-30-PBio from USA'] |
+| AAAGAAAAA | 2 | ['HIV-1 isolate 01BRRJUD508 from Brazil', 'HIV-1 isolate Pt1-M26-NFL-30-PBio from USA'] |   
+| TTAAAAGAA | 2 | ['HIV-1 isolate 1031 from Philippines', 'HIV-1 isolate Pt1-M26-NFL-30-PBio from USA'] |     
+| AATGGCACT | 1 | ['HIV-1 isolate PK040 from Pakistan'] |
+| GGGAAAGAA | 1 | ['HIV-1 isolate S4858 from Cameroon'] |
+| AAAGGAGAA | 1 | ['HIV-1 isolate S4858 from Cameroon'] |
+| AGAAAAAAT | 1 | ['HIV-1 isolate 1031 from Philippines'] |
+| CAAATTTAT | 1 | ['HIV-1 isolate 1031 from Philippines'] |
+| ATAGTAGGA | 1 | ['HIV-1 isolate 1031 from Philippines'] |
+| CTAATGCTA | 1 | ['HIV-1 isolate 1031 from Philippines'] |
+
+: Most frequent 9-mers HIV-1 table {tbl-colwidths="[10,5,85]"}
+
+* **Running time**:
+```
+Runing time: 0.00150 seconds
+```
+
+### Adenovirus-2 Results
+
+#### Most frequent 9-mers:
+
+The following are the results most frequent 9-mers for virus type: Adenovirus-2
+
+* **Pylogenetic Tree by Neighbor Joining**:
+
+```
+
+          __________________________________ GAGGAGGAG
+  _______|
+ |       |____________________________________ GGCGGCGGC
+ |
+ |                                               ________________ TTTTTTTTT  
+ |                                 _____________|
+_|            ____________________|             |___________________ TCTTCTTCT
+ |           |                    |
+ |___________|                    |___________________________ ATTTCAAAT     
+ |           |
+ |           |____________________________________ AAAATTTGA
+ |
+ |__________________________ AGGAGGAGG
+
+```
+
+* **Most frequent 9-mers**:
+
+| Sequence | Count | Genome |
+|:--------:|:-----:|:-------|
+| GAGGAGGAG | 3 | ['Raccoon adenovirus isolate W-0155-19B', 'Porcupine adenovirus isolate X-24879-18', 'Skunk adenovirus PB1'] |
+| GGCGGCGGC | 1 | ['Human adenovirus 2'] |
+| AAAATTTGA | 1 | ['Unidentified adenovirus isolate GPAdV_5'] |
+| ATTTCAAAT | 1 | ['Unidentified adenovirus isolate GPAdV_5'] |
+| TCTTCTTCT | 1 | ['Unidentified adenovirus isolate GPAdV_5'] |
+| TTTTTTTTT | 1 | ['Adenovirus type 12 DNA'] |
+| AGGAGGAGG | 1 | ['Adenovirus type 12 DNA'] |
+
+: Most frequent 9-mers Adenovirus-2 table {tbl-colwidths="[10,5,85]"}
+
+* **Running time**:
+```
+Runing time: 0.00073 seconds
+```
+
+### Ebola Results
+
+#### Most frequent 9-mers:
+
+The following are the results most frequent 9-mers for virus type: Ebola
+
+* **Pylogenetic Tree by Neighbor Joining**:
+
+```
+  _________________________________________ GAAGATTAA
+ |
+ |                         _________________________ TTAAGAAAA
+_|________________________|
+ |                        |__________________________________________ ATTAAGAAA
+ |
+ |_______ TAAGAAAAA
+
+```
+
+* **Most frequent 9-mers**:
+
+| Sequence | Count | Genome |
+|:--------:|:-----:|:-------|
+| GAAGATTAA | 4 | ['Ebola virus - Mayinga, Zaire, 1976', 'Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran', 'Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9', 'Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626'] |
+| TTAAGAAAA | 4 | ['Ebola virus - Mayinga, Zaire, 1976', 'Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran', 'Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9', 'Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626'] |
+| TAAGAAAAA | 4 | ['Ebola virus - Mayinga, Zaire, 1976', 'Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran', 'Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9', 'Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626'] |
+| ATTAAGAAA | 3 | ['Ebola virus - Mayinga, Zaire, 1976', 'Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran', 'Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626'] |
+
+: Most frequent 9-mers Ebola table {tbl-colwidths="[10,5,85]"}
+
+* **Running time**:
+```
+Runing time: 0.00032 seconds
+```
+
+### Hepatitis-B Results
+
+#### Most frequent 9-mers:
+
+The following are the results most frequent 9-mers for virus type: Hepatitis-B
+
+* **Pylogenetic Tree by Neighbor Joining**:
+
+```
+                    ____________________________ GAGTGGGAG
+               ____|
+     _________|    |____________________________ GGTTGGGGC
+    |         |
+    |         |______________________________ GTCTGTGCC
+   _|
+  | |                      ______________________________ TGGGAGTGG
+  | |            _________|
+  | |           |         |_________________________ TATAAGAGG
+  | |___________|
+  |             |                          _______________ GGGAGTGGG
+  |             |_________________________|
+  |                                       |___________ AGGACTGGG
+  |
+  |                ___________________________________ CAATTTTCT
+  |          _____|
+  |         |     |   _______________________________ AACTACTGT
+  |         |     |__|
+  |         |        |            _____________________ TTCACCTCT
+ ,|         |        |___________|
+ ||     ____|                    |____________________ TATTCCTCT
+ ||    |    |
+ ||    |    |               ______________________________ CGACCGACC
+ ||    |    |        ______|
+ ||    |    |       |      |__________________________ ACATTGACC
+ ||    |    |       |
+ ||    |    |_______|              ___________________ TCCTCCTCC
+ ||    |            |        _____|
+ ||    |            |       |     |______________________ TCATCTGCC
+ ||    |            |_______|
+ ||    |                    |         _____________________ CCATACTGC        
+ ||    |                    |________|
+ ||    |                             |_____________________ CCAACCTCC        
+ ||    |
+ ||____|                        _______________________________ GGGGCTCTA    
+ |     |        _______________|
+ |     |       |               |_________________________ AGATCTCAA
+ |     | ______|
+ |     ||      |        __________________________________ CCCACTGTT
+ |     ||      |_______|
+ |     ||              |    __________________________ ACCCCTCCC
+ |     ||              |___|
+ |     ||                  |          _____________________ TCACCTCTG        
+ |     ||                  |_________|
+ |     ||                            |____________________ CCCCCACTG
+ |     ||
+ |     ||                      ___________________________ CACCAGCAC
+ |     ||                 ____|
+ |     ||                |    |____________________________ CATCTGCCG        
+ |     ||       _________|
+ |      |      |         |           ____________________ CTCCTCCTC
+ |      |      |         |__________|
+ |      |  ____|                    |____________________ CACCTCTGC
+ |      | |    |
+ |      | |    |      __________________________________________ CTTGGACTC   
+ |      | |    |_____|
+ |      | |          |           __________________________ TGGATCCTT        
+ |      | |          |__________|
+_|      | |                     |         ____________________ CTGTGCCTT     
+ |      | |                     |________|
+ |      | |                              |______________________ TTGGGCTTT   
+ |      |_|
+ |        |                     __________________________ GACATTATT
+ |        |               _____|
+ |        |     _________|     |_____________________________ GATCTCAAT      
+ |        |    |         |
+ |        |    |         |____________________________ TACTTCAAA
+ |        |    |
+ |        |    |                _____________________________ TCTGTGCCA      
+ |        |    |     __________|
+ |        |____|    |          |__________________________ ACCATGCAA
+ |             |  __|
+ |             | |  |      __________________________________ AAGGTGGGA      
+ |             | |  |_____|
+ |             | |        |                ____________________ AAACAAAAA    
+ |             | |        |_______________|
+ |             |_|                        |____________________ AAGAAGAAA    
+ |               |
+ |               |                  ____________________________ TGTCAACGA   
+ |               |               __|
+ |               |              |  |___________________________ TGTACAAAA    
+ |               |______________|
+ |                              |        ________________________ TTTGGAAGA  
+ |                              |      _|
+ |                              |_____| |__________________ TATATAAGA        
+ |                                    |
+ |                                    |___________________ TTCCTAAGA
+ |
+ |                    ______________________ ATGTCAACG
+ |       ____________|
+ |      |            |___________________ ATCTCAATC
+ |______|
+ |      |                _______________________ ATATAAGAG
+ |      |_______________|
+ |                      |__________________ TTATATAAG
+ |
+ |                ___________________ TTCTTGTTG
+ |_______________|
+                 |_____________________ GTCTTTTGG
+```
+
+* **Most frequent 9-mers**:
+
+| Sequence | Count | Genome |
+|:--------:|:-----:|:-------|
+| CCCCCACTG | 3 | ['Hepatitis B virus complete genome, genotype A', 'Hepatitis B virus strain #1958.7', 'Hepatitis B virus HB20-0698 DNA'] |
+| CTGTGCCTT | 3 | ['Hepatitis B virus complete genome, genotype A', 'Hepatitis B virus strain #1958.7', 'Hepatitis B virus HB20-0698 DNA'] |
+| TTCACCTCT | 3 | ['Hepatitis B virus complete genome, genotype A', 'Hepatitis B virus strain #1958.7', 'Hepatitis B virus HB20-0698 DNA'] |
+| TCACCTCTG | 3 | ['Hepatitis B virus complete genome, genotype A', 'Hepatitis B virus strain #1958.7', 'Hepatitis B virus HB20-0698 DNA'] |
+| CACCTCTGC | 3 | ['Hepatitis B virus complete genome, genotype A', 'Hepatitis B virus strain #1958.7', 'Hepatitis B virus HB20-0698 DNA'] |
+| GTCTGTGCC | 2 | ['Hepatitis B virus complete genome, genotype A', 'Hepatitis B virus HB20-0698 DNA'] |
+| CTTGGACTC | 2 | ['Hepatitis B virus complete genome, genotype A', 'Hepatitis B virus HB20-0698 DNA'] |
+| GTCTTTTGG | 2 | ['Hepatitis B virus strain #1958.7', 'Hepatitis B virus HB20-0698 DNA'] |
+| AGGACTGGG | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| TTCCTAAGA | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| CCAACCTCC | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| TATTCCTCT | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| TGTACAAAA | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| TTGGGCTTT | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| CCCACTGTT | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| TGGATCCTT | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| CCATACTGC | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| TTATATAAG | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| TATATAAGA | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| ATATAAGAG | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| TATAAGAGG | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| TACTTCAAA | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| ACATTGACC | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| AGATCTCAA | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| GATCTCAAT | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| ATCTCAATC | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| GACATTATT | 1 | ['Hepatitis B virus complete genome, genotype A'] |        
+| AAGAAGAAA | 1 | ['Duck hepatitis B virus'] |
+| ACCATGCAA | 1 | ['Hepatitis B virus strain #1958.7'] |
+| TCATCTGCC | 1 | ['Hepatitis B virus strain #1958.7'] |
+| CATCTGCCG | 1 | ['Hepatitis B virus strain #1958.7'] |
+| TTTGGAAGA | 1 | ['Hepatitis B virus strain #1958.7'] |
+| AACTACTGT | 1 | ['Hepatitis B virus strain #1958.7'] |
+| TTCTTGTTG | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| CAATTTTCT | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| CACCAGCAC | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| TGGGAGTGG | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| GGGAGTGGG | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| AAACAAAAA | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| GGTTGGGGC | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| ATGTCAACG | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| TGTCAACGA | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| TCTGTGCCA | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| ACCCCTCCC | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| GGGGCTCTA | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| CGACCGACC | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| GAGTGGGAG | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| CTCCTCCTC | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| TCCTCCTCC | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+| AAGGTGGGA | 1 | ['Hepatitis B virus HB20-0698 DNA'] |
+
+: Most frequent 9-mers Hepatitis-B table {tbl-colwidths="[10,5,85]"}
+
+* **Running time**:
+```
+Runing time: 0.08194 seconds
+```
+
+# Discussion
+
+## Task 5
+
+Pending
+
+## Task E2
+
+Pending
+
+# Conclusions
+
+Pending
 
 # References
 
-* Articles
+- The Evolution and Biology of SARS-CoV-2 Variants
+  https://perspectivesinmedicine.cshlp.org/content/12/5/a041390.full
 
-The Evolution and Biology of SARS-CoV-2 Variants
-https://perspectivesinmedicine.cshlp.org/content/12/5/a041390.full
+- The XBB.1.5 (‘Kraken’) Subvariant of Omicron SARS-CoV-2 and its Rapid Global Spread. Retrieved from: 
+  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10050278/
 
-XBB1.5 
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10050278/
+- Inhibition of HIV-1 Replication by siRNA Targeting Conserved Regions of gag/pol. Retrieved from:
+  https://www.researchgate.net/publication/6665603_Inhibition_of_HIV-1_Replication_by_siRNA_Targeting_Conserved_Regions_of_gagpol
 
-https://www.researchgate.net/publication/6665603_Inhibition_of_HIV-1_Replication_by_siRNA_Targeting_Conserved_Regions_of_gagpol
+- Nucleotide 9-mers Characterize the Type II Diabetic Gut Metagenome. Retrieved from:
+  https://www.sciencedirect.com/science/article/pii/S0888754316300155
 
-Nucleotide 9-mers characterize the type II diabetic gut metagenome
-https://www.sciencedirect.com/science/article/pii/S0888754316300155
+- Phillip Compeau & Pavel Pevzner. *Bioinformatics Algorithms–An Active Learning Approach. 3rd Edition*. Active Learning Publishers. La Jolla, California. 2018
 
-* Genomes used to get 9-mers:
+- Shabir, O. 2021. *How Does the SARS-CoV-2 Genome Compare to Other Viruses?*. News Medical Life Science.
+https://www.news-medical.net/health/How-Does-the-SARS-Virus-Genome-Compare-to-Other-Viruses.aspx
 
-Coronavirus 2 isolate Wuhan-Hu-1
-https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2?report=fasta
-
-Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015,
-https://www.ncbi.nlm.nih.gov/nuccore/KT225476.2?report=fasta
-
-Bat coronavirus isolate BANAL-20-236/Laos/2020
-https://www.ncbi.nlm.nih.gov/nuccore/MZ937003.2?report=fasta
-
-SARS coronavirus isolate CFB/SZ/94/03
-https://www.ncbi.nlm.nih.gov/nuccore/AY545919.1?report=fasta
-
-Pangolin coronavirus HKU4/P251T/pangolin/2018
-https://www.ncbi.nlm.nih.gov/nuccore/OM009282.1?report=fasta
-
-=== Aditional Genomic Datasets
-
-Search: https://www.ncbi.nlm.nih.gov/nuccore/?term=(clade+coronavirus)+AND+%22complete+genome%22
-
-SARS coronavirus civet007
-https://www.ncbi.nlm.nih.gov/nuccore/AY572034.1?report=fasta
-
-Coronavirus 2 JP_Hiro97618 RNA
-https://www.ncbi.nlm.nih.gov/nuccore/LC594651.1?report=fasta
-
-coronavirus 2 isolate SARS-CoV-2/human/JPN/SARS-CoV-2, B.1.617.2 lineage, Delta variant/2021
-https://www.ncbi.nlm.nih.gov/nuccore/OK091006.1?report=fasta
-
-coronavirus 2 isolate SARS-CoV-2/human/CAN/Kappa_NML_P4/2021
-https://www.ncbi.nlm.nih.gov/nuccore/2182752773?report=fasta
-
-coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021
-https://www.ncbi.nlm.nih.gov/nuccore/MZ496616.1?report=fasta
-
-coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022
-https://www.ncbi.nlm.nih.gov/nuccore/OP183454.1?report=fasta
-
-ORFB1ab USA human/USA/WA-PHL-027795/2022
-https://www.ncbi.nlm.nih.gov/nuccore/OQ780237.1?report=fasta
-
-SARS-CoV-2/human/USA/WA-PHL-026151/2022
-https://www.ncbi.nlm.nih.gov/nuccore/OQ779361.1?report=fasta
-
-human/USA/NC-CDC-LC0984552/2023
-https://www.ncbi.nlm.nih.gov/nuccore/OQ258758.1?report=fasta
-
-SARS-CoV-2/human/MAR/Omicron BA.2/2022
-https://www.ncbi.nlm.nih.gov/nuccore/OQ722344.1?report=fasta
-
-SARS-CoV-2/human/BRA/ILMD2203877/2022
-https://www.ncbi.nlm.nih.gov/nuccore/OQ525773.1?report=fasta
-
-Covid Switzerland 2023
-https://www.ncbi.nlm.nih.gov/nuccore/OX460957.1?report=fasta
 
 

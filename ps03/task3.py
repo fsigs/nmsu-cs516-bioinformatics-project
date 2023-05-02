@@ -1,66 +1,96 @@
-from task2 import tree_by_neighbor_joining
 import numpy as np
-from Bio import Phylo
+from timeit import default_timer as timer
+from task2 import tree_by_neighbor_joining
 
-'''def small_parsimony(tree):
-  nucleotides = ['A', 'C', 'G', 'T']
-  for node in tree.get_nonterminals(order='postorder'):
-    print(node.clades)'''
-
-from Bio import Phylo
+nucleotides = 'ACGT'
 
 def small_parsimony(tree):
-  # Initialize root with all possible characters
-  for node in tree.get_terminals():
-    seq = {c: 0 if node.name == c else float('inf') for c in 'ACGT'}
-    node.seq = seq
-    print(node, node.seq)
-  # Bottom-up approach to fill internal nodes
-  for node in tree.get_nonterminals(order='postorder'):
-    left = node.clades[0]
-    right = node.clades[1]
-    seq = {c: float('inf') for c in 'ACGT'}
-    # Compute minimum score for each character
-    for c in 'ACGT':
-      for c1 in left.seq:
-        score = left.seq[c1] + (0 if c == c1 else 1)
-        seq[c] = min(seq[c], score)
-      for c2 in right.seq:
-        score = right.seq[c2] + (0 if c == c2 else 1)
-        seq[c] = min(seq[c], score)
+  start = timer()
+  sequences = [node.name for node in tree.get_terminals()]
+  
+  # (i-th) letter of each sequence
+  words = []
+  for i in range(0, len(sequences[0])):
+    word = ''
+    for sequence in sequences:
+      word += str(sequence[i])
+    words.append(word)
+  
+  ancestral_sequence = ''
+  for word in words:
+    ancestral_sequence += sp(word)
+  end = timer()
+  ancestral_sequence_time = end - start
+  return ancestral_sequence, ancestral_sequence_time
 
-    node.seq = seq
-  exit()
-  # Get the sequence for the root
-  root_seq = {}
-  for c in 'ACGT':
-      score = tree.root.clades[0].seq[c] + tree.root.clades[1].seq[c]
-      root_seq[c] = score
+def sp(word):
+  left, right = [], []
+  for i, c in enumerate(word):
+    if i % 2 == 0:
+      left.append(c)
+    else:
+      right.append(c)
   
-  tree.root.seq = root_seq
+  aditional = False
+  if len(right) % 2 != 0:
+    aditional = True
   
-  # Infer the sequences for the internal nodes
-  for node in tree.get_nonterminals(order='preorder'):
-      left = node.clades[0]
-      right = node.clades[1]
-      seq = ''
-      
-      for i in range(len(left.seq)):
-          min_score = float('inf')
-          min_char = ''
-          for c in 'ACGT':
-              score = left.seq[c] + right.seq[c] + (0 if c == node.seq[i] else 1)
-              if score < min_score:
-                  min_score = score
-                  min_char = c
-          seq += min_char
-      
-      node.seq = seq
-  
-  # Return the tree with inferred ancestral sequences
-  return tree
+  scores_boths = []  
+  for i, c in enumerate(left):
+    c_left = c
+    if i == len(left) - 1 and aditional == True:
+      c_right = None
+    else:
+      c_right = right[i]
+    scores_left = [0 if c_left == n else float('inf') for n in nucleotides]
+    if c_right != None:
+      scores_right = [0 if c_right == n else float('inf') for n in nucleotides]
+    else:
+      scores_right = [float('inf') for n in nucleotides]
+    scores_both = scores(scores_left, scores_right)
+    scores_boths.append(scores_both)
+
+  while len(scores_boths) > 1:
+    num_pairs = len(scores_boths) // 2
+    pairs = []
+    for i in range(num_pairs):
+      start_index = i * 2
+      end_index = start_index + 2
+      pair = scores_boths[start_index:end_index]
+      pairs.append(pair)
+    scoresb = []
+    for pair in pairs:
+      scoresb.append(scores(pair[0], pair[1]))
+    scores_boths = scoresb
+
+  scores_boths = np.array(scores_boths).flatten()
+
+  nucleotide_letter = None
+  for i, s in enumerate(scores_boths):
+    if s == min(scores_boths):
+      nucleotide_letter = nucleotides[i]
+  return nucleotide_letter
+
+def scores(scores_node_left, scores_node_right):
+  scores_internal_node = []
+  for ni, n in enumerate(nucleotides):
+    ss_left = []
+    for si,s in enumerate(scores_node_left):
+      ss = s + (0 if si == ni else 1)
+      ss_left.append(ss)
+    ss_right = []
+    for si,s in enumerate(scores_node_right):
+      ss = s + (0 if si == ni else 1)
+      ss_right.append(ss)
+    score = min(ss_left) + min(ss_right)
+    scores_internal_node.append(score)
+  return scores_internal_node     
 
 if __name__ == '__main__':
+  print()
   sequences = ["ACGTAGGCCT", "ATGTAAGACT", "TCGAGAGCAC", "TCGAAAGCAT"]
   tree = tree_by_neighbor_joining(sequences, True, "ascii")
-  small_parsimony(tree)
+  ancestral_sequence, ancestral_sequence_time = small_parsimony(tree[0])
+  print("Ancestral Sequence (Small Parsimony): ",ancestral_sequence,"\n")
+  print('Runing time: {:.5f} seconds'.format(ancestral_sequence_time))
+  print()

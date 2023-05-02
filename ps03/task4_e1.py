@@ -1,7 +1,9 @@
-#from datasets import datasets
-
 import os
+import sys
+import numpy as np
+from collections import Counter
 from FrequentKmers import FrequentKmers
+from datasets import datasets
 from task2 import tree_by_neighbor_joining
 
 def get_genome_files(dir_path):
@@ -24,8 +26,9 @@ def get_kmers(dir_path, klength):
   fk = FrequentKmers()
   files = get_genome_files(dir_path)
   covid_k = [klength]
+  
   nine_mers = {}
-  print("| Genome | k-mer | Sequence |")
+  lst = []
   for file in files: 
     covid2_genome = fk.get_covid_genome(dir_path + '/' + file)
     for k in covid_k:
@@ -35,7 +38,24 @@ def get_kmers(dir_path, klength):
       if r_len < 1000:
         for r in rs:
           nine_mers[r] = nine_mers[r] + 1 if r in nine_mers else 1
-          print(f"| {file} | {k}-mer | {r} |")
+          virus = dir_path.split('/')[len(dir_path.split('/')) - 1]
+          dataset_virus = datasets[virus][file.replace(".txt", "")]["title"]
+          l = {}
+          l["v"] = dataset_virus
+          l["k"] = k
+          l["s"] = r
+          lst.append(l)
+
+  kmer_list = [d['s'] for d in lst]
+  counter = Counter(kmer_list)
+  sorted_counts = sorted(counter.items(), key=lambda x: x[1], reverse=True)
+  
+  print("| Sequence | Count | Genome |")
+  print("|:--------:|:-----:|:------:|")
+  for s, count in sorted_counts:
+    genome_titles = [d['v'] for d in lst if d['s'] == s]
+    print(f"| {s} | {count} | {genome_titles} |")
+
   return nine_mers
 
 def get_sequences(nine_mers):
@@ -57,55 +77,63 @@ def generate_mutations(kmer):
 
 if __name__ == '__main__':
   
-  klength = 9
+  klength = int(sys.argv[1]) if len(sys.argv) > 1 else 9
   type_drawing = "ascii"
+
+  title = f"most frequent {klength}-mers"
   print()
-  print("Coronavirus")
-  print("===========")
+  print("===========================================")
+  print(f"Analysis of the {title}")
+  print("===========================================")
+  print()
+
+  print(f"Coronavirus {title}")
+  print("==========================================")
   nine_mers = get_kmers('./genomes/Coronavirus',klength)
   sequences = get_sequences(nine_mers)
-  most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
-  print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
   tree = tree_by_neighbor_joining(sequences, True, type_drawing)
+  print('Runing time: {:.5f} seconds\n'.format(tree[1]))
+  print()
+
+
+  print(f"More Coronaviruses {title}")
+  print("==========================================")
+  nine_mers = get_kmers('./genomes/More Coronaviruses',klength)
+  sequences = get_sequences(nine_mers)
+  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
+  print('Runing time: {:.5f} seconds\n'.format(tree[1]))
+  print()
+
+  print(f"HIV-1 {title}")
+  print("==========================================")
+  nine_mers = get_kmers('./genomes/HIV-1',klength)
+  sequences = get_sequences(nine_mers)
+  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
+  print('Runing time: {:.5f} seconds\n'.format(tree[1]))
+  print()
+
+  print(f"Adenovirus-2 {title}")
+  print("==========================================")
+  nine_mers = get_kmers('./genomes/Adenovirus-2',klength)
+  sequences = get_sequences(nine_mers)
+  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
+  print('Runing time: {:.5f} seconds\n'.format(tree[1]))
+
+  print(f"Ebola {title}")
+  print("==========================================")
+  nine_mers = get_kmers('./genomes/Ebola',klength)
+  sequences = get_sequences(nine_mers)
+  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
+  print('Runing time: {:.5f} seconds\n'.format(tree[1]))
+  print()
+
+  print(f"Hepatitis-B {title}")
+  print("==========================================")
+  nine_mers = get_kmers('./genomes/Hepatitis-B',klength)
+  sequences = get_sequences(nine_mers)
+  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
+  print('Runing time: {:.5f} seconds\n'.format(tree[1]))
   print()
 
   exit()
-  print("HIV-1")
-  print("=====")
-  nine_mers = get_kmers('./genomes/HIV-1',klength)
-  sequences = get_sequences(nine_mers)
-  most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
-  print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
-  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
- 
-  print("Adenovirus-2")
-  print("============")
-  nine_mers = get_kmers('./genomes/Adenovirus-2',klength)
-  sequences = get_sequences(nine_mers)
-  most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
-  print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
-  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
-
-  print("Ebola")
-  print("=====")
-  nine_mers = get_kmers('./genomes/Ebola',klength)
-  sequences = get_sequences(nine_mers)
-  most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
-  print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
-  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
-
-  print("Hepatitis-B")
-  print("===========")
-  nine_mers = get_kmers('./genomes/Hepatitis-B',klength)
-  sequences = get_sequences(nine_mers)
-  most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
-  print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
-  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
-
-  print("Diabetes")
-  print("===========")
-  nine_mers = get_kmers('./genomes/Diabetes',klength)
-  sequences = get_sequences(nine_mers)
-  most_frequent_nine_mer = get_most_frequent_nine_mer(nine_mers)
-  print(f'\n* Most frequent {klength}-mer: ',most_frequent_nine_mer[0],'. Ocurrences: ',str(most_frequent_nine_mer[1]),'in studied genomes\n')
-  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
+  

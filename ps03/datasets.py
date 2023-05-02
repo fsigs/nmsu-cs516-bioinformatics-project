@@ -35,7 +35,20 @@ datasets = {
     "AJ344115.1": {"title":"Hepatitis B virus complete genome, genotype A", "polyA": False, "ployALength": 0}, 
     "KR014099.1": {"title":"Hepatitis B virus strain #1958.7", "polyA": False, "ployALength": 0}, 
   },
-  "Diabetes": {
-    "JX171119.1": {"title":"Homo sapiens isolate diabetic patient 43 mitochondrion", "polyA": False, "ployALength": 0},
-  },
+  "More Coronaviruses": {
+    "NC_045512.2": {"title":"Coronavirus 2 isolate Wuhan-Hu-1", "polyA": False, "ployALength": 0, "ployALength": 0},
+    "MZ937003.2": {"title":"Bat coronavirus isolate BANAL-20-236/Laos/2020", "polyA": False, "ployALength": 0},
+    "OK091006.1": {"title":"Coronavirus 2 Delta variant/2021", "polyA": False, "ployALength": 0},
+    "AY572034.1": {"title":"Coronavirus 2 JP_Hiro97618 RNA", "polyA": False, "ployALength": 0}, 
+    "OP183454.1": {"title":"Coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022", "polyA": False, "ployALength": 0}, 
+    "2182752773": {"title":"Coronavirus 2 isolate SARS-CoV-2/human/CAN/Kappa_NML_P4/2021", "polyA": False, "ployALength": 0}, 
+    "MZ496616.1": {"title":"Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021", "polyA": False, "ployALength": 0}, 
+    "OQ780237.1": {"title":"ORFB1ab USA human/USA/WA-PHL-027795/2022", "polyA": False, "ployALength": 0},
+    "OQ779361.1": {"title":"SARS-CoV-2/human/USA/WA-PHL-026151/2022", "polyA": False, "ployALength": 0},
+    "OQ258758.1": {"title":"Human/USA/NC-CDC-LC0984552/2023", "polyA": False, "ployALength": 0},
+    "OQ722344.1": {"title":"SARS-CoV-2/human/MAR/Omicron BA.2/2022", "polyA": False, "ployALength": 0},
+    "OQ525773.1": {"title":"SARS-CoV-2/human/BRA/ILMD2203877/2022", "polyA": False, "ployALength": 0},
+    "OX460957.1": {"title":"Covid Switzerland 2023", "polyA": False, "ployALength": 0},
+    "LC594651.1": {"title":"Coronavirus 2 JP_Hiro97618 RNA", "polyA": False, "ployALength": 0},
+  }
 }

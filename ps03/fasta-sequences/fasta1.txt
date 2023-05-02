@@ -1,0 +1,6 @@
+> virus 1
+GACGTTTGGGC
+> virus 2
+ACGTGGATCCG
+> virus 3
+CAATGGGAATC

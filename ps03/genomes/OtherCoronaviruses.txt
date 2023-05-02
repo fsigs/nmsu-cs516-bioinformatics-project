@@ -1,0 +1,38 @@
+Other Coronaviruses:
+
+SARS coronavirus civet007
+https://www.ncbi.nlm.nih.gov/nuccore/AY572034.1?report=fasta
+
+Coronavirus 2 JP_Hiro97618 RNA
+https://www.ncbi.nlm.nih.gov/nuccore/LC594651.1?report=fasta
+
+coronavirus 2 isolate SARS-CoV-2/human/JPN/SARS-CoV-2, B.1.617.2 lineage, Delta variant/2021
+https://www.ncbi.nlm.nih.gov/nuccore/OK091006.1?report=fasta
+
+coronavirus 2 isolate SARS-CoV-2/human/CAN/Kappa_NML_P4/2021
+https://www.ncbi.nlm.nih.gov/nuccore/2182752773?report=fasta
+
+coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021
+https://www.ncbi.nlm.nih.gov/nuccore/MZ496616.1?report=fasta
+
+coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022
+https://www.ncbi.nlm.nih.gov/nuccore/OP183454.1?report=fasta
+
+ORFB1ab USA human/USA/WA-PHL-027795/2022
+https://www.ncbi.nlm.nih.gov/nuccore/OQ780237.1?report=fasta
+
+SARS-CoV-2/human/USA/WA-PHL-026151/2022
+https://www.ncbi.nlm.nih.gov/nuccore/OQ779361.1?report=fasta
+
+human/USA/NC-CDC-LC0984552/2023
+https://www.ncbi.nlm.nih.gov/nuccore/OQ258758.1?report=fasta
+
+SARS-CoV-2/human/MAR/Omicron BA.2/2022
+https://www.ncbi.nlm.nih.gov/nuccore/OQ722344.1?report=fasta
+
+SARS-CoV-2/human/BRA/ILMD2203877/2022
+https://www.ncbi.nlm.nih.gov/nuccore/OQ525773.1?report=fasta
+
+Covid Switzerland 2023
+https://www.ncbi.nlm.nih.gov/nuccore/OX460957.1?report=fasta
+

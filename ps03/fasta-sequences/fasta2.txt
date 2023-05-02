@@ -1,0 +1,8 @@
+> virus 1
+ACGTAGGCCT
+> virus 2
+ATGTAAGACT
+> virus 3
+TCGAGAGCAC
+> virus 4
+TCGAAAGCAT
