@@ -51,7 +51,7 @@ def get_kmers(dir_path, klength):
   sorted_counts = sorted(counter.items(), key=lambda x: x[1], reverse=True)
   
   print("| Sequence | Count | Genome |")
-  print("|:--------:|:-----:|:------:|")
+  print("|:---------|:-----:|:-------|")
   for s, count in sorted_counts:
     genome_titles = [d['v'] for d in lst if d['s'] == s]
     print(f"| {s} | {count} | {genome_titles} |")
@@ -79,61 +79,20 @@ if __name__ == '__main__':
   
   klength = int(sys.argv[1]) if len(sys.argv) > 1 else 9
   type_drawing = "ascii"
-
+  viruses = ['Coronavirus'] #['Coronavirus','HIV-1','Adenovirus-2','Ebola','Hepatitis-B']
   title = f"most frequent {klength}-mers"
+
   print()
   print("===========================================")
   print(f"Analysis of the {title}")
   print("===========================================")
   print()
 
-  print(f"Coronavirus {title}")
-  print("==========================================")
-  nine_mers = get_kmers('./genomes/Coronavirus',klength)
-  sequences = get_sequences(nine_mers)
-  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
-  print('Runing time: {:.5f} seconds\n'.format(tree[1]))
-  print()
-
-
-  print(f"More Coronaviruses {title}")
-  print("==========================================")
-  nine_mers = get_kmers('./genomes/More Coronaviruses',klength)
-  sequences = get_sequences(nine_mers)
-  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
-  print('Runing time: {:.5f} seconds\n'.format(tree[1]))
-  print()
-
-  print(f"HIV-1 {title}")
-  print("==========================================")
-  nine_mers = get_kmers('./genomes/HIV-1',klength)
-  sequences = get_sequences(nine_mers)
-  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
-  print('Runing time: {:.5f} seconds\n'.format(tree[1]))
-  print()
-
-  print(f"Adenovirus-2 {title}")
-  print("==========================================")
-  nine_mers = get_kmers('./genomes/Adenovirus-2',klength)
-  sequences = get_sequences(nine_mers)
-  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
-  print('Runing time: {:.5f} seconds\n'.format(tree[1]))
-
-  print(f"Ebola {title}")
-  print("==========================================")
-  nine_mers = get_kmers('./genomes/Ebola',klength)
-  sequences = get_sequences(nine_mers)
-  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
-  print('Runing time: {:.5f} seconds\n'.format(tree[1]))
-  print()
-
-  print(f"Hepatitis-B {title}")
-  print("==========================================")
-  nine_mers = get_kmers('./genomes/Hepatitis-B',klength)
-  sequences = get_sequences(nine_mers)
-  tree = tree_by_neighbor_joining(sequences, True, type_drawing)
-  print('Runing time: {:.5f} seconds\n'.format(tree[1]))
-  print()
-
-  exit()
-  
+  for virus in viruses:
+    print(f"{virus} {title}")
+    print("==========================================")
+    nine_mers = get_kmers('./genomes/' + virus,klength)
+    sequences = get_sequences(nine_mers)
+    tree = tree_by_neighbor_joining(sequences, True, type_drawing)
+    print('Runing time: {:.5f} seconds\n'.format(tree[1]))
+    print()

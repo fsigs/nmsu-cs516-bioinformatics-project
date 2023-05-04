@@ -2640,7 +2640,8 @@ vertical-align: -.125em;
   <li><a href="#task-5" id="toc-task-5" class="nav-link" data-scroll-target="#task-5">Task 5</a></li>
   <li><a href="#task-e2" id="toc-task-e2" class="nav-link" data-scroll-target="#task-e2">Task E2</a></li>
   </ul></li>
-  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#distribution-of-work" id="toc-distribution-of-work" class="nav-link" data-scroll-target="#distribution-of-work">Distribution of work</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -2679,17 +2680,17 @@ vertical-align: -.125em;
 
 <section id="abstract" class="level1">
 <h1>Abstract</h1>
-<p>In this project, we study the evolution of the most frequent 9-mers in coronaviruses as main tasks and other viruses. We calculate sequence similarity, build a rooted phylogenetic tree, reconstruct ancestral sequences for the most frequent 9-mers. Also, we interpret the tree built for potentially new understanding of the evolution history of repetitive elements in viruses.</p>
+<p>In this project, we study the evolution of the most frequent 9-mers in coronaviruses as main tasks and other viruses. We calculate sequence similarity, build a rooted phylogenetic tree, reconstruct ancestral sequences not only for the most frequent 9-mers as it was required but also for other k-mers that, in our opinion, could give more light to the genomic relations viruses represent.</p>
 </section>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>In our class, we have learned that analyzing the frequency of k-mers in genomes of living beings - like viruses - has the potential to provide relevant insights regarding the evolution and biological diversity of them. By calculating similarity or how distant their patterns are, building phylogennetic trees based on the most frequen k-mers (k=9 for this study), we can infer genomic relationships and if they possess common ancestors. In this sense, we can have a vision of the potential origin and how the spread of viruses has happened.</p>
-<p>For instance, if a particular k-mer is found in many different viral genomes, it may indicate that this sequence has been conserved over time and is important for the virus’s function or survival. On the other hand, if a k-mer is only found in a subset of viral genomes, it may indicate that this sequence has evolved more recently. In more empirical terms, this is also important because vaccines and other biological applications can be created based on these conclusions.</p>
-<p>This project has a five tasks centered on Coronavirus SARCoV-2 strains, and finally extends its methodology to two aditional taks related to Adenovirus-2, Ebola, HIV-1, and Hepatitis-B viruses; so that we, as students in the biotechnology field, can understand that the methodology is applicable to other genomic contexts also.</p>
+<p>In our class, we have learned that analyzing the frequency of k-mers in genomes of living beings - like viruses - has the potential to provide relevant insights regarding the evolution and biological diversity of them. By calculating similarity or how distant their patterns are, building phylogennetic trees based on the most frequen k-mers (k=9 for this study), we can infer genomic relationships and if they possess common ancestors. In this sense, we can have a vision of the proximity the spread of viruses has produced on the virus types.</p>
+<p>For instance, if a particular k-mer is found in many different viral genomes, it may indicate that this sequence has been conserved over time and is important for the virus’s function or survival. On the other hand, if a k-mer is only found in a subset of viral genomes, it may indicate that this sequence has less in common and perhaps it has more biological reasons.</p>
+<p>This project has five tasks centered on Coronavirus SARCoV-2 strains, and finally extends its methodology to two aditional taks related to Adenovirus-2, Ebola, HIV-1, and Hepatitis-B viruses; so that we, as students in the biotechnology field, can understand that the methodology is applicable to other genomic contexts also and learn to draw some conclusions based on the information we can retrieve from the data we analyze from complete genome sequences.</p>
 </section>
 <section id="methods" class="level1">
 <h1>Methods</h1>
-<p>In this section, from the seven tasks, five are purely programs. Then, we proceed to describe the methods and data structures that we have implemented in Python to accomplish each required task of this project. We have organized in functions in files <code>task1.py</code>, <code>task2.py</code>, <code>task3.py</code>, and <code>task4_e1.py</code></p>
+<p>In this section, we proceed to describe the methods and data structures that we have implemented in Python to accomplish each required task of this project. We have organized in functions in files <code>task1.py</code>, <code>task2.py</code>, <code>task3.py</code>, and <code>task4_e1.py</code></p>
 <section id="data-structures-and-algorithms" class="level2">
 <h2 class="anchored" data-anchor-id="data-structures-and-algorithms">Data structures and algorithms</h2>
 <section id="task-1-calculating-pairwise-hamming-distance" class="level3">
@@ -2994,7 +2995,6 @@ Runing time: 0.00036 seconds</code></pre>
 <span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> <span class="bu">min</span>(ss_left) <span class="op">+</span> <span class="bu">min</span>(ss_right)</span>
 <span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>    scores_internal_node.append(score)</span>
 <span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> scores_internal_node   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This code defines three functions: small_parsimony, sp, and scores.</p>
 <p>The small_parsimony function takes a phylogenetic tree as input, extracts the DNA sequences of the terminal nodes, computes the ancestral sequence using the small parsimony algorithm (implemented in the sp function), and returns the ancestral sequence and the time it took to compute it. Specifically, the function creates a list of strings (sequences) from the names of the terminal nodes of the tree. It then loops over the letters of the first sequence in sequences, and creates a list (words) of strings where each string contains the i-th letter of all sequences. Then, the sp function is then called on each word to compute the corresponding letter of the ancestral sequence. Finally, the ancestral sequence is built by concatenating all letters computed by the sp function. The small_parsimony function returns the ancestral sequence and the time it took to compute it in seconds.</p>
 <p>The sp function takes a DNA word as input and computes the letter of the ancestral sequence that corresponds to the DNA position represented by that word using the small parsimony algorithm. The function first splits the input word into two lists (left and right) that contain the nucleotides of the first and second sequences, the second and third sequences, and so on. It then determines whether an additional nucleotide needs to be added to the right list if the length of the original sequence list was odd. The function initializes an empty list (scores_boths) that will store the scores of all possible nucleotides for each internal node in the tree. It then loops over the nucleotides in the left list, and computes the score of each nucleotide by comparing it to the nucleotide in the corresponding position in the right list, or to None if the right list is shorter by one element. The scores function is then called to compute the scores of the internal nodes in the tree. The function repeatedly applies the scores function to pairs of internal nodes until a single score is obtained, which is then converted into a nucleotide letter by finding the index of the minimum score in the scores_boths list. The function returns the nucleotide letter.</p>
 <p>The scores function takes two lists of scores (scores_node_left and scores_node_right) as input, and returns a list of scores for the internal node in the tree. The function initializes an empty list (scores_internal_node) that will store the scores of all possible nucleotides for the internal node. It then loops over the nucleotides in the nucleotides list, and for each nucleotide, it computes the sum of the score of the nucleotide in the scores_node_left list and the score of the corresponding nucleotide in the scores_node_right list. The function returns the list of scores for the internal node.</p>
@@ -3196,139 +3196,199 @@ Runing time: 0.00044 seconds
 <thead>
 <tr class="header">
 <th style="text-align: left;">Virus Type</th>
-<th style="text-align: left;">Fasta Genome</th>
+<th style="text-align: center;">Fasta Genome</th>
 <th style="text-align: left;">Title</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Coronavirus</td>
-<td style="text-align: left;">NC_045512.2</td>
+<td style="text-align: center;">NC_045512.2</td>
 <td style="text-align: left;">Coronavirus 2 isolate Wuhan-Hu-1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Coronavirus</td>
-<td style="text-align: left;">KT225476.2</td>
+<td style="text-align: center;">KT225476.2</td>
 <td style="text-align: left;">Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Coronavirus</td>
-<td style="text-align: left;">MZ937003.2</td>
+<td style="text-align: center;">MZ937003.2</td>
 <td style="text-align: left;">Bat coronavirus isolate BANAL-20-236/Laos/2020</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Coronavirus</td>
-<td style="text-align: left;">AY545919.1</td>
+<td style="text-align: center;">AY545919.1</td>
 <td style="text-align: left;">SARS coronavirus isolate CFB/SZ/94/03</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Coronavirus</td>
-<td style="text-align: left;">OM009282.1</td>
+<td style="text-align: center;">OM009282.1</td>
 <td style="text-align: left;">Pangolin coronavirus HKU4/P251T/pangolin/2018</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">Coronavirus</td>
+<td style="text-align: center;">OK091006.1</td>
+<td style="text-align: left;">Coronavirus 2 Delta variant/2021</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Coronavirus</td>
+<td style="text-align: center;">AY572034.1</td>
+<td style="text-align: left;">Coronavirus 2 JP_Hiro97618 RNA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Coronavirus</td>
+<td style="text-align: center;">OP183454.1</td>
+<td style="text-align: left;">Coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Coronavirus</td>
+<td style="text-align: center;">2182752773</td>
+<td style="text-align: left;">Coronavirus 2 isolate SARS-CoV-2/human/CAN/Kappa_NML_P4/2021</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Coronavirus</td>
+<td style="text-align: center;">MZ496616.1</td>
+<td style="text-align: left;">Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Coronavirus</td>
+<td style="text-align: center;">OQ780237.1</td>
+<td style="text-align: left;">ORFB1ab USA human/USA/WA-PHL-027795/2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Coronavirus</td>
+<td style="text-align: center;">OQ779361.1</td>
+<td style="text-align: left;">SARS-CoV-2/human/USA/WA-PHL-026151/2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Coronavirus</td>
+<td style="text-align: center;">OQ258758.1</td>
+<td style="text-align: left;">Human/USA/NC-CDC-LC0984552/2023</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Coronavirus</td>
+<td style="text-align: center;">OQ722344.1</td>
+<td style="text-align: left;">SARS-CoV-2/human/MAR/Omicron BA.2/2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Coronavirus</td>
+<td style="text-align: center;">OQ525773.1</td>
+<td style="text-align: left;">SARS-CoV-2/human/BRA/ILMD2203877/2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Coronavirus</td>
+<td style="text-align: center;">OX460957.1</td>
+<td style="text-align: left;">Covid Switzerland 2023</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Coronavirus</td>
+<td style="text-align: center;">LC594651.1</td>
+<td style="text-align: left;">Coronavirus 2 JP_Hiro97618 RNA</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">HIV-1</td>
-<td style="text-align: left;">MN692147.1</td>
+<td style="text-align: center;">MN692147.1</td>
 <td style="text-align: left;">HIV-1 isolate Pt1-M26-NFL-30-PBio from USA</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">HIV-1</td>
-<td style="text-align: left;">MH327766.1</td>
+<td style="text-align: center;">MH327766.1</td>
 <td style="text-align: left;">HIV-1 isolate 1031 from Philippines</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">HIV-1</td>
-<td style="text-align: left;">EU541617.1</td>
+<td style="text-align: center;">EU541617.1</td>
 <td style="text-align: left;">HIV-1 clone pIIIB from USA</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">HIV-1</td>
-<td style="text-align: left;">AF224507.1</td>
+<td style="text-align: center;">AF224507.1</td>
 <td style="text-align: left;">HIV-1 strain HIV-1wk from South Korea</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">HIV-1</td>
-<td style="text-align: left;">KX232629.1</td>
+<td style="text-align: center;">KX232629.1</td>
 <td style="text-align: left;">HIV-1 isolate PK040 from Pakistan</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">HIV-1</td>
-<td style="text-align: left;">MG365771.1</td>
+<td style="text-align: center;">MG365771.1</td>
 <td style="text-align: left;">HIV-1 isolate 01BRRJUD508 from Brazil</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">HIV-1</td>
-<td style="text-align: left;">KY498771.1</td>
+<td style="text-align: center;">KY498771.1</td>
 <td style="text-align: left;">HIV-1 isolate S4858 from Cameroon</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Adenovirus-2</td>
-<td style="text-align: left;">AC_000007.1</td>
+<td style="text-align: center;">AC_000007.1</td>
 <td style="text-align: left;">Human adenovirus 2</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Adenovirus-2</td>
-<td style="text-align: left;">KP279747.1</td>
+<td style="text-align: center;">KP279747.1</td>
 <td style="text-align: left;">Unidentified adenovirus isolate GPAdV_5</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Adenovirus-2</td>
-<td style="text-align: left;">NC_027708.1</td>
+<td style="text-align: center;">NC_027708.1</td>
 <td style="text-align: left;">Skunk adenovirus PB1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Adenovirus-2</td>
-<td style="text-align: left;">X73487.1</td>
+<td style="text-align: center;">X73487.1</td>
 <td style="text-align: left;">Adenovirus type 12 DNA</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Adenovirus-2</td>
-<td style="text-align: left;">MZ073342.1</td>
+<td style="text-align: center;">MZ073342.1</td>
 <td style="text-align: left;">Porcupine adenovirus isolate X-24879-18</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Adenovirus-2</td>
-<td style="text-align: left;">MZ073341.1</td>
+<td style="text-align: center;">MZ073341.1</td>
 <td style="text-align: left;">Raccoon adenovirus isolate W-0155-19B</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Ebola</td>
-<td style="text-align: left;">KU143834.1</td>
+<td style="text-align: center;">KU143834.1</td>
 <td style="text-align: left;">Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Ebola</td>
-<td style="text-align: left;">AF086833.2</td>
+<td style="text-align: center;">AF086833.2</td>
 <td style="text-align: left;">Ebola virus - Mayinga, Zaire, 1976</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Ebola</td>
-<td style="text-align: left;">KU182904.1</td>
+<td style="text-align: center;">KU182904.1</td>
 <td style="text-align: left;">Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Ebola</td>
-<td style="text-align: left;">KM655246.1</td>
+<td style="text-align: center;">KM655246.1</td>
 <td style="text-align: left;">Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Hepatitis-B</td>
-<td style="text-align: left;">LC603637.1</td>
+<td style="text-align: center;">LC603637.1</td>
 <td style="text-align: left;">Hepatitis B virus HB20-0698 DNA</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Hepatitis-B</td>
-<td style="text-align: left;">K01834.1</td>
+<td style="text-align: center;">K01834.1</td>
 <td style="text-align: left;">Duck hepatitis B virus</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Hepatitis-B</td>
-<td style="text-align: left;">AJ344115.1</td>
+<td style="text-align: center;">AJ344115.1</td>
 <td style="text-align: left;">Hepatitis B virus complete genome, genotype A</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Hepatitis-B</td>
-<td style="text-align: left;">KR014099.1</td>
+<td style="text-align: center;">KR014099.1</td>
 <td style="text-align: left;">Hepatitis B virus strain #1958.7</td>
 </tr>
 </tbody>
@@ -3342,13 +3402,15 @@ Runing time: 0.00044 seconds
 <ul>
 <li><strong>Pylogenetic Tree by Neighbor Joining</strong>:</li>
 </ul>
-<pre><code>                                              , TAAACGAAC
-  ____________________________________________|
- |                                            |______________________ TTAACGAAC
-_|
- |___________________________________________________________________ TAACGAACT
+<pre><code>                    _ TAAACGAAC
+  _________________|
+ |                 |_______ TTAACGAAC
  |
- |____________________________________________ TAATGGTAA</code></pre>
+_|   _______________________________________________________________ NNNNNNNNN
+ |__|
+ |  |_________________________ TAACGAACT
+ |
+ |____________________ TAATGGTAA</code></pre>
 <ul>
 <li><strong>Most frequent 9-mers</strong>:</li>
 </ul>
@@ -3361,101 +3423,34 @@ _|
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Sequence</th>
+<th style="text-align: left;">Sequence</th>
 <th style="text-align: center;">Count</th>
 <th style="text-align: left;">Genome</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">TAAACGAAC</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: left;">[‘SARS coronavirus isolate CFB/SZ/94/03’, ‘Bat coronavirus isolate BANAL-20-236/Laos/2020’, ‘Coronavirus 2 isolate Wuhan-Hu-1’]</td>
+<td style="text-align: left;">TAAACGAAC</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">[‘SARS coronavirus isolate CFB/SZ/94/03’, ‘Coronavirus 2 JP_Hiro97618 RNA’, ‘Coronavirus 2 JP_Hiro97618 RNA’, ‘Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021’, ‘Bat coronavirus isolate BANAL-20-236/Laos/2020’, ‘Coronavirus 2 isolate Wuhan-Hu-1’, ‘Coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022’]</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">TTAACGAAC</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: left;">[‘Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015’]</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">TAACGAACT</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: left;">[‘Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015’]</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">TAATGGTAA</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: left;">[‘Pangolin coronavirus HKU4/P251T/pangolin/2018’]</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><strong>Running time</strong>:</li>
-</ul>
-<pre><code>Runing time: 0.00049 seconds</code></pre>
-</section>
-<section id="most-frequent-8-mers" class="level4">
-<h4 class="anchored" data-anchor-id="most-frequent-8-mers">Most frequent 8-mers:</h4>
-<p>The following are the results most frequent 8-mers for virus type: Coronavirus</p>
-<ul>
-<li><strong>Pylogenetic Tree by Neighbor Joining</strong>:</li>
-</ul>
-<pre><code>                  ___________________________ TGTTGACA
-      ___________|
-  ___|           |_______________ TGCTGCTA
- |   |
- |   |________________ TGATTTTA
- |
-_|                                 __________________________________ ATGGTGTT
- |________________________________|
- |                                |_______________________ TTAATGGT
- |
- |________________ TAATGGTA</code></pre>
-<ul>
-<li><strong>Most frequent 8-mers</strong>:</li>
-</ul>
-<table class="table">
-<caption>Most frequent 8-mers Coronavirus table</caption>
-<colgroup>
-<col style="width: 10%">
-<col style="width: 5%">
-<col style="width: 85%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Sequence</th>
-<th style="text-align: center;">Count</th>
-<th style="text-align: left;">Genome</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">ATGGTGTT</td>
+<td style="text-align: left;">NNNNNNNNN</td>
 <td style="text-align: center;">2</td>
-<td style="text-align: left;">[‘Bat coronavirus isolate BANAL-20-236/Laos/2020’, ‘Coronavirus 2 isolate Wuhan-Hu-1’]</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">TGTTGACA</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: left;">[‘SARS coronavirus isolate CFB/SZ/94/03’]</td>
+<td style="text-align: left;">[‘Coronavirus 2 Delta variant/2021’, ‘SARS-CoV-2/human/USA/WA-PHL-026151/2022’]</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">TGCTGCTA</td>
+<td style="text-align: left;">TTAACGAAC</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: left;">[‘SARS coronavirus isolate CFB/SZ/94/03’]</td>
+<td style="text-align: left;">[‘Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015’]</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">TGATTTTA</td>
+<td style="text-align: left;">TAACGAACT</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015’]</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">TTAATGGT</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: left;">[‘Bat coronavirus isolate BANAL-20-236/Laos/2020’]</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">TAATGGTA</td>
+<td style="text-align: left;">TAATGGTAA</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘Pangolin coronavirus HKU4/P251T/pangolin/2018’]</td>
 </tr>
@@ -3464,7 +3459,7 @@ _|                                 __________________________________ ATGGTGTT
 <ul>
 <li><strong>Running time</strong>:</li>
 </ul>
-<pre><code>Runing time: 0.00093 seconds</code></pre>
+<pre><code>Runing time: 0.00054 seconds</code></pre>
 </section>
 <section id="most-frequent-10-mers" class="level4">
 <h4 class="anchored" data-anchor-id="most-frequent-10-mers">Most frequent 10-mers:</h4>
@@ -3472,11 +3467,13 @@ _|                                 __________________________________ ATGGTGTT
 <ul>
 <li><strong>Pylogenetic Tree by Neighbor Joining</strong>:</li>
 </ul>
-<pre><code>  __________________________________________________________________ CTAAACGAAC
+<pre><code>          _______________________________________ CTAAACGAAC
+  _______|
+ |       |_______________________ TTAACGAACT
+_|
+ |_______________________________________ TAATGGTGTT
  |
-_|_____________________ TTAACGAACT
- |
- |__________________________________________________________________ TAATGGTGTT
+ |__________________________________________________________________ NNNNNNNNNN
 </code></pre>
 <ul>
 <li><strong>Most frequent 10-mers</strong>:</li>
@@ -3490,26 +3487,31 @@ _|_____________________ TTAACGAACT
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Sequence</th>
+<th style="text-align: left;">Sequence</th>
 <th style="text-align: center;">Count</th>
 <th style="text-align: left;">Genome</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">CTAAACGAAC</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: left;">[‘SARS coronavirus isolate CFB/SZ/94/03’, ‘Bat coronavirus isolate BANAL-20-236/Laos/2020’, ‘Coronavirus 2 isolate Wuhan-Hu-1’]</td>
+<td style="text-align: left;">CTAAACGAAC</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">[‘SARS coronavirus isolate CFB/SZ/94/03’, ‘Coronavirus 2 JP_Hiro97618 RNA’, ‘Coronavirus 2 JP_Hiro97618 RNA’, ‘Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021’, ‘Bat coronavirus isolate BANAL-20-236/Laos/2020’, ‘Coronavirus 2 isolate Wuhan-Hu-1’, ‘Coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022’]</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">TTAACGAACT</td>
+<td style="text-align: left;">TAATGGTGTT</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">[‘Coronavirus 2 JP_Hiro97618 RNA’, ‘Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021’, ‘Coronavirus 2 isolate Wuhan-Hu-1’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TTAACGAACT</td>
 <td style="text-align: center;">2</td>
 <td style="text-align: left;">[‘Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015’, ‘Pangolin coronavirus HKU4/P251T/pangolin/2018’]</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">TAATGGTGTT</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: left;">[‘Coronavirus 2 isolate Wuhan-Hu-1’]</td>
+<tr class="even">
+<td style="text-align: left;">NNNNNNNNNN</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">[‘Coronavirus 2 Delta variant/2021’, ‘SARS-CoV-2/human/USA/WA-PHL-026151/2022’]</td>
 </tr>
 </tbody>
 </table>
@@ -3517,6 +3519,65 @@ _|_____________________ TTAACGAACT
 <li><strong>Running time</strong>:</li>
 </ul>
 <pre><code>Runing time: 0.00054 seconds</code></pre>
+</section>
+<section id="most-frequent-17-mers" class="level4">
+<h4 class="anchored" data-anchor-id="most-frequent-17-mers">Most frequent 17-mers:</h4>
+<p>The following are the results most frequent 17-mers for virus type: Coronavirus</p>
+<ul>
+<li><strong>Pylogenetic Tree by Neighbor Joining</strong>:</li>
+</ul>
+<pre><code>      _____________________ ATATAAAAATACATGTG
+  ___|
+ |   |_____________________________ ATCAGACAACTACTATT
+_|
+ |_____________________________ CAATTATTATAAGAAAG
+ |
+ |___________________________________________________________ NNNNNNNNNNNNNNNNN
+</code></pre>
+<ul>
+<li><strong>Most frequent 17-mers</strong>:</li>
+</ul>
+<table class="table">
+<caption>Most frequent 17-mers Coronavirus table</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sequence</th>
+<th style="text-align: center;">Count</th>
+<th style="text-align: left;">Genome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CAATTATTATAAGAAAG</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">[‘Coronavirus 2 JP_Hiro97618 RNA’, ‘Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021’, ‘Bat coronavirus isolate BANAL-20-236/Laos/2020’, ‘Coronavirus 2 isolate Wuhan-Hu-1’, ‘Coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022’, ‘SARS-CoV-2/human/USA/WA-PHL-026151/2022’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATCAGACAACTACTATT</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">[‘Coronavirus 2 JP_Hiro97618 RNA’, ‘Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021’, ‘Coronavirus 2 isolate Wuhan-Hu-1’, ‘Coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022’, ‘SARS-CoV-2/human/USA/WA-PHL-026151/2022’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NNNNNNNNNNNNNNNNN</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">[‘Coronavirus 2 Delta variant/2021’, ‘SARS-CoV-2/human/USA/WA-PHL-026151/2022’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATATAAAAATACATGTG</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Bat coronavirus isolate BANAL-20-236/Laos/2020’]</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Running time</strong>:</li>
+</ul>
+<pre><code>Runing time: 0.00077 seconds</code></pre>
 </section>
 </section>
 <section id="hiv-1-results" class="level3">
@@ -3560,59 +3621,59 @@ _|                          ____________________________________ CTAATGCTA
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Sequence</th>
+<th style="text-align: left;">Sequence</th>
 <th style="text-align: center;">Count</th>
 <th style="text-align: left;">Genome</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">AAGAAAAAA</td>
+<td style="text-align: left;">AAGAAAAAA</td>
 <td style="text-align: center;">3</td>
 <td style="text-align: left;">[‘HIV-1 strain HIV-1wk from South Korea’, ‘HIV-1 clone pIIIB from USA’, ‘HIV-1 isolate Pt1-M26-NFL-30-PBio from USA’]</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">AAAGAAAAA</td>
+<td style="text-align: left;">AAAGAAAAA</td>
 <td style="text-align: center;">2</td>
 <td style="text-align: left;">[‘HIV-1 isolate 01BRRJUD508 from Brazil’, ‘HIV-1 isolate Pt1-M26-NFL-30-PBio from USA’]</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">TTAAAAGAA</td>
+<td style="text-align: left;">TTAAAAGAA</td>
 <td style="text-align: center;">2</td>
 <td style="text-align: left;">[‘HIV-1 isolate 1031 from Philippines’, ‘HIV-1 isolate Pt1-M26-NFL-30-PBio from USA’]</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">AATGGCACT</td>
+<td style="text-align: left;">AATGGCACT</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘HIV-1 isolate PK040 from Pakistan’]</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">GGGAAAGAA</td>
+<td style="text-align: left;">GGGAAAGAA</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘HIV-1 isolate S4858 from Cameroon’]</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">AAAGGAGAA</td>
+<td style="text-align: left;">AAAGGAGAA</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘HIV-1 isolate S4858 from Cameroon’]</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">AGAAAAAAT</td>
+<td style="text-align: left;">AGAAAAAAT</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘HIV-1 isolate 1031 from Philippines’]</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">CAAATTTAT</td>
+<td style="text-align: left;">CAAATTTAT</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘HIV-1 isolate 1031 from Philippines’]</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">ATAGTAGGA</td>
+<td style="text-align: left;">ATAGTAGGA</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘HIV-1 isolate 1031 from Philippines’]</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">CTAATGCTA</td>
+<td style="text-align: left;">CTAATGCTA</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘HIV-1 isolate 1031 from Philippines’]</td>
 </tr>
@@ -3622,6 +3683,86 @@ _|                          ____________________________________ CTAATGCTA
 <li><strong>Running time</strong>:</li>
 </ul>
 <pre><code>Runing time: 0.00150 seconds</code></pre>
+</section>
+<section id="most-frequent-7-mers" class="level4">
+<h4 class="anchored" data-anchor-id="most-frequent-7-mers">Most frequent 7-mers:</h4>
+<p>The following are the results most frequent 7-mers for virus type: HIV-1</p>
+<ul>
+<li><strong>Pylogenetic Tree by Neighbor Joining</strong>:</li>
+</ul>
+<pre><code>                 ________________________________ AAAGAAA
+       _________|
+      |         |_____________________________ AAGAAAA
+  ____|
+ |    |                  _____________ AGAAAAA
+ |    |_________________|
+ |                      |                 ____________________________ AGCAGAA
+_|                      |________________|
+ |                                       |___ AGAAGAA
+ |
+ |__________ AAAAGAA
+ |
+ |_________________________________________________ AAAATTA
+</code></pre>
+<ul>
+<li><strong>Most frequent 7-mers</strong>:</li>
+</ul>
+<table class="table">
+<caption>Most frequent 7-mers HIV-1 table</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sequence</th>
+<th style="text-align: center;">Count</th>
+<th style="text-align: left;">Genome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AAGAAAA</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">[‘HIV-1 strain HIV-1wk from South Korea’, ‘HIV-1 isolate 01BRRJUD508 from Brazil’, ‘HIV-1 isolate 1031 from Philippines’, ‘HIV-1 isolate Pt1-M26-NFL-30-PBio from USA’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AAAGAAA</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">[‘HIV-1 isolate PK040 from Pakistan’, ‘HIV-1 isolate Pt1-M26-NFL-30-PBio from USA’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AAAAGAA</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">[‘HIV-1 isolate 01BRRJUD508 from Brazil’, ‘HIV-1 isolate Pt1-M26-NFL-30-PBio from USA’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AGAAGAA</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘HIV-1 clone pIIIB from USA’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AGCAGAA</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘HIV-1 isolate S4858 from Cameroon’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AAAATTA</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘HIV-1 isolate 1031 from Philippines’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AGAAAAA</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘HIV-1 isolate 1031 from Philippines’]</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Running time</strong>:</li>
+</ul>
+<pre><code>Runing time: 0.00098 seconds</code></pre>
 </section>
 </section>
 <section id="adenovirus-2-results" class="level3">
@@ -3659,44 +3800,44 @@ _|            ____________________|             |___________________ TCTTCTTCT
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Sequence</th>
+<th style="text-align: left;">Sequence</th>
 <th style="text-align: center;">Count</th>
 <th style="text-align: left;">Genome</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">GAGGAGGAG</td>
+<td style="text-align: left;">GAGGAGGAG</td>
 <td style="text-align: center;">3</td>
 <td style="text-align: left;">[‘Raccoon adenovirus isolate W-0155-19B’, ‘Porcupine adenovirus isolate X-24879-18’, ‘Skunk adenovirus PB1’]</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">GGCGGCGGC</td>
+<td style="text-align: left;">GGCGGCGGC</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘Human adenovirus 2’]</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">AAAATTTGA</td>
+<td style="text-align: left;">AAAATTTGA</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘Unidentified adenovirus isolate GPAdV_5’]</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">ATTTCAAAT</td>
+<td style="text-align: left;">ATTTCAAAT</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘Unidentified adenovirus isolate GPAdV_5’]</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">TCTTCTTCT</td>
+<td style="text-align: left;">TCTTCTTCT</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘Unidentified adenovirus isolate GPAdV_5’]</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">TTTTTTTTT</td>
+<td style="text-align: left;">TTTTTTTTT</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘Adenovirus type 12 DNA’]</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">AGGAGGAGG</td>
+<td style="text-align: left;">AGGAGGAGG</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">[‘Adenovirus type 12 DNA’]</td>
 </tr>
@@ -3706,6 +3847,100 @@ _|            ____________________|             |___________________ TCTTCTTCT
 <li><strong>Running time</strong>:</li>
 </ul>
 <pre><code>Runing time: 0.00073 seconds</code></pre>
+</section>
+<section id="most-frequent-16-mers" class="level4">
+<h4 class="anchored" data-anchor-id="most-frequent-16-mers">Most frequent 16-mers:</h4>
+<p>The following are the results most frequent 16-mers for virus type: Adenovirus-2</p>
+<ul>
+<li><strong>Pylogenetic Tree by Neighbor Joining</strong>:</li>
+</ul>
+<pre><code>             ________________________________ TTGTTCCTGCACTTCC
+   _________|
+  |         |_________________________________ CTGTTGTTCCTGCACT
+ ,|
+ ||  _____________________________ TTTTTGGCGCCAAAAA
+ || |
+ ||_|                            ______________________ ATGAAGAAGAGGAAGA
+ |  |                 __________|
+ |  |________________|          |___________________________ AAAAAAAAAAAAAAAA
+_|                   |
+ |                   |___________________________________ GATGAAGAAGAGGAAG
+ |
+ |                ______________________________ TGTTGTTCCTGCACTT
+ |_______________|
+ |               |___________________________ TGTAATGTTTTCTATT
+ |
+ |_________________________________________ GTTGTTCCTGCACTTC
+</code></pre>
+<ul>
+<li><strong>Most frequent 16-mers</strong>:</li>
+</ul>
+<table class="table">
+<caption>Most frequent 16-mers Adenovirus-2 table</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sequence</th>
+<th style="text-align: center;">Count</th>
+<th style="text-align: left;">Genome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">TTTTTGGCGCCAAAAA</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">[‘Raccoon adenovirus isolate W-0155-19B’, ‘Porcupine adenovirus isolate X-24879-18’, ‘Skunk adenovirus PB1’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AAAAAAAAAAAAAAAA</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Human adenovirus 2’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GATGAAGAAGAGGAAG</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Human adenovirus 2’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATGAAGAAGAGGAAGA</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Human adenovirus 2’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TGTAATGTTTTCTATT</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Unidentified adenovirus isolate GPAdV_5’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CTGTTGTTCCTGCACT</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Unidentified adenovirus isolate GPAdV_5’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TGTTGTTCCTGCACTT</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Unidentified adenovirus isolate GPAdV_5’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GTTGTTCCTGCACTTC</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Unidentified adenovirus isolate GPAdV_5’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TTGTTCCTGCACTTCC</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Unidentified adenovirus isolate GPAdV_5’]</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Running time</strong>:</li>
+</ul>
+<pre><code>Runing time: 0.00132 seconds</code></pre>
 </section>
 </section>
 <section id="ebola-results" class="level3">
@@ -3768,6 +4003,96 @@ _|________________________|
 <li><strong>Running time</strong>:</li>
 </ul>
 <pre><code>Runing time: 0.00032 seconds</code></pre>
+</section>
+<section id="most-frequent-10-mers-1" class="level4">
+<h4 class="anchored" data-anchor-id="most-frequent-10-mers-1">Most frequent 10-mers:</h4>
+<p>The following are the results most frequent 10-mers for virus type: Ebola</p>
+<ul>
+<li><strong>Pylogenetic Tree by Neighbor Joining</strong>:</li>
+</ul>
+<pre><code>  ___________________________________________________________________ TTAAGAAAAA        
+_|
+ |___________________________________________________________________ ATTAAGAAAA  
+</code></pre>
+<ul>
+<li><strong>Most frequent 10-mers</strong>:</li>
+</ul>
+<table class="table">
+<caption>Most frequent 10-mers Ebola table</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sequence</th>
+<th style="text-align: center;">Count</th>
+<th style="text-align: left;">Genome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">TTAAGAAAAA</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">[‘Ebola virus - Mayinga, Zaire, 1976’, ‘Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran’, ‘Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9’, ‘Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATTAAGAAAA</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">[‘Ebola virus - Mayinga, Zaire, 1976’, ‘Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran’, ‘Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626’]</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Running time</strong>:</li>
+</ul>
+<pre><code>Runing time: 0.00037 seconds</code></pre>
+</section>
+<section id="most-frequent-15-mers" class="level4">
+<h4 class="anchored" data-anchor-id="most-frequent-15-mers">Most frequent 15-mers:</h4>
+<p>The following are the results most frequent 15-mers for virus type: Ebola</p>
+<ul>
+<li><strong>Pylogenetic Tree by Neighbor Joining</strong>:</li>
+</ul>
+<pre><code>   ______________________________________________________________ AATGATGAAGATTAA
+_|
+ |______________________________________________________________ GAAGATTAAGAAAAA 
+</code></pre>
+<ul>
+<li><strong>Most frequent 15-mers</strong>:</li>
+</ul>
+<table class="table">
+<caption>Most frequent 15-mers Ebola table</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sequence</th>
+<th style="text-align: center;">Count</th>
+<th style="text-align: left;">Genome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">GAAGATTAAGAAAAA</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">[‘Ebola virus - Mayinga, Zaire, 1976’, ‘Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran’, ‘Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9’, ‘Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AATGATGAAGATTAA</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9’]</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Running time</strong>:</li>
+</ul>
+<pre><code>Runing time: 0.00037 seconds</code></pre>
 </section>
 </section>
 <section id="hepatitis-b-results" class="level3">
@@ -4152,6 +4477,107 @@ _|      | |                     |         ____________________ CTGTGCCTT
 </ul>
 <pre><code>Runing time: 0.08194 seconds</code></pre>
 </section>
+<section id="most-frequent-11-mers" class="level4">
+<h4 class="anchored" data-anchor-id="most-frequent-11-mers">Most frequent 11-mers:</h4>
+<p>The following are the results most frequent 11-mers for virus type: Hepatitis-B</p>
+<ul>
+<li><strong>Pylogenetic Tree by Neighbor Joining</strong>:</li>
+</ul>
+<pre><code>                              ______________________ TACACCCCTCT
+    _________________________|
+   |                         |________________________ TTCACCTCTGC
+  _|
+ | |           ________________________________________________ TATATAAGAGG
+ | |          |
+ | |__________|                                    ________ CAAGAAGAAAG
+ |            |     ______________________________|
+ |            |____|                              |______________ GAAGAAGAAAA
+ |                 |
+_|                 |__________________________________ TTATATAAGAG
+ |
+ |        ___________________________________ AAGTTTCCAAC
+ |_______|
+ |       |           ____________________________________ ACACCCCTCTC
+ |       |__________|
+ |                  |______________________ AGATCTCAATC
+ |
+ |____________________________________________ CTGTACCTTTG
+</code></pre>
+<ul>
+<li><strong>Most frequent 11-mers</strong>:</li>
+</ul>
+<table class="table">
+<caption>Most frequent 11-mers Hepatitis-B table</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sequence</th>
+<th style="text-align: center;">Count</th>
+<th style="text-align: left;">Genome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">TTCACCTCTGC</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">[‘Hepatitis B virus complete genome, genotype A’, ‘Hepatitis B virus strain #1958.7’, ‘Hepatitis B virus HB20-0698 DNA’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TTATATAAGAG</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Hepatitis B virus complete genome, genotype A’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TATATAAGAGG</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Hepatitis B virus complete genome, genotype A’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AGATCTCAATC</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Hepatitis B virus complete genome, genotype A’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GAAGAAGAAAA</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Duck hepatitis B virus’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AAGTTTCCAAC</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Duck hepatitis B virus’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CAAGAAGAAAG</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Duck hepatitis B virus’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CTGTACCTTTG</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Duck hepatitis B virus’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TACACCCCTCT</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Duck hepatitis B virus’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ACACCCCTCTC</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">[‘Duck hepatitis B virus’]</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Running time</strong>:</li>
+</ul>
+<pre><code>Runing time: 0.00200 seconds</code></pre>
+</section>
 </section>
 </section>
 </section>
@@ -4159,16 +4585,30 @@ _|      | |                     |         ____________________ CTGTGCCTT
 <h1>Discussion</h1>
 <section id="task-5" class="level2">
 <h2 class="anchored" data-anchor-id="task-5">Task 5</h2>
-<p>Pending</p>
+<p>The given results show the most frequent k-mers for different values of k (k=9,10,17) for the coronavirus genome. These values have been selected trying to produce optimal clustering among the studied genomes. The tables show the sequence, count, and genome where the k-mer was found. The pylogenetic tree by neighbor joining shows the relationships between the different sequences based on their similarities. The running time of the analysis is also reported. Also, the pylogenetic tree shows the relationships between these genome sequences based on their similarity. The running time of the analysis indicates the computational efficiency of the algorithm used to generate these results is directly proportional to the number of sequences involved. Overall, these results provide insights into the genomic diversity of coronavirus and how different sequences are related to each other. These findings could be used for further research on the evolution and transmission of coronavirus.</p>
+<p>In case of Coronavirus, with k=9 we see a strong relation through 9-mer <code>TAAACGAAC</code> for ‘SARS coronavirus isolate CFB/SZ/94/03’, ‘Coronavirus 2 JP_Hiro97618 RNA’, ‘Coronavirus 2 JP_Hiro97618 RNA’, ‘Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021’, ‘Bat coronavirus isolate BANAL-20-236/Laos/2020’, ‘Coronavirus 2 isolate Wuhan-Hu-1’, ‘Coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022’ and this cluster with a proximity in similarity with the 9-mer <code>TTAACGAAC</code> with the ‘Coronavirus 2 Delta variant/2021’, ‘SARS-CoV-2/human/USA/WA-PHL-026151/2022’ and the ‘Middle East respiratory’ variants.</p>
+<p>In addition, it is interesting that the 17-mer produces a concise group of coronaviruses with 6 coincidences of it. Here, we see that the 17-mer <code>CAATTATTATAAGAAAG</code> is shared by the Hiroshima, Domestic Cat’s, Bat’s, Wuhan-Hu-1, Usa’s sample, and Omicron variants. Here, it is interesting to note that we again have many of the members of the cluster that has the same mark than with 9-mer <code>TAAACGAAC</code>.</p>
+<p>For instance, always variants related to bats and Wuhan belong to the very same clusters. So that, this study does not iluminate related to the question of if the virus could have been originated by the animals or the lab installed in Wuhan. The question still remains unanswered.</p>
+<p>This study also shows that this 9-mer and 17-mer show that strong genomic material is present in new and very virulent variants such as Omicron. Could these marks can be related to virulence and transmision power? Hence, these perspectives deserve to go more in deep with more Bioinformatics tools (2023, Subvariant of Omicron SARS-CoV-2 and its Rapid Global Spread).</p>
 </section>
 <section id="task-e2" class="level2">
 <h2 class="anchored" data-anchor-id="task-e2">Task E2</h2>
-<p>Pending</p>
+<p>Similarly to prior, for each one of the virus types, the given results show the most frequent k-mers for different values of k. In case of HIV-1 (k=7,9); Adenovirus-2(k=9,16); Ebola(k=9,10,15); and Hepatitis-B(k=9,11). These values have been selected trying to produce optimal clustering among the studied genomes. The tables show the sequence, count, and genome where the k-mer was found. The pylogenetic tree by neighbor joining shows the relationships between the different sequences based on their similarities. The running time of the analysis is also reported. Also, the pylogenetic tree shows the relationships between these genome sequences based on their similarity. The running time of the analysis indicates the computational efficiency of the algorithm used to generate these results is directly proportional to the number of sequences involved. Overall, these results provide insights into the genomic diversity of coronavirus and how different sequences are related to each other. These findings could be used for further research on the evolution and transmission of coronavirus.</p>
+<p>Also, our biological conclusions are similar. Nonetheless, the strategies for having concise clusters sometimes require to decrease the number of k-mers, as it happened in HIV-1, the results speak clear about understanding the similarities by studying the pylogenetic trees.</p>
+<p>First, <strong>HIV-1</strong> shows its 9-mer <code>AAGAAAAAA</code> with 3 coincidences that ‘HIV-1 strain HIV-1wk from South Korea’, ‘HIV-1 clone pIIIB from USA’, and ‘HIV-1 isolate Pt1-M26-NFL-30-PBio from USA’ followed by <code>AAAGAAAAA</code> and <code>TTAAAAGAA</code> with 2 coincidences each that ‘HIV-1 isolate 01BRRJUD508 from Brazil’, ‘HIV-1 isolate Pt1-M26-NFL-30-PBio from USA’ and ‘HIV-1 isolate 1031 from Philippines’, ‘HIV-1 isolate Pt1-M26-NFL-30-PBio from USA’ are also close to the main group. The 7-mer <code>AAGAAAA</code> with 4 matches is useful to strenghten that ‘HIV-1 strain HIV-1wk from South Korea’, ‘HIV-1 isolate 01BRRJUD508 from Brazil’, ‘HIV-1 isolate 1031 from Philippines’, ‘HIV-1 isolate Pt1-M26-NFL-30-PBio from USA’ are close to each other too. Observing these patterns, we can see that HIV-1 South Korea, USA, Brazil, and Philipines in that order, share a proximity in this subset of HIV-1 virus type.</p>
+<p>Second, <strong>Adenovirus-2</strong> shows its 9-mer <code>GAGGAGGAG</code> with 3 coincidences that ‘Raccoon adenovirus isolate W-0155-19B’, ‘Porcupine adenovirus isolate X-24879-18’, and ‘Skunk adenovirus PB1’ live in the same clusters with a string genomic relationship, followed by the ‘Human adenovirus 2’ being who shares the major proximity to them. The 16-mer | TTTTTGGCGCCAAAAA comes to iluminate also a strng relationship between ‘Raccoon adenovirus isolate W-0155-19B’, ‘Porcupine adenovirus isolate X-24879-18’, and ‘Skunk adenovirus PB1’. Hence, we can infer that these species of animals are key in potentially the spread of this virus.</p>
+<p>Third, <strong>Ebola</strong> is characterized for its conciseness of its trees, and follwing that trend, we have chosen k=9, 15 to get also concise clusters then. Three of its most frequent 9-mers show three clear groups: <code>GAAGATTAA</code> shows that ‘Ebola virus - Mayinga, Zaire, 1976’, ‘Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran’, ‘Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9’, and ‘Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626’ share a strong relationship; followed by <code>TTAAGAAAA</code> with the group of ‘Ebola virus - Mayinga, Zaire, 1976’, ‘Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran’, ‘Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9’, and ‘Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626’; and by <code>TAAGAAAAA</code> with ‘Ebola virus - Mayinga, Zaire, 1976’, ‘Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran’, ‘Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9’, and ‘Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626’. It is important to note that these last two sequences difer from each other with just one mutation. That can suggest that we could be in the case of a wrong written nucleotide?. Also, with not 4 but 3 matches <code>ATTAAGAAA</code> shows a new close group compounded by ‘Ebola virus - Mayinga, Zaire, 1976’, ‘Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran’, ‘Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626’. When we take into consideration k=10 with 10-mers <code>TTAAGAAAAA</code>, <code>ATTAAGAAAA</code> (having only 3 mutations of distance switching similar nucleotides in it) we can also regroup to only two clusters, which is very interesting to understand a macro behaviour of the virus in a broader scope.</p>
+<p>Finally, <strong>Hepatitis-B</strong> with 9-mers it shows a very diverse number of leaves. That is why is useful to concentrate in mentioning that these 9-mers produce each one close clusters: <code>CCCCCACTG</code> with ‘Hepatitis B virus complete genome, genotype A’, ‘Hepatitis B virus strain #1958.7’, ‘Hepatitis B virus HB20-0698 DNA’; <code>CTGTGCCTT</code> with ‘Hepatitis B virus complete genome, genotype A’, ‘Hepatitis B virus strain #1958.7’, ‘Hepatitis B virus HB20-0698 DNA’; <code>TTCACCTCT</code> with ‘Hepatitis B virus complete genome, genotype A’, ‘Hepatitis B virus strain #1958.7’, ‘Hepatitis B virus HB20-0698 DNA’; <code>TCACCTCTG</code> with ‘Hepatitis B virus complete genome, genotype A’, ‘Hepatitis B virus strain #1958.7’, ‘Hepatitis B virus HB20-0698 DNA’; <code>CACCTCTGC</code> with ‘Hepatitis B virus complete genome, genotype A’, ‘Hepatitis B virus strain #1958.7’, ‘Hepatitis B virus HB20-0698 DNA’; and close but with less matches (only 2) <code>GTCTGTGCC</code> with ‘Hepatitis B virus complete genome, genotype A’, ‘Hepatitis B virus HB20-0698 DNA’; and <code>CTTGGACTC</code> with ‘Hepatitis B virus complete genome, genotype A’, ‘Hepatitis B virus HB20-0698 DNA’.</p>
+<p>However, all these diverse situtaion changes if we choose k=11 because now the cluster and proximity are more brief and concise. Its 11-mer <code>TTCACCTCTGC</code> with ‘Hepatitis B virus complete genome, genotype A’, ‘Hepatitis B virus strain #1958.7’, ‘Hepatitis B virus HB20-0698 DNA’ shows what already <code>CCCCCACTG</code> also showed but now with more exclusivity. Now, we see that <code>TTATATAAGAG</code> shows that ‘Hepatitis B virus complete genome, genotype A’ is near to those others.</p>
 </section>
 </section>
-<section id="conclusions" class="level1">
-<h1>Conclusions</h1>
-<p>Pending</p>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>This analysis aimed to identify the most frequent k-mers for different values of k for various viruses, including coronavirus, HIV-1, Adenovirus-2, Ebola, and Hepatitis-B, and generate a phylogenetic tree by neighbor joining. The results provide insights into the genomic diversity of these viruses and how different sequences are related to each other, which could be used for further research on the evolution and transmission of these viruses.</p>
+</section>
+<section id="distribution-of-work" class="level1">
+<h1>Distribution of work</h1>
+<p>This time, the entire work was done by myself. This was an agreement with Gabriel.</p>
 </section>
 <section id="references" class="level1">
 <h1>References</h1>
@@ -4387,19 +4827,19 @@ execute:
 ---
 # Abstract
 
-In this project, we study the evolution of the most frequent 9-mers in coronaviruses as main tasks and other viruses. We calculate sequence similarity, build a rooted phylogenetic tree, reconstruct ancestral sequences for the most frequent 9-mers. Also, we interpret the tree built for potentially new understanding of the evolution history of repetitive elements in viruses.
+In this project, we study the evolution of the most frequent 9-mers in coronaviruses as main tasks and other viruses. We calculate sequence similarity, build a rooted phylogenetic tree, reconstruct ancestral sequences not only for the most frequent 9-mers as it was required but also for other k-mers that, in our opinion, could give more light to the genomic relations viruses represent.
 
 # Introduction
 
-In our class, we have learned that analyzing the frequency of k-mers in genomes of living beings - like viruses - has the potential to provide relevant insights regarding the evolution and biological diversity of them. By calculating similarity or how distant their patterns are, building phylogennetic trees based on the most frequen k-mers (k=9 for this study), we can infer genomic relationships and if they possess common ancestors. In this sense, we can have a vision of the potential origin and how the spread of viruses has happened. 
+In our class, we have learned that analyzing the frequency of k-mers in genomes of living beings - like viruses - has the potential to provide relevant insights regarding the evolution and biological diversity of them. By calculating similarity or how distant their patterns are, building phylogennetic trees based on the most frequen k-mers (k=9 for this study), we can infer genomic relationships and if they possess common ancestors. In this sense, we can have a vision of the proximity the spread of viruses has produced on the virus types. 
 
-For instance, if a particular k-mer is found in many different viral genomes, it may indicate that this sequence has been conserved over time and is important for the virus&#39;s function or survival. On the other hand, if a k-mer is only found in a subset of viral genomes, it may indicate that this sequence has evolved more recently. In more empirical terms, this is also important because vaccines and other biological applications can be created based on these conclusions.
+For instance, if a particular k-mer is found in many different viral genomes, it may indicate that this sequence has been conserved over time and is important for the virus&#39;s function or survival. On the other hand, if a k-mer is only found in a subset of viral genomes, it may indicate that this sequence has less in common and perhaps it has more biological reasons.
 
-This project has a five tasks centered on Coronavirus SARCoV-2 strains, and finally extends its methodology to two aditional taks related to Adenovirus-2, Ebola, HIV-1, and Hepatitis-B viruses; so that we, as students in the biotechnology field, can understand that the methodology is applicable to other genomic contexts also.
+This project has five tasks centered on Coronavirus SARCoV-2 strains, and finally extends its methodology to two aditional taks related to Adenovirus-2, Ebola, HIV-1, and Hepatitis-B viruses; so that we, as students in the biotechnology field, can understand that the methodology is applicable to other genomic contexts also and learn to draw some conclusions based on the information we can retrieve from the data we analyze from complete genome sequences.
 
 # Methods
 
-In this section, from the seven tasks, five are purely programs. Then, we proceed to describe the methods and data structures that we have implemented in Python to accomplish each required task of this project. We have organized in functions in files `task1.py`, `task2.py`, `task3.py`, and `task4_e1.py`
+In this section, we proceed to describe the methods and data structures that we have implemented in Python to accomplish each required task of this project. We have organized in functions in files `task1.py`, `task2.py`, `task3.py`, and `task4_e1.py`
 
 ## Data structures and algorithms
 
@@ -4729,8 +5169,6 @@ def scores(scores_node_left, scores_node_right):
 
 ```
 
-This code defines three functions: small_parsimony, sp, and scores.
-
 The small_parsimony function takes a phylogenetic tree as input, extracts the DNA sequences of the terminal nodes, computes the ancestral sequence using the small parsimony algorithm (implemented in the sp function), and returns the ancestral sequence and the time it took to compute it. Specifically, the function creates a list of strings (sequences) from the names of the terminal nodes of the tree. It then loops over the letters of the first sequence in sequences, and creates a list (words) of strings where each string contains the i-th letter of all sequences. Then, the sp function is then called on each word to compute the corresponding letter of the ancestral sequence. Finally, the ancestral sequence is built by concatenating all letters computed by the sp function. The small_parsimony function returns the ancestral sequence and the time it took to compute it in seconds.
 
 The sp function takes a DNA word as input and computes the letter of the ancestral sequence that corresponds to the DNA position represented by that word using the small parsimony algorithm. The function first splits the input word into two lists (left and right) that contain the nucleotides of the first and second sequences, the second and third sequences, and so on. It then determines whether an additional nucleotide needs to be added to the right list if the length of the original sequence list was odd. The function initializes an empty list (scores_boths) that will store the scores of all possible nucleotides for each internal node in the tree. It then loops over the nucleotides in the left list, and computes the score of each nucleotide by comparing it to the nucleotide in the corresponding position in the right list, or to None if the right list is shorter by one element. The scores function is then called to compute the scores of the internal nodes in the tree. The function repeatedly applies the scores function to pairs of internal nodes until a single score is obtained, which is then converted into a nucleotide letter by finding the index of the minimum score in the scores_boths list. The function returns the nucleotide letter.
@@ -4939,33 +5377,45 @@ Our results involve the execution of the previous explained functions in these v
 The are the variants by virus type with their Fasta code and description. It is important to note that we have used complete genomes in this study.
 
 | Virus Type | Fasta Genome |  Title |
-|:-----------|:-------------|:-------|
-| Coronavirus | NC_045512.2 | Coronavirus 2 isolate Wuhan-Hu-1 |
+|:-----------|:------------:|:-------|
+| Coronavirus | NC_045512.2 | Coronavirus 2 isolate Wuhan-Hu-1 |      
 | Coronavirus | KT225476.2 | Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015 |
-| Coronavirus | MZ937003.2 | Bat coronavirus isolate BANAL-20-236/Laos/2020 |       
-| Coronavirus | AY545919.1 | SARS coronavirus isolate CFB/SZ/94/03 |
-| Coronavirus | OM009282.1 | Pangolin coronavirus HKU4/P251T/pangolin/2018 |        
-| HIV-1 | MN692147.1 | HIV-1 isolate Pt1-M26-NFL-30-PBio from USA |
+| Coronavirus | MZ937003.2 | Bat coronavirus isolate BANAL-20-236/Laos/2020 |
+| Coronavirus | AY545919.1 | SARS coronavirus isolate CFB/SZ/94/03 |  
+| Coronavirus | OM009282.1 | Pangolin coronavirus HKU4/P251T/pangolin/2018 |
+| Coronavirus | OK091006.1 | Coronavirus 2 Delta variant/2021 |       
+| Coronavirus | AY572034.1 | Coronavirus 2 JP_Hiro97618 RNA |
+| Coronavirus | OP183454.1 | Coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022 |
+| Coronavirus | 2182752773 | Coronavirus 2 isolate SARS-CoV-2/human/CAN/Kappa_NML_P4/2021 |
+| Coronavirus | MZ496616.1 | Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021 |
+| Coronavirus | OQ780237.1 | ORFB1ab USA human/USA/WA-PHL-027795/2022 |
+| Coronavirus | OQ779361.1 | SARS-CoV-2/human/USA/WA-PHL-026151/2022 |
+| Coronavirus | OQ258758.1 | Human/USA/NC-CDC-LC0984552/2023 |        
+| Coronavirus | OQ722344.1 | SARS-CoV-2/human/MAR/Omicron BA.2/2022 | 
+| Coronavirus | OQ525773.1 | SARS-CoV-2/human/BRA/ILMD2203877/2022 |  
+| Coronavirus | OX460957.1 | Covid Switzerland 2023 |
+| Coronavirus | LC594651.1 | Coronavirus 2 JP_Hiro97618 RNA |
+| HIV-1 | MN692147.1 | HIV-1 isolate Pt1-M26-NFL-30-PBio from USA |   
 | HIV-1 | MH327766.1 | HIV-1 isolate 1031 from Philippines |
 | HIV-1 | EU541617.1 | HIV-1 clone pIIIB from USA |
-| HIV-1 | AF224507.1 | HIV-1 strain HIV-1wk from South Korea |
+| HIV-1 | AF224507.1 | HIV-1 strain HIV-1wk from South Korea |        
 | HIV-1 | KX232629.1 | HIV-1 isolate PK040 from Pakistan |
-| HIV-1 | MG365771.1 | HIV-1 isolate 01BRRJUD508 from Brazil |
+| HIV-1 | MG365771.1 | HIV-1 isolate 01BRRJUD508 from Brazil |        
 | HIV-1 | KY498771.1 | HIV-1 isolate S4858 from Cameroon |
 | Adenovirus-2 | AC_000007.1 | Human adenovirus 2 |
 | Adenovirus-2 | KP279747.1 | Unidentified adenovirus isolate GPAdV_5 |
 | Adenovirus-2 | NC_027708.1 | Skunk adenovirus PB1 |
 | Adenovirus-2 | X73487.1 | Adenovirus type 12 DNA |
 | Adenovirus-2 | MZ073342.1 | Porcupine adenovirus isolate X-24879-18 |
-| Adenovirus-2 | MZ073341.1 | Raccoon adenovirus isolate W-0155-19B |
+| Adenovirus-2 | MZ073341.1 | Raccoon adenovirus isolate W-0155-19B | 
 | Ebola | KU143834.1 | Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9 |
 | Ebola | AF086833.2 | Ebola virus - Mayinga, Zaire, 1976 |
 | Ebola | KU182904.1 | Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626 |
 | Ebola | KM655246.1 | Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran |
-| Hepatitis-B | LC603637.1 | Hepatitis B virus HB20-0698 DNA |
+| Hepatitis-B | LC603637.1 | Hepatitis B virus HB20-0698 DNA |        
 | Hepatitis-B | K01834.1 | Duck hepatitis B virus |
-| Hepatitis-B | AJ344115.1 | Hepatitis B virus complete genome, genotype A |        
-| Hepatitis-B | KR014099.1 | Hepatitis B virus strain #1958.7 |
+| Hepatitis-B | AJ344115.1 | Hepatitis B virus complete genome, genotype A |
+| Hepatitis-B | KR014099.1 | Hepatitis B virus strain #1958.7 | 
 
 : Genomes used table {tbl-colwidths=&quot;[20,20,60]&quot;}
 
@@ -4978,20 +5428,23 @@ The following are the results most frequent 9-mers for virus type: Coronavirus
 * **Pylogenetic Tree by Neighbor Joining**:
 
 ```
-                                              , TAAACGAAC
-  ____________________________________________|
- |                                            |______________________ TTAACGAAC
-_|
- |___________________________________________________________________ TAACGAACT
+                    _ TAAACGAAC
+  _________________|
+ |                 |_______ TTAACGAAC
  |
- |____________________________________________ TAATGGTAA
+_|   _______________________________________________________________ NNNNNNNNN
+ |__|
+ |  |_________________________ TAACGAACT
+ |
+ |____________________ TAATGGTAA
 ```
 
 * **Most frequent 9-mers**:
 
 | Sequence | Count | Genome |
-|:--------:|:-----:|:-------|
-| TAAACGAAC | 3 | [&#39;SARS coronavirus isolate CFB/SZ/94/03&#39;, &#39;Bat coronavirus isolate BANAL-20-236/Laos/2020&#39;, &#39;Coronavirus 2 isolate Wuhan-Hu-1&#39;] |
+|:---------|:-----:|:-------|
+| TAAACGAAC | 7 | [&#39;SARS coronavirus isolate CFB/SZ/94/03&#39;, &#39;Coronavirus 2 JP_Hiro97618 RNA&#39;, &#39;Coronavirus 2 JP_Hiro97618 RNA&#39;, &#39;Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021&#39;, &#39;Bat coronavirus isolate BANAL-20-236/Laos/2020&#39;, &#39;Coronavirus 2 isolate Wuhan-Hu-1&#39;, &#39;Coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022&#39;] |
+| NNNNNNNNN | 2 | [&#39;Coronavirus 2 Delta variant/2021&#39;, &#39;SARS-CoV-2/human/USA/WA-PHL-026151/2022&#39;] |
 | TTAACGAAC | 1 | [&#39;Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015&#39;] |
 | TAACGAACT | 1 | [&#39;Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015&#39;] |
 | TAATGGTAA | 1 | [&#39;Pangolin coronavirus HKU4/P251T/pangolin/2018&#39;] |
@@ -5000,45 +5453,7 @@ _|
 
 * **Running time**:
 ```
-Runing time: 0.00049 seconds
-```
-
-#### Most frequent 8-mers:
-
-The following are the results most frequent 8-mers for virus type: Coronavirus  
-
-* **Pylogenetic Tree by Neighbor Joining**:
-
-```
-                  ___________________________ TGTTGACA
-      ___________|
-  ___|           |_______________ TGCTGCTA
- |   |
- |   |________________ TGATTTTA
- |
-_|                                 __________________________________ ATGGTGTT
- |________________________________|
- |                                |_______________________ TTAATGGT
- |
- |________________ TAATGGTA
-```
-
-* **Most frequent 8-mers**:
-
-| Sequence | Count | Genome |
-|:--------:|:-----:|:-------|
-| ATGGTGTT | 2 | [&#39;Bat coronavirus isolate BANAL-20-236/Laos/2020&#39;, &#39;Coronavirus 2 isolate Wuhan-Hu-1&#39;] |
-| TGTTGACA | 1 | [&#39;SARS coronavirus isolate CFB/SZ/94/03&#39;] |
-| TGCTGCTA | 1 | [&#39;SARS coronavirus isolate CFB/SZ/94/03&#39;] |
-| TGATTTTA | 1 | [&#39;Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015&#39;] |
-| TTAATGGT | 1 | [&#39;Bat coronavirus isolate BANAL-20-236/Laos/2020&#39;] |
-| TAATGGTA | 1 | [&#39;Pangolin coronavirus HKU4/P251T/pangolin/2018&#39;] |
-
-: Most frequent 8-mers Coronavirus table {tbl-colwidths=&quot;[10,5,85]&quot;}
-
-* **Running time**:
-```
-Runing time: 0.00093 seconds
+Runing time: 0.00054 seconds
 ```
 
 #### Most frequent 10-mers:
@@ -5048,27 +5463,63 @@ The following are the results most frequent 10-mers for virus type: Coronavirus
 * **Pylogenetic Tree by Neighbor Joining**:
 
 ```
-  __________________________________________________________________ CTAAACGAAC
+          _______________________________________ CTAAACGAAC
+  _______|
+ |       |_______________________ TTAACGAACT
+_|
+ |_______________________________________ TAATGGTGTT
  |
-_|_____________________ TTAACGAACT
- |
- |__________________________________________________________________ TAATGGTGTT
+ |__________________________________________________________________ NNNNNNNNNN
 
 ```
 
 * **Most frequent 10-mers**:
 
 | Sequence | Count | Genome |
-|:--------:|:-----:|:-------|
-| CTAAACGAAC | 3 | [&#39;SARS coronavirus isolate CFB/SZ/94/03&#39;, &#39;Bat coronavirus isolate BANAL-20-236/Laos/2020&#39;, &#39;Coronavirus 2 isolate Wuhan-Hu-1&#39;] |
+|:---------|:-----:|:-------|
+| CTAAACGAAC | 7 | [&#39;SARS coronavirus isolate CFB/SZ/94/03&#39;, &#39;Coronavirus 2 JP_Hiro97618 RNA&#39;, &#39;Coronavirus 2 JP_Hiro97618 RNA&#39;, &#39;Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021&#39;, &#39;Bat coronavirus isolate BANAL-20-236/Laos/2020&#39;, &#39;Coronavirus 2 isolate Wuhan-Hu-1&#39;, &#39;Coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022&#39;] |
+| TAATGGTGTT | 3 | [&#39;Coronavirus 2 JP_Hiro97618 RNA&#39;, &#39;Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021&#39;, &#39;Coronavirus 2 isolate Wuhan-Hu-1&#39;] |
 | TTAACGAACT | 2 | [&#39;Middle East respiratory syndrome coronavirus isolate MERS-CoV/THA/CU/17_06_2015&#39;, &#39;Pangolin coronavirus HKU4/P251T/pangolin/2018&#39;] |
-| TAATGGTGTT | 1 | [&#39;Coronavirus 2 isolate Wuhan-Hu-1&#39;] |
+| NNNNNNNNNN | 2 | [&#39;Coronavirus 2 Delta variant/2021&#39;, &#39;SARS-CoV-2/human/USA/WA-PHL-026151/2022&#39;] |
 
 : Most frequent 10-mers Coronavirus table {tbl-colwidths=&quot;[10,5,85]&quot;}
 
 * **Running time**:
 ```
 Runing time: 0.00054 seconds
+```
+
+#### Most frequent 17-mers:
+
+The following are the results most frequent 17-mers for virus type: Coronavirus  
+
+* **Pylogenetic Tree by Neighbor Joining**:
+
+```
+      _____________________ ATATAAAAATACATGTG
+  ___|
+ |   |_____________________________ ATCAGACAACTACTATT
+_|
+ |_____________________________ CAATTATTATAAGAAAG
+ |
+ |___________________________________________________________ NNNNNNNNNNNNNNNNN
+
+```
+
+* **Most frequent 17-mers**:
+
+| Sequence | Count | Genome |
+|:---------|:-----:|:-------|
+| CAATTATTATAAGAAAG | 6 | [&#39;Coronavirus 2 JP_Hiro97618 RNA&#39;, &#39;Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021&#39;, &#39;Bat coronavirus isolate BANAL-20-236/Laos/2020&#39;, &#39;Coronavirus 2 isolate Wuhan-Hu-1&#39;, &#39;Coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022&#39;, &#39;SARS-CoV-2/human/USA/WA-PHL-026151/2022&#39;] |
+| ATCAGACAACTACTATT | 5 | [&#39;Coronavirus 2 JP_Hiro97618 RNA&#39;, &#39;Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021&#39;, &#39;Coronavirus 2 isolate Wuhan-Hu-1&#39;, &#39;Coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022&#39;, &#39;SARS-CoV-2/human/USA/WA-PHL-026151/2022&#39;] |      
+| NNNNNNNNNNNNNNNNN | 2 | [&#39;Coronavirus 2 Delta variant/2021&#39;, &#39;SARS-CoV-2/human/USA/WA-PHL-026151/2022&#39;] |
+| ATATAAAAATACATGTG | 1 | [&#39;Bat coronavirus isolate BANAL-20-236/Laos/2020&#39;] |
+
+: Most frequent 17-mers Coronavirus table {tbl-colwidths=&quot;[10,5,85]&quot;}
+
+* **Running time**:
+```
+Runing time: 0.00077 seconds
 ```
 
 ### HIV-1 Results
@@ -5106,7 +5557,7 @@ _|                          ____________________________________ CTAATGCTA
 * **Most frequent 9-mers**:
 
 | Sequence | Count | Genome |
-|:--------:|:-----:|:-------|
+|:---------|:-----:|:-------|
 | AAGAAAAAA | 3 | [&#39;HIV-1 strain HIV-1wk from South Korea&#39;, &#39;HIV-1 clone pIIIB from USA&#39;, &#39;HIV-1 isolate Pt1-M26-NFL-30-PBio from USA&#39;] |
 | AAAGAAAAA | 2 | [&#39;HIV-1 isolate 01BRRJUD508 from Brazil&#39;, &#39;HIV-1 isolate Pt1-M26-NFL-30-PBio from USA&#39;] |   
 | TTAAAAGAA | 2 | [&#39;HIV-1 isolate 1031 from Philippines&#39;, &#39;HIV-1 isolate Pt1-M26-NFL-30-PBio from USA&#39;] |     
@@ -5123,6 +5574,48 @@ _|                          ____________________________________ CTAATGCTA
 * **Running time**:
 ```
 Runing time: 0.00150 seconds
+```
+
+#### Most frequent 7-mers:
+
+The following are the results most frequent 7-mers for virus type: HIV-1
+
+* **Pylogenetic Tree by Neighbor Joining**:
+
+```
+                 ________________________________ AAAGAAA
+       _________|
+      |         |_____________________________ AAGAAAA
+  ____|
+ |    |                  _____________ AGAAAAA
+ |    |_________________|
+ |                      |                 ____________________________ AGCAGAA
+_|                      |________________|
+ |                                       |___ AGAAGAA
+ |
+ |__________ AAAAGAA
+ |
+ |_________________________________________________ AAAATTA
+
+```
+
+* **Most frequent 7-mers**:
+
+| Sequence | Count | Genome |
+|:---------|:-----:|:-------|
+| AAGAAAA | 4 | [&#39;HIV-1 strain HIV-1wk from South Korea&#39;, &#39;HIV-1 isolate 01BRRJUD508 from Brazil&#39;, &#39;HIV-1 isolate 1031 from Philippines&#39;, &#39;HIV-1 isolate Pt1-M26-NFL-30-PBio from USA&#39;] |
+| AAAGAAA | 2 | [&#39;HIV-1 isolate PK040 from Pakistan&#39;, &#39;HIV-1 isolate Pt1-M26-NFL-30-PBio from USA&#39;] |
+| AAAAGAA | 2 | [&#39;HIV-1 isolate 01BRRJUD508 from Brazil&#39;, &#39;HIV-1 isolate Pt1-M26-NFL-30-PBio from USA&#39;] |
+| AGAAGAA | 1 | [&#39;HIV-1 clone pIIIB from USA&#39;] |
+| AGCAGAA | 1 | [&#39;HIV-1 isolate S4858 from Cameroon&#39;] |
+| AAAATTA | 1 | [&#39;HIV-1 isolate 1031 from Philippines&#39;] |
+| AGAAAAA | 1 | [&#39;HIV-1 isolate 1031 from Philippines&#39;] |
+
+: Most frequent 7-mers HIV-1 table {tbl-colwidths=&quot;[10,5,85]&quot;}
+
+* **Running time**:
+```
+Runing time: 0.00098 seconds
 ```
 
 ### Adenovirus-2 Results
@@ -5154,7 +5647,7 @@ _|            ____________________|             |___________________ TCTTCTTCT
 * **Most frequent 9-mers**:
 
 | Sequence | Count | Genome |
-|:--------:|:-----:|:-------|
+|:---------|:-----:|:-------|
 | GAGGAGGAG | 3 | [&#39;Raccoon adenovirus isolate W-0155-19B&#39;, &#39;Porcupine adenovirus isolate X-24879-18&#39;, &#39;Skunk adenovirus PB1&#39;] |
 | GGCGGCGGC | 1 | [&#39;Human adenovirus 2&#39;] |
 | AAAATTTGA | 1 | [&#39;Unidentified adenovirus isolate GPAdV_5&#39;] |
@@ -5168,6 +5661,54 @@ _|            ____________________|             |___________________ TCTTCTTCT
 * **Running time**:
 ```
 Runing time: 0.00073 seconds
+```
+
+#### Most frequent 16-mers:
+
+The following are the results most frequent 16-mers for virus type: Adenovirus-2
+
+* **Pylogenetic Tree by Neighbor Joining**:
+
+```
+             ________________________________ TTGTTCCTGCACTTCC
+   _________|
+  |         |_________________________________ CTGTTGTTCCTGCACT
+ ,|
+ ||  _____________________________ TTTTTGGCGCCAAAAA
+ || |
+ ||_|                            ______________________ ATGAAGAAGAGGAAGA
+ |  |                 __________|
+ |  |________________|          |___________________________ AAAAAAAAAAAAAAAA
+_|                   |
+ |                   |___________________________________ GATGAAGAAGAGGAAG
+ |
+ |                ______________________________ TGTTGTTCCTGCACTT
+ |_______________|
+ |               |___________________________ TGTAATGTTTTCTATT
+ |
+ |_________________________________________ GTTGTTCCTGCACTTC
+
+```
+
+* **Most frequent 16-mers**:
+
+| Sequence | Count | Genome |
+|:---------|:-----:|:-------|
+| TTTTTGGCGCCAAAAA | 3 | [&#39;Raccoon adenovirus isolate W-0155-19B&#39;, &#39;Porcupine adenovirus isolate X-24879-18&#39;, &#39;Skunk adenovirus PB1&#39;] |
+| AAAAAAAAAAAAAAAA | 1 | [&#39;Human adenovirus 2&#39;] |
+| GATGAAGAAGAGGAAG | 1 | [&#39;Human adenovirus 2&#39;] |
+| ATGAAGAAGAGGAAGA | 1 | [&#39;Human adenovirus 2&#39;] |
+| TGTAATGTTTTCTATT | 1 | [&#39;Unidentified adenovirus isolate GPAdV_5&#39;] |
+| CTGTTGTTCCTGCACT | 1 | [&#39;Unidentified adenovirus isolate GPAdV_5&#39;] |
+| TGTTGTTCCTGCACTT | 1 | [&#39;Unidentified adenovirus isolate GPAdV_5&#39;] |
+| GTTGTTCCTGCACTTC | 1 | [&#39;Unidentified adenovirus isolate GPAdV_5&#39;] |
+| TTGTTCCTGCACTTCC | 1 | [&#39;Unidentified adenovirus isolate GPAdV_5&#39;] |
+
+: Most frequent 16-mers Adenovirus-2 table {tbl-colwidths=&quot;[10,5,85]&quot;}
+
+* **Running time**:
+```
+Runing time: 0.00132 seconds
 ```
 
 ### Ebola Results
@@ -5203,6 +5744,60 @@ _|________________________|
 * **Running time**:
 ```
 Runing time: 0.00032 seconds
+```
+
+#### Most frequent 10-mers:
+
+The following are the results most frequent 10-mers for virus type: Ebola
+
+* **Pylogenetic Tree by Neighbor Joining**:
+
+```
+  ___________________________________________________________________ TTAAGAAAAA        
+_|
+ |___________________________________________________________________ ATTAAGAAAA  
+
+```
+
+* **Most frequent 10-mers**:
+
+| Sequence | Count | Genome |
+|:---------|:-----:|:-------|
+| TTAAGAAAAA | 4 | [&#39;Ebola virus - Mayinga, Zaire, 1976&#39;, &#39;Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran&#39;, &#39;Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9&#39;, &#39;Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626&#39;] |
+| ATTAAGAAAA | 3 | [&#39;Ebola virus - Mayinga, Zaire, 1976&#39;, &#39;Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran&#39;, &#39;Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626&#39;] |
+
+: Most frequent 10-mers Ebola table {tbl-colwidths=&quot;[10,5,85]&quot;}
+
+* **Running time**:
+```
+Runing time: 0.00037 seconds
+```
+
+#### Most frequent 15-mers:
+
+The following are the results most frequent 15-mers for virus type: Ebola
+
+* **Pylogenetic Tree by Neighbor Joining**:
+
+```
+   ______________________________________________________________ AATGATGAAGATTAA
+_|
+ |______________________________________________________________ GAAGATTAAGAAAAA 
+
+```
+
+* **Most frequent 15-mers**:
+
+| Sequence | Count | Genome |
+|:---------|:-----:|:-------|
+| GAAGATTAAGAAAAA | 4 | [&#39;Ebola virus - Mayinga, Zaire, 1976&#39;, &#39;Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran&#39;, &#39;Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9&#39;, &#39;Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626&#39;] |
+| AATGATGAAGATTAA | 1 | [&#39;Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9&#39;] |
+
+: Most frequent 15-mers Ebola table {tbl-colwidths=&quot;[10,5,85]&quot;}
+
+* **Running time**:
+```
+Runing time: 0.00037 seconds
 ```
 
 ### Hepatitis-B Results
@@ -5377,19 +5972,95 @@ _|      | |                     |         ____________________ CTGTGCCTT
 Runing time: 0.08194 seconds
 ```
 
+#### Most frequent 11-mers:
+
+The following are the results most frequent 11-mers for virus type: Hepatitis-B
+
+* **Pylogenetic Tree by Neighbor Joining**:
+
+```
+                              ______________________ TACACCCCTCT
+    _________________________|
+   |                         |________________________ TTCACCTCTGC
+  _|
+ | |           ________________________________________________ TATATAAGAGG
+ | |          |
+ | |__________|                                    ________ CAAGAAGAAAG
+ |            |     ______________________________|
+ |            |____|                              |______________ GAAGAAGAAAA
+ |                 |
+_|                 |__________________________________ TTATATAAGAG
+ |
+ |        ___________________________________ AAGTTTCCAAC
+ |_______|
+ |       |           ____________________________________ ACACCCCTCTC
+ |       |__________|
+ |                  |______________________ AGATCTCAATC
+ |
+ |____________________________________________ CTGTACCTTTG
+
+```
+
+* **Most frequent 11-mers**:
+
+| Sequence | Count | Genome |
+|:---------|:-----:|:-------|
+| TTCACCTCTGC | 3 | [&#39;Hepatitis B virus complete genome, genotype A&#39;, &#39;Hepatitis B virus strain #1958.7&#39;, &#39;Hepatitis B virus HB20-0698 DNA&#39;] |
+| TTATATAAGAG | 1 | [&#39;Hepatitis B virus complete genome, genotype A&#39;] |
+| TATATAAGAGG | 1 | [&#39;Hepatitis B virus complete genome, genotype A&#39;] |
+| AGATCTCAATC | 1 | [&#39;Hepatitis B virus complete genome, genotype A&#39;] |
+| GAAGAAGAAAA | 1 | [&#39;Duck hepatitis B virus&#39;] |
+| AAGTTTCCAAC | 1 | [&#39;Duck hepatitis B virus&#39;] |
+| CAAGAAGAAAG | 1 | [&#39;Duck hepatitis B virus&#39;] |
+| CTGTACCTTTG | 1 | [&#39;Duck hepatitis B virus&#39;] |
+| TACACCCCTCT | 1 | [&#39;Duck hepatitis B virus&#39;] |
+| ACACCCCTCTC | 1 | [&#39;Duck hepatitis B virus&#39;] |
+
+: Most frequent 11-mers Hepatitis-B table {tbl-colwidths=&quot;[10,5,85]&quot;}
+
+* **Running time**:
+```
+Runing time: 0.00200 seconds
+```
+
 # Discussion
 
 ## Task 5
 
-Pending
+The given results show the most frequent k-mers for different values of k (k=9,10,17) for the coronavirus genome. These values have been selected trying to produce optimal clustering among the studied genomes. The tables show the sequence, count, and genome where the k-mer was found. The pylogenetic tree by neighbor joining shows the relationships between the different sequences based on their similarities. The running time of the analysis is also reported. Also, the pylogenetic tree shows the relationships between these genome sequences based on their similarity. The running time of the analysis indicates the computational efficiency of the algorithm used to generate these results is directly proportional to the number of sequences involved. Overall, these results provide insights into the genomic diversity of coronavirus and how different sequences are related to each other. These findings could be used for further research on the evolution and transmission of coronavirus.
+
+In case of Coronavirus, with k=9 we see a strong relation through 9-mer `TAAACGAAC` for &#39;SARS coronavirus isolate CFB/SZ/94/03&#39;, &#39;Coronavirus 2 JP_Hiro97618 RNA&#39;, &#39;Coronavirus 2 JP_Hiro97618 RNA&#39;, &#39;Coronavirus 2 isolate SARS-CoV-2/Felis catus/PER/UPCH_sc2_cat3/2021&#39;, &#39;Bat coronavirus isolate BANAL-20-236/Laos/2020&#39;, &#39;Coronavirus 2 isolate Wuhan-Hu-1&#39;, &#39;Coronavirus 2 isolate SARS-CoV-2/human/EGY/OMICRON-40/2022&#39; and this cluster with a proximity in similarity with the 9-mer `TTAACGAAC` with the &#39;Coronavirus 2 Delta variant/2021&#39;, &#39;SARS-CoV-2/human/USA/WA-PHL-026151/2022&#39; and the &#39;Middle East respiratory&#39; variants. 
+
+In addition, it is interesting that the 17-mer produces a concise group of coronaviruses with 6 coincidences of it. Here, we see that the 17-mer `CAATTATTATAAGAAAG` is shared by the Hiroshima, Domestic Cat&#39;s, Bat&#39;s, Wuhan-Hu-1, Usa&#39;s sample, and Omicron variants. Here, it is interesting to note that we again have many of the members of the cluster that has the same mark than with  9-mer `TAAACGAAC`.
+
+For instance, always variants related to bats and Wuhan belong to the very same clusters. So that, this study does not iluminate related to the question of if the virus could have been originated by the animals or the lab installed in Wuhan. The question still remains unanswered.
+
+This study also shows that this 9-mer and 17-mer show that strong genomic material is present in new and very virulent variants such as Omicron. Could these marks can be related to virulence and transmision power? Hence, these perspectives deserve to go more in deep with more Bioinformatics tools (2023, Subvariant of Omicron SARS-CoV-2 and its Rapid Global Spread).
 
 ## Task E2
 
-Pending
+Similarly to prior, for each one of the virus types, the given results show the most frequent k-mers for different values of k. In case of HIV-1 (k=7,9); Adenovirus-2(k=9,16); Ebola(k=9,10,15); and Hepatitis-B(k=9,11). These values have been selected trying to produce optimal clustering among the studied genomes. The tables show the sequence, count, and genome where the k-mer was found. The pylogenetic tree by neighbor joining shows the relationships between the different sequences based on their similarities. The running time of the analysis is also reported. Also, the pylogenetic tree shows the relationships between these genome sequences based on their similarity. The running time of the analysis indicates the computational efficiency of the algorithm used to generate these results is directly proportional to the number of sequences involved. Overall, these results provide insights into the genomic diversity of coronavirus and how different sequences are related to each other. These findings could be used for further research on the evolution and transmission of coronavirus.
 
-# Conclusions
+Also, our biological conclusions are similar. Nonetheless, the strategies for having concise clusters sometimes require to decrease the number of k-mers, as it happened in HIV-1, the results speak clear about understanding the similarities by studying the pylogenetic trees.
 
-Pending
+First, **HIV-1** shows its 9-mer `AAGAAAAAA` with 3 coincidences that &#39;HIV-1 strain HIV-1wk from South Korea&#39;, &#39;HIV-1 clone pIIIB from USA&#39;, and &#39;HIV-1 isolate Pt1-M26-NFL-30-PBio from USA&#39; followed by 
+`AAAGAAAAA` and `TTAAAAGAA` with 2 coincidences each that &#39;HIV-1 isolate 01BRRJUD508 from Brazil&#39;, &#39;HIV-1 isolate Pt1-M26-NFL-30-PBio from USA&#39; and &#39;HIV-1 isolate 1031 from Philippines&#39;, &#39;HIV-1 isolate Pt1-M26-NFL-30-PBio from USA&#39; are also close to the main group. The 7-mer `AAGAAAA` with 4 matches is useful to strenghten that &#39;HIV-1 strain HIV-1wk from South Korea&#39;, &#39;HIV-1 isolate 01BRRJUD508 from Brazil&#39;, &#39;HIV-1 isolate 1031 from Philippines&#39;, &#39;HIV-1 isolate Pt1-M26-NFL-30-PBio from USA&#39; are close to each other too. Observing these patterns, we can see that HIV-1 South Korea, USA, Brazil, and Philipines in that order, share a proximity in this subset of HIV-1 virus type.
+
+Second, **Adenovirus-2** shows its 9-mer `GAGGAGGAG` with 3 coincidences that &#39;Raccoon adenovirus isolate W-0155-19B&#39;, &#39;Porcupine adenovirus isolate X-24879-18&#39;, and &#39;Skunk adenovirus PB1&#39; live in the same clusters with a string genomic relationship, followed by the &#39;Human adenovirus 2&#39; being who shares the major proximity to them. The 16-mer | TTTTTGGCGCCAAAAA comes to iluminate also a strng relationship between &#39;Raccoon adenovirus isolate W-0155-19B&#39;, &#39;Porcupine adenovirus isolate X-24879-18&#39;, and &#39;Skunk adenovirus PB1&#39;. Hence, we can infer that these species of animals are key in potentially the spread of this virus.
+
+Third, **Ebola** is characterized for its conciseness of its trees, and follwing that trend, we have chosen k=9, 15 to get also concise clusters then. Three of its most frequent 9-mers show three clear groups: `GAAGATTAA` shows that &#39;Ebola virus - Mayinga, Zaire, 1976&#39;, &#39;Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran&#39;, &#39;Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9&#39;, and &#39;Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626&#39; share a strong relationship; followed by `TTAAGAAAA` with the group of &#39;Ebola virus - Mayinga, Zaire, 1976&#39;, &#39;Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran&#39;, &#39;Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9&#39;, and &#39;Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626&#39;; and by `TAAGAAAAA` with &#39;Ebola virus - Mayinga, Zaire, 1976&#39;, &#39;Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran&#39;, &#39;Zaire ebolavirus isolate Ebola virus H.sapiens-wt/SLE/2014/Makona-S9&#39;, and &#39;Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626&#39;. It is important to note that these last two sequences difer from each other with just one mutation. That can suggest that we could be in the case of a wrong written nucleotide?. Also, with not 4 but 3 matches `ATTAAGAAA` shows a new close group compounded by &#39;Ebola virus - Mayinga, Zaire, 1976&#39;, &#39;Zaire ebolavirus isolate Ebola virus/H.sapiens-tc/COD/1976/Yambuku-Ecran&#39;, &#39;Ebola virus isolate Ebola virus/H. sapiens-tc/COD/1995/Kikwit-9510626&#39;. When we take into consideration k=10 with 10-mers `TTAAGAAAAA`, `ATTAAGAAAA` (having only 3 mutations of distance switching similar nucleotides in it) we can also regroup to only two clusters, which is very interesting to understand a macro behaviour of the virus in a broader scope.
+
+Finally, **Hepatitis-B** with 9-mers it shows a very diverse number of leaves. That is why is useful to concentrate in mentioning that these 9-mers produce each one close clusters: `CCCCCACTG` with &#39;Hepatitis B virus complete genome, genotype A&#39;, &#39;Hepatitis B virus strain #1958.7&#39;, &#39;Hepatitis B virus HB20-0698 DNA&#39;; `CTGTGCCTT` with &#39;Hepatitis B virus complete genome, genotype A&#39;, &#39;Hepatitis B virus strain #1958.7&#39;, &#39;Hepatitis B virus HB20-0698 DNA&#39;; `TTCACCTCT` with &#39;Hepatitis B virus complete genome, genotype A&#39;, &#39;Hepatitis B virus strain #1958.7&#39;, &#39;Hepatitis B virus HB20-0698 DNA&#39;; `TCACCTCTG` with &#39;Hepatitis B virus complete genome, genotype A&#39;, &#39;Hepatitis B virus strain #1958.7&#39;, &#39;Hepatitis B virus HB20-0698 DNA&#39;; `CACCTCTGC` with &#39;Hepatitis B virus complete genome, genotype A&#39;, &#39;Hepatitis B virus strain #1958.7&#39;, &#39;Hepatitis B virus HB20-0698 DNA&#39;; and close but with less matches (only 2) `GTCTGTGCC` with &#39;Hepatitis B virus complete genome, genotype A&#39;, &#39;Hepatitis B virus HB20-0698 DNA&#39;; and `CTTGGACTC` with &#39;Hepatitis B virus complete genome, genotype A&#39;, &#39;Hepatitis B virus HB20-0698 DNA&#39;. 
+
+However, all these diverse situtaion changes if we choose k=11 because now the cluster and proximity are more brief and concise. Its 11-mer `TTCACCTCTGC` with &#39;Hepatitis B virus complete genome, genotype A&#39;, &#39;Hepatitis B virus strain #1958.7&#39;, &#39;Hepatitis B virus HB20-0698 DNA&#39; shows what already `CCCCCACTG` also showed but now with more exclusivity. Now, we see that `TTATATAAGAG` shows that &#39;Hepatitis B virus complete genome, genotype A&#39; is near to those others.
+
+# Conclusion
+
+This analysis aimed to identify the most frequent k-mers for different values of k for various viruses, including coronavirus, HIV-1, Adenovirus-2, Ebola, and Hepatitis-B, and generate a phylogenetic tree by neighbor joining. The results provide insights into the genomic diversity of these viruses and how different sequences are related to each other, which could be used for further research on the evolution and transmission of these viruses.
+
+# Distribution of work
+
+This time, the entire work was done by myself. This was an agreement with Gabriel. 
 
 # References
 
